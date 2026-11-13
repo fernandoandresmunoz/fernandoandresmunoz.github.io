@@ -14,15 +14,19 @@ Uso:
     python3 script_generator.py
 """
 import hashlib
+import html
 import io
 import json
 import os
 import re
+import shutil
 import sys
+import unicodedata
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 try:
     from PIL import Image
@@ -57,6 +61,7 @@ MAX_HORAS_UPLOAD = 48  # Regla de new_stores.txt: si el upload no está dentro d
 REGISTERS_BASE = os.environ.get("REGISTERS_URL", BASE).rstrip("/")
 HIST_PAGE_SIZE = 250   # registros que se piden por producto
 HIST_PUNTOS = 40       # puntos que se guardan en el JSON (muestreo parejo, incluye primero y último)
+DET_REGISTROS = 8      # filas de "Últimos registros" en la página de detalle
 
 TABS_CONFIG = [
     {
@@ -502,38 +507,82 @@ def guardar_imagenes(todos_los_items):
     print(f"✓ {len(usadas)} imágenes locales en {RUTA_IMG} ({borradas} obsoletas eliminadas)")
 
 
-def historial_precios(article_id):
-    """Serie cronológica de precios del artículo (máx. HIST_PUNTOS) o None si hay menos de 2 puntos."""
-    resp = get(f"{REGISTERS_BASE}/registers/", article=article_id, ordering="-obtained", page_size=HIST_PAGE_SIZE)
-    precios = [r["precio"] for r in reversed(resp.get("results", [])) if r.get("precio")]
-    if len(precios) < 2:
+def slugify(text):
+    text = unicodedata.normalize("NFKD", str(text or "")).encode("ascii", "ignore").decode("ascii")
+    text = re.sub(r"[^\w\s-]", "", text.lower())
+    text = re.sub(r"[-\s]+", "-", text).strip("-")
+    return text[:70].rstrip("-")
+
+
+def _a_epoch(s):
+    try:
+        d = datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+        if d.tzinfo is None:
+            d = d.replace(tzinfo=timezone.utc)
+        return int(d.timestamp())
+    except Exception:
         return None
-    if len(precios) > HIST_PUNTOS:
-        n = len(precios) - 1
-        precios = [precios[round(i * n / (HIST_PUNTOS - 1))] for i in range(HIST_PUNTOS)]
-    return [round(p) for p in precios]
+
+
+def historial_precios(article_id):
+    """Pide los registros del artículo una sola vez y devuelve (hist, detalle).
+
+    hist    -> hasta HIST_PUNTOS valores para el mini gráfico de la tabla.
+    detalle -> datos de la página de detalle: n (registros), s (puntos donde cambia el valor, como
+               [epoch, valor], más el último) y r (últimos registros, del más nuevo al más antiguo).
+    Devuelve (None, None) si hay menos de 2 registros.
+    """
+    resp = get(f"{REGISTERS_BASE}/registers/", article=article_id, ordering="-obtained", page_size=HIST_PAGE_SIZE)
+    regs = [(_a_epoch(r.get("obtained")), round(r["precio"])) for r in reversed(resp.get("results", [])) if r.get("precio")]
+    if len(regs) < 2:
+        return None, None
+    hist = [v for _, v in regs]
+    if len(hist) > HIST_PUNTOS:
+        n = len(hist) - 1
+        hist = [hist[round(i * n / (HIST_PUNTOS - 1))] for i in range(HIST_PUNTOS)]
+    detalle = None
+    con_fecha = [(t, v) for t, v in regs if t is not None]
+    if len(con_fecha) >= 2:
+        s = [list(con_fecha[0])]
+        for t, v in con_fecha[1:-1]:
+            if v != s[-1][1]:
+                s.append([t, v])
+        s.append(list(con_fecha[-1]))
+        detalle = {"n": len(regs), "s": s, "r": [list(x) for x in reversed(con_fecha[-(DET_REGISTROS + 1):])]}
+    return hist, detalle
 
 
 def guardar_historiales(items):
-    """Agrega 'hist' (lista de precios) a cada item. Si algo falla, el item queda sin hist y la web lo tolera."""
+    """Agrega 'hist' (lista de precios), '_det' y 'slug' a cada item. Deduplica por article_id."""
     estado = {"ok": 0, "fallos": 0}
+    unique_items = {}
+    for b in items:
+        bid = b.get("id")
+        if bid and bid not in unique_items:
+            unique_items[bid] = b
 
-    def uno(b):
+    def fetch_uno(b):
         if estado["ok"] == 0 and estado["fallos"] >= 20:  # el endpoint no responde: no insistir
-            return None
+            return b["id"], (None, None)
         try:
-            h = historial_precios(b["id"])
+            r = historial_precios(b["id"])
             estado["ok"] += 1
-            return h
+            return b["id"], r
         except Exception:
             estado["fallos"] += 1
-            return None
+            return b["id"], (None, None)
 
     with ThreadPoolExecutor(8) as ex:
-        series = list(ex.map(uno, items))
-    for b, h in zip(items, series):
+        resultados = dict(ex.map(fetch_uno, list(unique_items.values())))
+
+    for b in items:
+        h, d = resultados.get(b.get("id"), (None, None))
         b["hist"] = h
-    con = sum(1 for h in series if h)
+        if d:
+            b["_det"] = d   # datos de la página de detalle (no va al JSON de la lista)
+            b["slug"] = f"{b['id']}-{slugify(b.get('title', ''))}"
+            b["det"] = 1    # marca de soporte
+    con = sum(1 for b in items if b.get("hist"))
     print(f"✓ Historial de precios: {con}/{len(items)} productos ({estado['fallos']} errores)")
     if estado["ok"] == 0 and estado["fallos"]:
         print(f"  ⚠ /registers/ no respondió en {REGISTERS_BASE}; define REGISTERS_URL en .env")
@@ -640,6 +689,7 @@ td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
 tbody tr{transition:background .15s}tbody tr:hover{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
 .n{color:var(--mute);width:44px}
 .bk{display:flex;gap:14px;align-items:center}
+a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
 .mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
 .mc img{width:100%;height:100%;object-fit:cover;display:block}
 .t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
@@ -687,7 +737,7 @@ footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;colo
   <div class="row">
     <input id="q" type="search" placeholder="Buscar..." aria-label="Buscar">
     <select id="min" aria-label="Descuento mínimo"><option value="0">Cualquier descuento</option><option value="20">+20%</option><option value="40">+40%</option><option value="50">+50%</option><option value="70">+70%</option></select>
-    <select id="per" aria-label="Filas por página"><option>10</option><option selected>25</option><option>50</option><option value="1000">Todos</option></select>
+    <select id="per" aria-label="Filas por página"><option selected>10</option><option>25</option><option>50</option><option value="1000">Todos</option></select>
   </div>
   <div class="chips" id="chips"></div>
 </div></div>
@@ -810,6 +860,33 @@ const fixUrl = b => {
   return b.url;
 };
 
+// Al ir al detalle se guarda cómo estaba el listado (búsqueda, filtros, página, orden, scroll)
+// para dejarlo igual cuando la persona vuelve.
+function saveList() {
+  if (!currentTab) return;
+  try {
+    sessionStorage.setItem("lista:" + currentTab.id, JSON.stringify({ q: $("q").value, min: $("min").value, per: $("per").value, page, store, key, dir, y: window.scrollY }));
+  } catch (e) {}
+}
+function restoreList(tabId) {
+  let s = null;
+  try {
+    s = JSON.parse(sessionStorage.getItem("lista:" + tabId) || "null");
+    sessionStorage.removeItem("lista:" + tabId);
+  } catch (e) {}
+  if (!s) return null;
+  $("q").value = s.q || "";
+  $("min").value = s.min || "0";
+  $("per").value = s.per || "10";
+  page = s.page || 1;
+  store = s.store ?? -1;
+  key = s.key || key;
+  dir = s.dir || dir;
+  if (D.length > 1) document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", +c.dataset.i === store));
+  return s;
+}
+document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList(); });
+
 function initTabData(tab, j) {
   D = j.dominios || [];
   document.querySelector("table").classList.toggle("single", D.length < 2);
@@ -839,7 +916,9 @@ function initTabData(tab, j) {
 
   page = 1;
   store = -1;
+  const sv = restoreList(tab.id);
   render();
+  if (sv) requestAnimationFrame(() => window.scrollTo(0, sv.y || 0));
 }
 
 const col = id => {
@@ -895,7 +974,7 @@ function render() {
 
   $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
     <td class="n">${st + i + 1}</td>
-    <td><div class="bk"><div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div></div></td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
     <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
     <td class="r p">${clp(b.precio)}</td>
     <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
@@ -961,9 +1040,429 @@ def render_html_page(tab_info, json_ld_obj, default_tab_id):
     return html
 
 
+MESES_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 
-def generar_sitemap(active_tabs_data, fecha):
-    """sitemap.xml con una URL limpia por tab (libros es la home). Crea robots.txt si no existe."""
+
+def _formatear_dt(dt):
+    return f"{dt.day} {MESES_ES[dt.month - 1]}. {dt.year}, {dt.strftime('%H:%M')}"
+
+
+def _formatear_fecha(dt):
+    return f"{dt.day:02d}/{dt.month:02d}/{dt.year}"
+
+
+def _ts_a_fecha(ts, tz_cl):
+    try:
+        return _formatear_fecha(datetime.fromtimestamp(ts, tz=tz_cl))
+    except Exception:
+        return ""
+
+
+def _fmt_unidad(val, unidad):
+    pre = unidad.get("pre", "$")
+    suf = unidad.get("suf", "")
+    v = int(round(val))
+    signo = "−" if v < 0 else ""
+    n = f"{abs(v):,}".replace(",", ".")
+    return f"{signo}{pre}{n}{suf}"
+
+
+def _pct_str(val, dec=1):
+    if round(val, dec) == 0:
+        return "0%"
+    signo = "+" if val > 0 else "−"
+    fmt_n = f"{abs(val):.{dec}f}".replace(".", ",")
+    return f"{signo}{fmt_n}%"
+
+
+ICON_BACK_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+
+
+def render_producto_page(item, tab_cfg, detalle_data, now_iso):
+    tz_cl = ZoneInfo("America/Santiago")
+    series = detalle_data.get("s", [])
+    vs = [p[1] for p in series] if series else [round(item.get("precio", 0))]
+    mn = min(vs)
+    mx = max(vs)
+    p_min = next((p for p in series if p[1] == mn), None)
+    p_max = next((p for p in series if p[1] == mx), None)
+    min_dt_str = _ts_a_fecha(p_min[0], tz_cl) if p_min else ""
+    max_dt_str = _ts_a_fecha(p_max[0], tz_cl) if p_max else ""
+    first_dt_str = _ts_a_fecha(series[0][0], tz_cl) if series else ""
+    last_dt_str = _ts_a_fecha(series[-1][0], tz_cl) if series else ""
+
+    prom = round(item.get("promedio") or 0)
+    precio = round(item.get("precio", 0))
+    dev = (precio - prom) / prom * 100 if prom else 0
+    dev_str = _pct_str(dev)
+
+    unidad = tab_cfg.get("unidad", {"pre": "$", "suf": ""})
+    descuento = item.get("descuento", 0)
+
+    slug = item["slug"]
+    canonical_url = f"{SITE_URL}/producto/{slug}/"
+    tab_html = tab_cfg.get("html_file", "index.html")
+    tab_path = "/" if tab_html == "index.html" else "/" + tab_html
+    tab_name = tab_cfg.get("name", "Listado")
+
+    try:
+        dt_gen = datetime.fromisoformat(str(now_iso).replace("Z", "+00:00")).astimezone(tz_cl)
+        fecha_gen_str = _formatear_dt(dt_gen)
+    except Exception:
+        fecha_gen_str = now_iso
+
+    ultimos = detalle_data.get("r", [])
+    filas_html = []
+    for i, p in enumerate(ultimos[:DET_REGISTROS]):
+        try:
+            dt = datetime.fromtimestamp(p[0], tz=tz_cl)
+            fecha_col = _formatear_fecha(dt)
+            hora_col = dt.strftime("%H:%M")
+        except Exception:
+            fecha_col = "—"
+            hora_col = "—"
+        val_col = _fmt_unidad(p[1], unidad)
+        if i + 1 < len(ultimos):
+            pv = ultimos[i + 1][1]
+            dl = _pct_str((p[1] - pv) / pv * 100) if pv else "—"
+        else:
+            dl = "—"
+        mut_cls = ' class="mut"' if dl in ("0%", "—") else ''
+        filas_html.append(f'<div class="gr"><span>{fecha_col}</span><span class="mut">{hora_col}</span><span style="font-weight:600">{val_col}</span><span{mut_cls}>{dl}</span></div>')
+    filas_str = "\n".join(filas_html)
+
+    if item.get("thumbnail"):
+        img_html = f'<img src="{html.escape(item["thumbnail"])}" alt="{html.escape(item["title"])}" loading="eager">'
+    else:
+        img_html = '📦'
+
+    ld_prod = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": item["title"],
+        "description": f"Historial de precios y análisis de oferta para {item['title']} en {item.get('tienda', '')}. Precio actual: {_fmt_unidad(precio, unidad)}.",
+        "offers": {
+            "@type": "Offer",
+            "price": str(precio),
+            "priceCurrency": "CLP",
+            "availability": "https://schema.org/InStock",
+            "url": item.get("url") or canonical_url,
+        }
+    }
+    if item.get("thumbnail"):
+        t_url = item["thumbnail"]
+        if not t_url.startswith("http"):
+            t_url = f"{SITE_URL}/{t_url.lstrip('/')}"
+        ld_prod["image"] = [t_url]
+    ld_str = json.dumps(ld_prod, ensure_ascii=False)
+
+    og_image_tag = f'<meta property="og:image" content="{html.escape(ld_prod.get("image", [""])[0])}">' if ld_prod.get("image") else ''
+    tienda_esc = html.escape(str(item.get("tienda", "")))
+    title_esc = html.escape(str(item.get("title", "")))
+    desc_meta = f"Historial de precios de {title_esc} en {tienda_esc}. Valor actual: {_fmt_unidad(precio, unidad)}, promedio: {_fmt_unidad(prom, unidad)}."
+    store_url_esc = html.escape(str(item.get("url") or "#"))
+
+    page_html = f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>{title_esc} · Historial de precios | Monitor de Ofertas</title>
+<meta name="description" content="{html.escape(desc_meta)}">
+<link rel="canonical" href="{canonical_url}">
+<meta property="og:type" content="product">
+<meta property="og:title" content="{title_esc}">
+<meta property="og:description" content="{html.escape(desc_meta)}">
+<meta property="og:url" content="{canonical_url}">
+{og_image_tag}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<script type="application/ld+json">
+{ld_str}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{{--bg:#0b0f17;--card:#121a28;--card2:#172235;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--onacc:#1a0f0a;--tip:#0b0f17}}
+@media (prefers-color-scheme:light){{:root{{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--onacc:#1a0f0a;--tip:#fff}}}}
+*{{box-sizing:border-box;margin:0}}
+body{{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.06),transparent)}}
+.wrap{{max-width:1200px;margin:auto;padding:28px 20px 56px;display:flex;flex-direction:column;gap:24px}}
+.card{{background:var(--card);border:1px solid var(--line);border-radius:20px}}
+.mut{{color:var(--mute)}}
+.lbl{{font:600 11px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}}
+h1,h2{{font-family:Fraunces,Georgia,serif;font-weight:800}}
+.btn{{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 13px Inter,sans-serif;text-decoration:none;cursor:pointer;transition:border-color .15s}}
+.btn:hover{{border-color:var(--acc)}}
+.btn.pri{{background:var(--acc);border-color:var(--acc);color:var(--onacc)}}
+.pill{{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:99px;background:var(--card2);border:1px solid var(--line);font:500 12px Inter,sans-serif}}
+.pill i{{width:8px;height:8px;border-radius:50%;background:var(--acc)}}
+.top{{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}}
+.top .l{{display:flex;align-items:center;gap:16px;flex-wrap:wrap}}
+.head{{padding:24px 28px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}}
+.img{{width:96px;height:120px;border-radius:12px;overflow:hidden;background:var(--card2);border:1px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;font-size:28px}}
+.img img{{width:100%;height:100%;object-fit:cover;display:block}}
+.head .m{{flex:1;min-width:260px;display:flex;flex-direction:column;gap:10px}}
+.head h1{{font-size:clamp(24px,3.5vw,34px);line-height:1.15;letter-spacing:-.02em}}
+.kpis{{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}}
+.kpi{{padding:18px 20px;display:flex;flex-direction:column;gap:6px}}
+.kv{{font:800 26px Fraunces,serif;letter-spacing:-.01em}}
+.kpi.cur{{border-color:var(--acc)}}.kpi.cur .kv{{color:var(--acc)}}
+.ch{{padding:24px 24px 20px;display:flex;flex-direction:column;gap:18px}}
+.chh{{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}}
+.seg{{display:inline-flex;border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}}
+.seg button{{border:0;background:transparent;color:var(--mute);min-height:38px;padding:0 14px;border-radius:9px;font:600 12px Inter,sans-serif;cursor:pointer}}
+.seg button.on{{background:var(--ink);color:var(--bg)}}
+.plot{{display:flex;gap:14px}}
+.ya{{width:72px;position:relative;height:300px;font-size:11px;flex:none;color:var(--mute)}}
+.ya span{{position:absolute;right:0;transform:translateY(-50%)}}
+.cv{{position:relative;flex:1;height:300px;cursor:crosshair;touch-action:pan-y}}
+.cv svg{{width:100%;height:300px;display:block}}
+.dot{{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--bg);border:3px solid var(--acc);pointer-events:none}}
+.lb{{position:absolute;font-size:11px;pointer-events:none;white-space:nowrap}}
+#cr{{position:absolute;top:0;bottom:0;width:1px;background:var(--mute);opacity:.6;display:none;pointer-events:none}}
+.tip{{position:absolute;top:8px;min-width:170px;padding:10px 12px;background:var(--tip);border:1px solid var(--line);border-radius:10px;pointer-events:none;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);display:none;line-height:1.5}}
+.xa{{display:flex;justify-content:space-between;margin-left:86px;font-size:11px;color:var(--mute)}}
+.tb{{overflow:hidden}}
+.tbh{{padding:16px 22px;border-bottom:1px solid var(--line)}}
+.gr{{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.4fr;gap:14px;padding:13px 22px;border-bottom:1px solid var(--line);font-size:13px}}
+.gr:last-child{{border-bottom:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="l">
+      <a class="btn" href="{tab_path}" data-back>{ICON_BACK_SVG}Volver</a>
+      <nav class="mut" aria-label="Ruta">Monitor de Ofertas / <a href="{tab_path}" style="color:inherit;text-decoration:none">{html.escape(tab_name)}</a> / <span style="color:var(--ink)">Detalle</span></nav>
+    </div>
+    <span class="pill mut">Actualizado {fecha_gen_str}</span>
+  </div>
+
+  <div class="card head">
+    <div class="img">{img_html}</div>
+    <div class="m">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="pill"><i></i>{tienda_esc}</span>
+        {f'<span class="pill" style="color:var(--acc);font-weight:700">−{round(descuento)}% vs. promedio</span>' if descuento > 0 else ''}
+      </div>
+      <h1>{title_esc}</h1>
+    </div>
+    <a class="btn pri" id="go" href="{store_url_esc}" target="_blank" rel="noopener">Ir a la tienda ↗</a>
+  </div>
+
+  <div class="kpis">
+    <div class="card kpi cur">
+      <span class="lbl">Valor actual</span>
+      <span class="kv">{_fmt_unidad(precio, unidad)}</span>
+      <span class="mut" style="font-size:12px">{f'Último registro ({last_dt_str})' if last_dt_str else 'Último registro'}</span>
+    </div>
+    <div class="card kpi">
+      <span class="lbl">Promedio histórico</span>
+      <span class="kv">{_fmt_unidad(prom, unidad)}</span>
+      <span class="mut" style="font-size:12px">Promedio consolidado</span>
+    </div>
+    <div class="card kpi">
+      <span class="lbl">Mínimo histórico</span>
+      <span class="kv">{_fmt_unidad(mn, unidad)}</span>
+      <span class="mut" style="font-size:12px">{f'Registrado el {min_dt_str}' if min_dt_str else 'Mínimo registrado'}</span>
+    </div>
+    <div class="card kpi">
+      <span class="lbl">Máximo histórico</span>
+      <span class="kv">{_fmt_unidad(mx, unidad)}</span>
+      <span class="mut" style="font-size:12px">{f'Registrado el {max_dt_str}' if max_dt_str else 'Máximo registrado'}</span>
+    </div>
+    <div class="card kpi">
+      <span class="lbl">Variación vs. promedio</span>
+      <span class="kv">{dev_str}</span>
+      <span class="mut" style="font-size:12px">Respecto a {_fmt_unidad(prom, unidad)}</span>
+    </div>
+    <div class="card kpi">
+      <span class="lbl">Total registros</span>
+      <span class="kv">{detalle_data.get('n', len(series))}</span>
+      <span class="mut" style="font-size:12px">{f'Desde {first_dt_str} a {last_dt_str}' if first_dt_str and last_dt_str else 'Observaciones registradas'}</span>
+    </div>
+  </div>
+
+  <div class="card ch">
+    <div class="chh">
+      <div>
+        <span class="lbl">Historial del valor</span>
+        <h2>Evolución en el tiempo</h2>
+      </div>
+      <div class="seg">
+        <button data-r="7">7 d</button>
+        <button data-r="30">30 d</button>
+        <button data-r="90">90 d</button>
+        <button class="on" data-r="all">Todo</button>
+      </div>
+    </div>
+    <div class="plot">
+      <div class="ya" id="ya"></div>
+      <div class="cv" id="cv">
+        <svg id="sv" viewBox="0 0 1000 300" preserveAspectRatio="none"></svg>
+        <div class="dot" id="cd" style="display:none"></div>
+        <div id="cr"></div>
+        <div class="tip" id="tip"></div>
+        <div id="ov"></div>
+      </div>
+    </div>
+    <div class="xa" id="xa"></div>
+  </div>
+
+  <div class="card tb">
+    <div class="tbh">
+      <span class="lbl">Detalle cronológico</span>
+      <h2>Últimos registros</h2>
+    </div>
+    <div class="gr mut" style="font-weight:600;font-size:11px;letter-spacing:.05em;text-transform:uppercase">
+      <span>Fecha</span><span>Hora</span><span>Valor</span><span>Variación</span>
+    </div>
+    {filas_str}
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id),
+  U = {json.dumps(unidad)},
+  S = {json.dumps(detalle_data.get('s', []))},
+  prom = {prom},
+  ID = "{item['id']}",
+  E = {json.dumps({"title": item["title"], "tienda": item.get("tienda", ""), "precio": precio})};
+let range = "all", VIEW = null;
+
+const fmt = v => U.pre + Math.round(v).toLocaleString("es-CL") + U.suf;
+const fd = ts => new Date(ts * 1000).toLocaleDateString("es-CL", {{ day: "2-digit", month: "2-digit", year: "numeric" }});
+const fs = ts => new Date(ts * 1000).toLocaleDateString("es-CL", {{ day: "2-digit", month: "2-digit" }});
+const pct = (x, dec = 1) => {{ const k = 10 ** dec, r = Math.round(x * k) / k; return r === 0 ? "0%" : (r > 0 ? "+" : "−") + Math.abs(r).toLocaleString("es-CL", {{ maximumFractionDigits: dec }}) + "%"; }};
+const nice = x => {{ const p = 10 ** Math.floor(Math.log10(x)), n = x / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }};
+
+function draw() {{
+  if (!S || S.length < 2) return;
+  const lastT = S[S.length - 1][0], firstT = S[0][0], days = {{ "7": 7, "30": 30, "90": 90, all: 0 }}[range];
+  const cut = days ? Math.max(firstT, lastT - days * 86400) : firstT;
+  let pts = S.filter(p => p[0] >= cut);
+  const prev = S.filter(p => p[0] < cut).pop();
+  if (prev && (!pts.length || pts[0][0] > cut)) pts.unshift([cut, prev[1]]);
+  if (pts[pts.length - 1][0] < lastT) pts.push([lastT, pts[pts.length - 1][1]]);
+  const t0 = pts[0][0], t1 = Math.max(pts[pts.length - 1][0], t0 + 1);
+  const vals = pts.map(p => p[1]).concat(prom ? [prom] : []);
+  const lo = Math.min(...vals), hi = Math.max(...vals), pad = (hi - lo) * 0.1 || hi * 0.1 || 1, y0 = lo - pad, y1 = hi + pad;
+  const X = t => (t - t0) / (t1 - t0) * 1000, Y = v => 20 + (y1 - v) / (y1 - y0) * 260;
+  const step = nice((y1 - y0) / 4), ticks = [];
+  for (let v = Math.ceil(y0 / step) * step; v <= y1; v += step) ticks.push(v);
+
+  let d = `M${{X(pts[0][0]).toFixed(1)}} ${{Y(pts[0][1]).toFixed(1)}}`;
+  for (let i = 1; i < pts.length; i++) d += `H${{X(pts[i][0]).toFixed(1)}}V${{Y(pts[i][1]).toFixed(1)}}`;
+  $("sv").innerHTML = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--acc);stop-opacity:.3"/><stop offset="1" style="stop-color:var(--acc);stop-opacity:0"/></linearGradient></defs>
+    <path d="${{ticks.map(v => `M0 ${{Y(v).toFixed(1)}}H1000`).join("")}}" stroke="var(--line)" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="${{d}}V300H0Z" fill="url(#g)"/>
+    ${{prom ? `<path d="M0 ${{Y(prom).toFixed(1)}}H1000" stroke="var(--mute)" stroke-dasharray="6 6" fill="none" vector-effect="non-scaling-stroke"/>` : ""}}
+    <path d="${{d}}" fill="none" stroke="var(--acc)" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+  $("ya").innerHTML = ticks.map(v => `<span style="top:${{Y(v).toFixed(1)}}px">${{fmt(v)}}</span>`).join("");
+
+  const cur = pts[pts.length - 1][1], mxp = pts.reduce((a, p) => p[1] > a[1] ? p : a), ov = [];
+  if (prom) ov.push(`<span class="lb mut" style="left:8px;top:${{(Y(prom) + 6).toFixed(0)}}px">Promedio ${{fmt(prom)}}</span>`);
+  if (mxp[1] !== cur) {{
+    const lx = (X(mxp[0]) / 10).toFixed(2);
+    ov.push(`<span class="dot" style="left:${{lx}}%;top:${{Y(mxp[1]).toFixed(1)}}px"></span><span class="lb" style="left:calc(${{lx}}% + 12px);top:${{Math.max(0, Y(mxp[1]) - 22).toFixed(0)}}px">Máx ${{fmt(mxp[1])}}</span>`);
+  }}
+  ov.push(`<span class="dot" style="left:100%;top:${{Y(cur).toFixed(1)}}px"></span><span class="lb" style="right:16px;top:${{Math.max(0, Y(cur) - 26).toFixed(0)}}px">Actual ${{fmt(cur)}}</span>`);
+  $("ov").innerHTML = ov.join("");
+  $("xa").innerHTML = Array.from({{ length: 5 }}, (_, i) => `<span>${{fs(t0 + (t1 - t0) * i / 4)}}</span>`).join("");
+  VIEW = {{ pts, t0, t1, Y }};
+}}
+
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {{
+  range = b.dataset.r;
+  document.querySelectorAll(".seg button").forEach(x => x.classList.toggle("on", x === b));
+  draw();
+}});
+
+const cv = $("cv");
+cv.addEventListener("pointermove", e => {{
+  if (!VIEW) return;
+  const r = cv.getBoundingClientRect(), f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), t = VIEW.t0 + f * (VIEW.t1 - VIEW.t0);
+  let p = VIEW.pts[0];
+  for (const q of VIEW.pts) if (q[0] <= t) p = q;
+  const cr = $("cr"), cd = $("cd"), tip = $("tip"), left = f < 0.62;
+  cr.style.display = cd.style.display = tip.style.display = "block";
+  cr.style.left = cd.style.left = (f * 100) + "%";
+  cd.style.top = VIEW.Y(p[1]) + "px";
+  tip.style.left = left ? `calc(${{f * 100}}% + 14px)` : "auto";
+  tip.style.right = left ? "auto" : `calc(${{(1 - f) * 100}}% + 14px)`;
+  tip.innerHTML = `<span class="mut" style="font-size:11px">${{fd(t)}}</span><br><b>Valor ${{fmt(p[1])}}</b>${{prom ? `<br><span class="mut" style="font-size:11px">vs. promedio ${{pct((p[1] - prom) / prom * 100, 0)}}</span>` : ""}}`;
+}});
+cv.addEventListener("pointerleave", () => {{ $("cr").style.display = $("cd").style.display = $("tip").style.display = "none"; }});
+
+document.addEventListener("click", e => {{
+  const a = e.target.closest("a[data-back]");
+  if (a && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {{
+    try {{
+      if (history.length > 1 && document.referrer && new URL(document.referrer).origin === location.origin) {{
+        e.preventDefault();
+        history.back();
+      }}
+    }} catch (_) {{}}
+  }}
+  const go = e.target.closest("#go");
+  if (go && E && typeof gtag === "function") {{
+    gtag("event", "select_item", {{ item_list_name: "Detalle", currency: "CLP", items: [{{ item_id: ID, item_name: E.title, item_brand: E.tienda, price: Math.round(E.precio) }}] }});
+  }}
+}});
+
+draw();
+</script>
+</body>
+</html>"""
+    return page_html
+
+
+def generar_paginas_producto(active_tabs_data, now_iso):
+    """Genera páginas físicas producto/{slug}/index.html para cada producto con historial.
+    Elimina subdirectorios obsoletos en producto/."""
+    prod_base_dir = os.path.join(DIR_BASE, "producto")
+    os.makedirs(prod_base_dir, exist_ok=True)
+
+    productos_unicos = {}
+    for tab in active_tabs_data:
+        cfg = tab["config"]
+        for b in tab["items"]:
+            if b.get("slug") and b.get("_det") and b["id"] not in productos_unicos:
+                productos_unicos[b["id"]] = (b, cfg)
+
+    slugs_activos = set()
+    for bid, (b, cfg) in productos_unicos.items():
+        slug = b["slug"]
+        slugs_activos.add(slug)
+        dir_p = os.path.join(prod_base_dir, slug)
+        os.makedirs(dir_p, exist_ok=True)
+        html_p = os.path.join(dir_p, "index.html")
+        contenido = render_producto_page(b, cfg, b["_det"], now_iso)
+        with open(html_p, "w", encoding="utf-8") as f:
+            f.write(contenido)
+
+    borradas = 0
+    for nombre in os.listdir(prod_base_dir):
+        path_completo = os.path.join(prod_base_dir, nombre)
+        if os.path.isdir(path_completo) and nombre not in slugs_activos:
+            shutil.rmtree(path_completo, ignore_errors=True)
+            borradas += 1
+
+    print(f"✓ Generadas {len(slugs_activos)} páginas en producto/<id-slug>/index.html ({borradas} obsoletas eliminadas)")
+    return sorted(slugs_activos)
+
+
+def generar_sitemap(active_tabs_data, slugs_productos, fecha):
+    """sitemap.xml con pestañas y páginas de producto. Crea robots.txt si no existe."""
     filas = []
     for tab in active_tabs_data:
         html_file = tab["config"].get("html_file", "index.html")
@@ -972,6 +1471,12 @@ def generar_sitemap(active_tabs_data, fecha):
         prio = "1.0" if path == "/" else "0.8"
         filas.append(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{fecha}</lastmod>\n"
                      f"    <changefreq>daily</changefreq>\n    <priority>{prio}</priority>\n  </url>")
+
+    for slug in slugs_productos:
+        loc = f"{SITE_URL}/producto/{slug}/".replace("&", "&amp;")
+        filas.append(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{fecha}</lastmod>\n"
+                     f"    <changefreq>daily</changefreq>\n    <priority>0.6</priority>\n  </url>")
+
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
            + "\n".join(filas) + "\n</urlset>\n")
@@ -1113,7 +1618,7 @@ def main():
             "total": len(tab["items"]),
             "avg_discount": tab["avg_discount"],
             "dominios": tab["dominios"],
-            "items": [{k: v for k, v in b.items() if v is not None} for b in tab["items"]],
+            "items": [{k: v for k, v in b.items() if v is not None and not k.startswith("_")} for b in tab["items"]],
         }
         # Para compatibilidad exacta con la versión previa de libros.json:
         if cfg["id"] == "libros":
@@ -1122,6 +1627,27 @@ def main():
 
         guardar_json_atomico(json_path, out_payload)
         print(f"✓ Guardado {cfg['json_file']} ({len(tab['items'])} items).")
+
+        # Datos de la página de detalle (/detalle?tab=...&id=...): un archivo por tab
+        detalles = {}
+        for b in tab["items"]:
+            d = b.get("_det")
+            if d:
+                detalles[str(b["id"])] = {
+                    "title": b["title"], "tienda": b["tienda"], "url": b.get("url"),
+                    "thumbnail": b.get("thumbnail"), "precio": b["precio"],
+                    "promedio": b["promedio"], **d,
+                }
+        os.makedirs(os.path.join(DIR_BASE, "detalle"), exist_ok=True)
+        guardar_json_atomico(os.path.join(DIR_BASE, "detalle", f"{cfg['id']}.json"), {
+            "id": cfg["id"],
+            "name": cfg["name"],
+            "path": "/" if cfg.get("html_file", "index.html") == "index.html" else "/" + cfg["html_file"].rsplit(".", 1)[0],
+            "unidad": cfg.get("unidad", {"pre": "$", "suf": ""}),
+            "generated_at": now_iso,
+            "items": detalles,
+        })
+        print(f"✓ Guardado detalle/{cfg['id']}.json ({len(detalles)} con historial).")
 
     # Generar archivos HTML (index.html + páginas dedicadas por tab)
     print("\nGenerando páginas HTML...")
@@ -1146,8 +1672,13 @@ def main():
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(index_html_content)
     print(f"✓ Generado index.html principal.")
-    generar_sitemap(active_tabs_data, now_iso[:10])
-    print(f"✓ Generado sitemap.xml con {len(active_tabs_data)} URLs.")
+
+    # Generar páginas físicas SEO de cada producto con historial
+    print("\nGenerando páginas de producto físicas (SEO /producto/<id-slug>/)...")
+    slugs_productos = generar_paginas_producto(active_tabs_data, now_iso)
+
+    generar_sitemap(active_tabs_data, slugs_productos, now_iso[:10])
+    print(f"✓ Generado sitemap.xml con {len(active_tabs_data) + len(slugs_productos)} URLs.")
 
     print("\n¡Proceso completado con éxito! Todos los tabs y páginas HTML fueron generados.")
 

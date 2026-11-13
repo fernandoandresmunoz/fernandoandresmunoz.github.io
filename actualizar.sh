@@ -50,7 +50,7 @@ if ! "$PY" -c 'import json, sys; sys.exit(0 if json.load(open("libros.json"))["t
 fi
 
 # Solo lo publicable (nunca venv ni .env). -A incluye las imágenes nuevas y las borradas.
-git add -A -- *.json *.html sitemap.xml robots.txt imagenes
+git add -A -- *.json *.html sitemap.xml robots.txt imagenes producto detalle
 if git diff --cached --quiet; then
   echo "Sin cambios; nada que publicar."
   exit 0
