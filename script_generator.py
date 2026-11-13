@@ -496,15 +496,8 @@ def guardar_imagenes(todos_los_items):
         if ruta:
             b["thumbnail"] = ruta
     usadas = {os.path.basename(r) for r in rutas if r}
-    borradas = 0
-    for f in os.listdir(RUTA_IMG):
-        if f not in usadas and re.fullmatch(r"[0-9a-f]{12}\.\w+", f):
-            try:
-                os.remove(os.path.join(RUTA_IMG, f))
-                borradas += 1
-            except OSError:
-                pass
-    print(f"✓ {len(usadas)} imágenes locales en {RUTA_IMG} ({borradas} obsoletas eliminadas)")
+    total_imgs = len([f for f in os.listdir(RUTA_IMG) if os.path.isfile(os.path.join(RUTA_IMG, f))])
+    print(f"✓ {len(usadas)} imágenes activas descargadas/verificadas. Total conservadas en {RUTA_IMG}: {total_imgs}")
 
 
 def slugify(text):
@@ -1427,8 +1420,8 @@ draw();
 
 
 def generar_paginas_producto(active_tabs_data, now_iso):
-    """Genera páginas físicas producto/{slug}/index.html para cada producto con historial.
-    Elimina subdirectorios obsoletos en producto/."""
+    """Genera páginas físicas producto/{slug}/index.html para cada producto activo con historial.
+    Los productos que dejan de estar disponibles con descuento se conservan indefinidamente (nunca se eliminan)."""
     prod_base_dir = os.path.join(DIR_BASE, "producto")
     os.makedirs(prod_base_dir, exist_ok=True)
 
@@ -1439,26 +1432,25 @@ def generar_paginas_producto(active_tabs_data, now_iso):
             if b.get("slug") and b.get("_det") and b["id"] not in productos_unicos:
                 productos_unicos[b["id"]] = (b, cfg)
 
-    slugs_activos = set()
+    actualizados = 0
     for bid, (b, cfg) in productos_unicos.items():
         slug = b["slug"]
-        slugs_activos.add(slug)
         dir_p = os.path.join(prod_base_dir, slug)
         os.makedirs(dir_p, exist_ok=True)
         html_p = os.path.join(dir_p, "index.html")
         contenido = render_producto_page(b, cfg, b["_det"], now_iso)
         with open(html_p, "w", encoding="utf-8") as f:
             f.write(contenido)
+        actualizados += 1
 
-    borradas = 0
-    for nombre in os.listdir(prod_base_dir):
-        path_completo = os.path.join(prod_base_dir, nombre)
-        if os.path.isdir(path_completo) and nombre not in slugs_activos:
-            shutil.rmtree(path_completo, ignore_errors=True)
-            borradas += 1
+    # Conservar y listar todos los slugs existentes en disco (los actualizados hoy + los históricos anteriores)
+    todos_los_slugs = sorted([
+        nombre for nombre in os.listdir(prod_base_dir)
+        if os.path.isdir(os.path.join(prod_base_dir, nombre))
+    ])
 
-    print(f"✓ Generadas {len(slugs_activos)} páginas en producto/<id-slug>/index.html ({borradas} obsoletas eliminadas)")
-    return sorted(slugs_activos)
+    print(f"✓ {actualizados} páginas actualizadas hoy. Total conservadas en producto/: {len(todos_los_slugs)} páginas")
+    return todos_los_slugs
 
 
 def generar_sitemap(active_tabs_data, slugs_productos, fecha):
