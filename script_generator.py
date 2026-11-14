@@ -59,7 +59,7 @@ MAX_HORAS_UPLOAD = 48  # Regla de new_stores.txt: si el upload no está dentro d
 # Historial de precios (sparkline): /registers/?article=<id>. Si onesource.cl no lo expone,
 # define REGISTERS_URL en .env (p. ej. http://192.168.1.22/api; solo alcanzable desde esa red).
 REGISTERS_BASE = os.environ.get("REGISTERS_URL", BASE).rstrip("/")
-HIST_PAGE_SIZE = 250   # registros que se piden por producto
+HIST_PAGE_SIZE = 1000  # registros que se piden por producto (máx.)
 HIST_PUNTOS = 40       # puntos que se guardan en el JSON (muestreo parejo, incluye primero y último)
 DET_REGISTROS = 8      # filas de "Últimos registros" en la página de detalle
 
@@ -526,7 +526,12 @@ def historial_precios(article_id):
     Devuelve (None, None) si hay menos de 2 registros.
     """
     resp = get(f"{REGISTERS_BASE}/registers/", article=article_id, ordering="-obtained", page_size=HIST_PAGE_SIZE)
-    regs = [(_a_epoch(r.get("obtained")), round(r["precio"])) for r in reversed(resp.get("results", [])) if r.get("precio")]
+    filas = resp.get("results", [])
+    while len(filas) < HIST_PAGE_SIZE and resp.get("next"):  # si la API limita el tamaño de página, sigue las siguientes
+        resp = get(resp["next"])
+        filas += resp.get("results", [])
+    filas = filas[:HIST_PAGE_SIZE]
+    regs = [(_a_epoch(r.get("obtained")), round(r["precio"])) for r in reversed(filas) if r.get("precio")]
     if len(regs) < 2:
         return None, None
     hist = [v for _, v in regs]
