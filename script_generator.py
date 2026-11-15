@@ -215,8 +215,8 @@ TABS_CONFIG = [
         "top": 100,
         "por_dominio": 100,
         "max_descuento": 40.0,
-        "json_file": "paris.json",
-        "html_file": "paris.html",
+        "json_file": "economicos.json",
+        "html_file": "economicos.html",
     },
     {
         "id": "automoviles",
