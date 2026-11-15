@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>economicos | Monitor de Ofertas · Descuentos en Chile</title>
+<meta name="description" content="Ofertas destacadas con mayor variación y descuento en Económicos.">
+<link rel="canonical" href="https://fernandoandresmunoz.github.io/economicos">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f17;--card:#121a28;--card2:#172235;--hov:#1a253a;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--acc2:#ffc857;--pr:#52e19b;--onacc:#fff;--up:#f87171;--dn:#4ade80;--fl:#94a3b8}
+@media (prefers-color-scheme:light){:root{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--hov:#e9edf5;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--acc2:#b7791f;--pr:#1f9d63;--onacc:#fff;--up:#dc2626;--dn:#16a34a;--fl:#64748b}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.08),transparent)}
+.wrap{max-width:1260px;margin:auto;padding:0 20px}
+.hero{padding:44px 0 20px}
+.brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
+.brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
+.brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
+h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
+.stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stats div{font:800 28px Fraunces,serif}
+.stats span{display:block;font:500 11px Inter;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* Tabs Bar */
+.tabs-wrap{margin:28px auto 16px;display:flex;justify-content:center;width:100%}
+.tabs-scroll{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 10px;margin:0 auto;max-width:100%}
+@media (max-width:768px){.tabs-scroll{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}}
+.tabs-scroll::-webkit-scrollbar{height:5px}
+.tabs-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.tab-btn{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 13px Inter,sans-serif;cursor:pointer;transition:all .2s ease;text-decoration:none;user-select:none}
+.tab-btn:hover{border-color:var(--acc);transform:translateY(-1px);background:var(--hov)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(255,107,61,.18),rgba(255,61,113,.15));border-color:var(--acc);color:var(--ink);box-shadow:0 0 18px -4px rgba(255,107,61,.4)}
+.tab-btn .t-icon{font-size:15px;line-height:1}
+.tab-btn .t-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--mute) 24%,transparent);color:var(--mute);transition:all .2s}
+.tab-btn.active .t-badge{background:var(--acc);color:#fff}
+
+/* Sticky Filter Bar */
+.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-block:1px solid var(--line);padding:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:11px 15px;border-radius:12px;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+input{flex:1 1 240px}input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,107,61,.18)}
+.chips{margin-top:10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:99px;font:500 13px Inter;display:flex;gap:7px;align-items:center;transition:all .15s}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}.chip:hover{border-color:var(--acc)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.count{margin:22px 0 12px;color:var(--mute)}.count b{color:var(--ink)}
+
+/* Table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{text-align:left;font:700 11px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:15px 16px;border-bottom:1px solid var(--line);white-space:nowrap;user-select:none}
+th[data-k]{cursor:pointer}th[data-k]:hover,th.s{color:var(--acc)}
+.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{transition:background .15s}tbody tr:hover{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.n{color:var(--mute);width:44px}
+.bk{display:flex;gap:14px;align-items:center}
+a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
+.mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
+.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
+.st{display:inline-flex;gap:7px;align-items:center;padding:5px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,transparent);font:500 12px Inter;white-space:nowrap}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.o{color:var(--mute);text-decoration:line-through;white-space:nowrap;font-size:13px}
+.p{font:800 17px Fraunces,serif;color:var(--pr);white-space:nowrap}
+.d{display:flex;align-items:center;gap:9px;min-width:130px}
+.d b{font:800 14px Fraunces,serif;width:48px;color:var(--acc2)}.d.hot b{color:var(--acc)}
+.d span{flex:1;height:8px;border-radius:9px;background:color-mix(in srgb,var(--mute) 26%,transparent);overflow:hidden}
+.d span i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--acc2),var(--acc),#ff3d71)}
+.sv{color:var(--acc2);font-weight:600;white-space:nowrap}
+.sp{display:flex;align-items:center;justify-content:flex-end;gap:10px}.sp svg{width:120px;height:34px;flex:none}
+table.single .c-store{display:none}
+.btn{display:inline-block;text-decoration:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:10px;font:700 12px Inter;white-space:nowrap;transition:all .15s}
+tr:hover .btn,.btn:hover{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.msg{text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}.msg code{font:13px monospace;background:var(--hov);padding:3px 8px;border-radius:6px}
+.pager{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:36px 0 16px}
+.pager button{min-width:40px;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Inter;cursor:pointer;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:var(--acc)}.pager button.on{background:linear-gradient(135deg,var(--acc),#ff3d71);border-color:transparent;color:var(--onacc);font-weight:700}
+.pager button:disabled{opacity:.35;cursor:default}.pager span{align-self:center;color:var(--mute)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;color:var(--mute);font-size:13px;text-align:center}
+</style>
+<script type="application/ld+json" id="ld-books">{"@context":"https://schema.org","@type":"ItemList","name":"economicos - Ofertas y Descuentos en Chile","numberOfItems":67,"itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Oficina en Arriendo en Providencia 7 dormitorios 8 baños / Inmobiliaria e Inversiones Greene Ltda.","offers":{"@type":"Offer","price":"223","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/oficina-o-casa-oficina-en-arriendo-en-providencia-7-dormitorios-8-banos-codR79857120-6L0-203187270.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/1c84200273df.webp"}},{"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Macul 4 baños / One Step Chile SpA","offers":{"@type":"Offer","price":"45000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-macul-4-banos-codR76708374-2L0-105162040.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/38ce40753af0.webp"}},{"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Casa en Arriendo en Colina 5 dormitorios 4 baños / Magnolia Property","offers":{"@type":"Offer","price":"1900000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-arriendo-en-colina-5-dormitorios-4-banos-codR77087837-3L0-201008891.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ced3fecaee5a.webp"}},{"@type":"ListItem","position":4,"item":{"@type":"Product","name":"Casa en Venta en El Monte 3 dormitorios 1 baño / Gestión y Propiedad","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-el-monte-3-dormitorios-1-bano-codR77020232-9L0-129308.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/a3a40e260a3d.webp"}},{"@type":"ListItem","position":5,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Santiago 4 baños / One Step Chile SpA","offers":{"@type":"Offer","price":"60000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-santiago-4-banos-codR76708374-2L0-105161944.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e1694716ec29.webp"}},{"@type":"ListItem","position":6,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Ñuñoa 2 baños / One Step Chile SpA","offers":{"@type":"Offer","price":"125000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-nunoa-2-banos-codR76708374-2L0-105161993.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/b3c6585798cf.webp"}},{"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Ñuñoa 2 baños / One Step Chile SpA","offers":{"@type":"Offer","price":"220000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-nunoa-2-banos-codR76708374-2L0-105162041.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/946d36f1fe67.webp"}},{"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Casa en Venta en Las Condes 4 dormitorios 3 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"10900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-las-condes-4-dormitorios-3-banos-codR77150929-0L0-101080113.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/be90c5ea2ecf.webp"}},{"@type":"ListItem","position":9,"item":{"@type":"Product","name":"Sitio o Terreno en Venta en Vitacura / Inmobiliaria e Inversiones Greene Ltda.","offers":{"@type":"Offer","price":"19800","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/sitio-o-terreno-en-venta-en-vitacura-codR79857120-6L0-104186019.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/93c7d7985fdb.webp"}},{"@type":"ListItem","position":10,"item":{"@type":"Product","name":"Casa en Venta en Independencia 5 dormitorios 2 baños / Gestión y Propiedad","offers":{"@type":"Offer","price":"95000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-independencia-5-dormitorios-2-banos-codR77020232-9L0-125427.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5521294fa4bd.webp"}},{"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Las Condes 1 baño / Finhabit Ltda.","offers":{"@type":"Offer","price":"145","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-las-condes-1-bano-codR78987370-4L0-205008705.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/725b6e2787cf.webp"}},{"@type":"ListItem","position":12,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Estación Central 1 baño / One Step Chile SpA","offers":{"@type":"Offer","price":"42000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-estacion-central-1-bano-codR76708374-2L0-105162118.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/76a8c7caa128.webp"}},{"@type":"ListItem","position":13,"item":{"@type":"Product","name":"Departamento en Venta en Santiago 2 dormitorios 1 baño / Gestión y Propiedad","offers":{"@type":"Offer","price":"2190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-santiago-2-dormitorios-1-bano-codR77020232-9L0-116072.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/bd3be02b3a0d.webp"}},{"@type":"ListItem","position":14,"item":{"@type":"Product","name":"Oficina en Venta en Providencia 4 dormitorios 2 baños / Lavalsil Corredores de Propiedades","offers":{"@type":"Offer","price":"4000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/oficina-o-casa-oficina-en-venta-en-providencia-4-dormitorios-2-banos-codR81225800-1L0-103079897.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/bd1351d007f0.webp"}},{"@type":"ListItem","position":15,"item":{"@type":"Product","name":"Departamento en Arriendo en La Cisterna 1 dormitorio 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"300000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-la-cisterna-1-dormitorio-1-bano-codR77150929-0L0-202078985.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/a5bf5ce1d85f.webp"}},{"@type":"ListItem","position":16,"item":{"@type":"Product","name":"Oficina en Venta en San Joaquín 6 dormitorios 3 baños / Lavalsil Corredores de Propiedades","offers":{"@type":"Offer","price":"4490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/oficina-o-casa-oficina-en-venta-en-san-joaquin-6-dormitorios-3-banos-codR81225800-1L0-103045381.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/a6cc8097fc5c.webp"}},{"@type":"ListItem","position":17,"item":{"@type":"Product","name":"Departamento en Venta en Santiago 2 dormitorios 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"1728","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-santiago-2-dormitorios-1-bano-codR77150929-0L0-102078193.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/990719bfc98b.webp"}},{"@type":"ListItem","position":18,"item":{"@type":"Product","name":"Oficina en Arriendo en Santiago 2 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"250000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/oficina-o-casa-oficina-en-arriendo-en-santiago-2-dormitorios-2-banos-codR77150929-0L0-203079140.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/375ec028dc90.webp"}},{"@type":"ListItem","position":19,"item":{"@type":"Product","name":"Departamento en Arriendo en Padre Hurtado 3 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"500000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-padre-hurtado-3-dormitorios-2-banos-codR77150929-0L0-202078820.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/134158ddbddc.webp"}},{"@type":"ListItem","position":20,"item":{"@type":"Product","name":"Departamento en Venta en Santiago 3 dormitorios 2 baños / Gestión y Propiedad","offers":{"@type":"Offer","price":"3900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-santiago-3-dormitorios-2-banos-codR77020232-9L0-118609.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/a171760ad139.webp"}},{"@type":"ListItem","position":21,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Providencia 1 baño / One Step Chile SpA","offers":{"@type":"Offer","price":"15000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-providencia-1-bano-codR76708374-2L0-105162163.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4a5e369c5c3e.webp"}},{"@type":"ListItem","position":22,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Las Condes 3 baños / Magnolia Property","offers":{"@type":"Offer","price":"120","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-las-condes-3-banos-codR77087837-3L0-205007680.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/75b7f8a1589c.webp"}},{"@type":"ListItem","position":23,"item":{"@type":"Product","name":"Departamento en Arriendo en Independencia 2 dormitorios 1 baño / Realty.Corp","offers":{"@type":"Offer","price":"300000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-independencia-2-dormitorios-1-bano-codR76868800-1L0-202051132.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/8b3536f793f7.webp"}},{"@type":"ListItem","position":24,"item":{"@type":"Product","name":"Oficina en Venta en Providencia 6 dormitorios 4 baños / Gestión y Propiedad","offers":{"@type":"Offer","price":"6700","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/oficina-o-casa-oficina-en-venta-en-providencia-6-dormitorios-4-banos-codR77020232-9L0-112229.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/0860cb6f4e8a.webp"}},{"@type":"ListItem","position":25,"item":{"@type":"Product","name":"Casa en Venta en Las Condes 5 dormitorios 4 baños / Lavalsil Corredores de Propiedades","offers":{"@type":"Offer","price":"19900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-las-condes-5-dormitorios-4-banos-codR81225800-1L0-101062146.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/aff7944146d7.webp"}},{"@type":"ListItem","position":26,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Las Condes 1 baño / MICASAPROP","offers":{"@type":"Offer","price":"290000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-las-condes-1-bano-codR76055330-1L0-1621334.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/c1a1c2ac4710.webp"}},{"@type":"ListItem","position":27,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Santiago 1 baño / Gestión y Propiedad","offers":{"@type":"Offer","price":"30","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-santiago-1-bano-codR77020232-9L0-114159.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/9d829f2cf221.webp"}},{"@type":"ListItem","position":28,"item":{"@type":"Product","name":"Departamento en Venta en Estación Central 1 dormitorio 1 baño / Corretajes Prosal","offers":{"@type":"Offer","price":"35000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-estacion-central-1-dormitorio-1-bano-codR76611561-6L0-102010030.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/8d754defa0da.webp"}},{"@type":"ListItem","position":29,"item":{"@type":"Product","name":"Departamento en Arriendo en Santiago 2 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"500000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-santiago-2-dormitorios-2-banos-codR77150929-0L0-202078507.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/9117d555949d.webp"}},{"@type":"ListItem","position":30,"item":{"@type":"Product","name":"Casa en Venta en Colina 7 dormitorios 9 baños / Magnolia Property","offers":{"@type":"Offer","price":"52000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-colina-7-dormitorios-9-banos-codR77087837-3L0-101007764.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/9d0774a480f6.webp"}},{"@type":"ListItem","position":31,"item":{"@type":"Product","name":"(Correa Propiedades) Cerca Polo, buena casa, 200/300 m2, 5 dormitorios, servicios, 994993547, 992238855","offers":{"@type":"Offer","price":"20900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-vitacura-5-dormitorios-cod49005447.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e3db503ad4e4.webp"}},{"@type":"ListItem","position":32,"item":{"@type":"Product","name":"Departamento en Venta en San Miguel 1 dormitorio 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"1700","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-san-miguel-1-dormitorio-1-bano-codR77150929-0L0-102079565.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/1091fe884d94.webp"}},{"@type":"ListItem","position":33,"item":{"@type":"Product","name":"Departamento en Venta en Estación Central 1 dormitorio 1 baño / ANCAR PROPIEDADES","offers":{"@type":"Offer","price":"35000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-estacion-central-1-dormitorio-1-bano-codR77350146-7L0-102005266.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/344591503a9a.webp"}},{"@type":"ListItem","position":34,"item":{"@type":"Product","name":"Casa en Venta en La Reina 4 dormitorios 4 baños / Magnolia Property","offers":{"@type":"Offer","price":"19000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-la-reina-4-dormitorios-4-banos-codR77087837-3L0-101008041.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/c0c460c334cd.webp"}},{"@type":"ListItem","position":35,"item":{"@type":"Product","name":"Departamento en Venta en Santiago 3 dormitorios 2 baños / Gestión y Propiedad","offers":{"@type":"Offer","price":"5600","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-santiago-3-dormitorios-2-banos-codR77020232-9L0-124581.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/21b04dbb2b46.webp"}},{"@type":"ListItem","position":36,"item":{"@type":"Product","name":"Casa en Venta en La Reina 4 dormitorios 4 baños / Magnolia Property","offers":{"@type":"Offer","price":"19000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-la-reina-4-dormitorios-4-banos-codR77087837-3L0-101008046.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/303f069e7f6f.webp"}},{"@type":"ListItem","position":37,"item":{"@type":"Product","name":"Departamento en Arriendo en Santiago 2 dormitorios 2 baños / Gestión y Propiedad","offers":{"@type":"Offer","price":"490000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-santiago-2-dormitorios-2-banos-codR77020232-9L0-132352.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5831493ad1d5.webp"}},{"@type":"ListItem","position":38,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Providencia 4 dormitorios / Gestión y Propiedad","offers":{"@type":"Offer","price":"3000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-providencia-4-dormitorios-codR77020232-9L0-131950.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5f42711ef2b2.webp"}},{"@type":"ListItem","position":39,"item":{"@type":"Product","name":"Casa en Venta en Vitacura 6 dormitorios 6 baños / Inmobiliaria e Inversiones Greene Ltda.","offers":{"@type":"Offer","price":"48000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-vitacura-6-dormitorios-6-banos-codR79857120-6L0-101184269.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/06152ae59b50.webp"}},{"@type":"ListItem","position":40,"item":{"@type":"Product","name":"Departamento en Venta en Independencia 1 dormitorio 1 baño / A4 Propiedades","offers":{"@type":"Offer","price":"1400","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-independencia-1-dormitorio-1-bano-codR76722039-1L0-177817.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/8fc80822d02e.webp"}},{"@type":"ListItem","position":41,"item":{"@type":"Product","name":"Casa en Venta en Providencia 6 dormitorios 5 baños / Realty.Corp","offers":{"@type":"Offer","price":"22500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-providencia-6-dormitorios-5-banos-codR76868800-1L0-101051263.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/2707e1952ba3.webp"}},{"@type":"ListItem","position":42,"item":{"@type":"Product","name":"Departamento en Arriendo en Santiago 1 dormitorio 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"390000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-santiago-1-dormitorio-1-bano-codR77150929-0L0-202079631.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/853d293c7281.webp"}},{"@type":"ListItem","position":43,"item":{"@type":"Product","name":"Sitio o Terreno en Venta en La Reina / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"60000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/sitio-o-terreno-en-venta-en-la-reina-codR77150929-0L0-116066113.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5b4fbf268738.webp"}},{"@type":"ListItem","position":44,"item":{"@type":"Product","name":"Casa en Venta en San Bernardo 3 dormitorios 2 baños / Gestión y Propiedad","offers":{"@type":"Offer","price":"107000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-san-bernardo-3-dormitorios-2-banos-codR77020232-9L0-127868.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4f396eb5fea9.webp"}},{"@type":"ListItem","position":45,"item":{"@type":"Product","name":"Casa en Venta en Puente Alto 4 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"2450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-puente-alto-4-dormitorios-2-banos-codR77150929-0L0-101079231.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e1df8e3df769.webp"}},{"@type":"ListItem","position":46,"item":{"@type":"Product","name":"Parcela o Chacra en Venta en Pudahuel / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"6051","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/parcela-o-chacra-en-venta-en-pudahuel-codR77150929-0L0-114072463.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/71708900b52c.webp"}},{"@type":"ListItem","position":47,"item":{"@type":"Product","name":"Departamento en Arriendo en Las Condes 1 dormitorio 1 baño / Vivax Propiedades","offers":{"@type":"Offer","price":"630000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-las-condes-1-dormitorio-1-bano-codR76039513-7L0-202715023.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ccb9c41d908b.webp"}},{"@type":"ListItem","position":48,"item":{"@type":"Product","name":"Local o Casa comercial en Venta en Santiago 1 baño / Realty.Corp","offers":{"@type":"Offer","price":"4900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-venta-en-santiago-1-bano-codR76868800-1L0-105051437.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/91b3ec0d501b.webp"}},{"@type":"ListItem","position":49,"item":{"@type":"Product","name":"Parcela o Chacra en Venta en Curacaví / Gestión y Propiedad","offers":{"@type":"Offer","price":"80000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/parcela-o-chacra-en-venta-en-curacavi-codR77020232-9L0-121532.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/1e094c09c8f7.webp"}},{"@type":"ListItem","position":50,"item":{"@type":"Product","name":"Departamento en Venta en Santiago 1 dormitorio 1 baño / Gestión y Propiedad","offers":{"@type":"Offer","price":"1900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-santiago-1-dormitorio-1-bano-codR77020232-9L0-13289.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/b81eaf42bf09.webp"}},{"@type":"ListItem","position":51,"item":{"@type":"Product","name":"Casa en Venta en Macul 4 dormitorios 1 baño / Gestión y Propiedad","offers":{"@type":"Offer","price":"6554","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-macul-4-dormitorios-1-bano-codR77020232-9L0-110614.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e78980453460.webp"}},{"@type":"ListItem","position":52,"item":{"@type":"Product","name":"Departamento en Venta en Lo Barnechea 5 dormitorios 5 baños / Magnolia Property","offers":{"@type":"Offer","price":"44800","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-lo-barnechea-5-dormitorios-5-banos-codR77087837-3L0-102008245.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/f74c32d941c9.webp"}},{"@type":"ListItem","position":53,"item":{"@type":"Product","name":"Departamento en Arriendo en Estación Central 2 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"380000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-estacion-central-2-dormitorios-2-banos-codR77150929-0L0-202079316.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/0f1fec3f1f30.webp"}},{"@type":"ListItem","position":54,"item":{"@type":"Product","name":"Casa en Venta en Ñuñoa 4 dormitorios 2 baños / Realty.Corp","offers":{"@type":"Offer","price":"9500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-nunoa-4-dormitorios-2-banos-codR76868800-1L0-101051193.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/2f4267285255.webp"}},{"@type":"ListItem","position":55,"item":{"@type":"Product","name":"Casa en Venta en La Florida 7 dormitorios 4 baños / ANCAR PROPIEDADES","offers":{"@type":"Offer","price":"160000000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-la-florida-7-dormitorios-4-banos-codR77350146-7L0-101005282.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/830ff883e570.webp"}},{"@type":"ListItem","position":56,"item":{"@type":"Product","name":"Departamento en Arriendo en San Joaquín 2 dormitorios 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"395000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-san-joaquin-2-dormitorios-1-bano-codR77150929-0L0-202079483.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/144eaa1b90fe.webp"}},{"@type":"ListItem","position":57,"item":{"@type":"Product","name":"Departamento en Arriendo en Huechuraba 4 dormitorios 3 baños / MICASAPROP","offers":{"@type":"Offer","price":"1050000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-huechuraba-4-dormitorios-3-banos-codR76055330-1L0-1685459.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/788f590e6d77.webp"}},{"@type":"ListItem","position":58,"item":{"@type":"Product","name":"Departamento en Arriendo en Las Condes 2 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"25","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-las-condes-2-dormitorios-2-banos-codR77150929-0L0-202071908.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ba0b7f6b822c.webp"}},{"@type":"ListItem","position":59,"item":{"@type":"Product","name":"Oficina en Venta en Santiago 3 dormitorios 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"1710","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/oficina-o-casa-oficina-en-venta-en-santiago-3-dormitorios-1-bano-codR77150929-0L0-103077612.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/cf3b37d366b0.webp"}},{"@type":"ListItem","position":60,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Vitacura / Finhabit Ltda.","offers":{"@type":"Offer","price":"75","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-vitacura-codR78987370-4L0-205008455.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/3ec44eb104ef.webp"}},{"@type":"ListItem","position":61,"item":{"@type":"Product","name":"Departamento en Venta en Providencia 3 dormitorios 3 baños / MONICA LARRAIN Y ASOCIADAS SPA","offers":{"@type":"Offer","price":"12290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-providencia-3-dormitorios-3-banos-codR77765923-5L0-102006335.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ad4b82f3388e.webp"}},{"@type":"ListItem","position":62,"item":{"@type":"Product","name":"Departamento en Arriendo en Cerrillos 3 dormitorios 1 baño / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"450000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-arriendo-en-cerrillos-3-dormitorios-1-bano-codR77150929-0L0-202072125.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d91168766626.webp"}},{"@type":"ListItem","position":63,"item":{"@type":"Product","name":"Parcela o Chacra en Venta en San Pedro / Corretajes Prosal","offers":{"@type":"Offer","price":"36500000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/parcela-o-chacra-en-venta-en-san-pedro-codR76611561-6L0-114009856.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/171e1c4d6de6.webp"}},{"@type":"ListItem","position":64,"item":{"@type":"Product","name":"Local o Casa comercial en Arriendo en Providencia 10 baños / Finhabit Ltda.","offers":{"@type":"Offer","price":"200","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/local-o-casa-comercial-en-arriendo-en-providencia-10-banos-codR78987370-4L0-205008663.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d35ef268371b.webp"}},{"@type":"ListItem","position":65,"item":{"@type":"Product","name":"Casa en Venta en Maipú 3 dormitorios 2 baños / Corredores Premium Chile SpA","offers":{"@type":"Offer","price":"2700","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-maipu-3-dormitorios-2-banos-codR77150929-0L0-101079683.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/6446b0eb07d9.webp"}},{"@type":"ListItem","position":66,"item":{"@type":"Product","name":"Casa en Venta en Providencia 3 dormitorios 3 baños / MONICA LARRAIN Y ASOCIADAS SPA","offers":{"@type":"Offer","price":"12290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/casa-en-venta-en-providencia-3-dormitorios-3-banos-codR77765923-5L0-101006346.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5e9342a5f606.webp"}},{"@type":"ListItem","position":67,"item":{"@type":"Product","name":"Departamento en Venta en Santiago 1 dormitorio 1 baño / Vivax Propiedades","offers":{"@type":"Offer","price":"1290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"economicos.cl"},"url":"https://www.economicos.cl/propiedades/departamento-en-venta-en-santiago-1-dormitorio-1-bano-codR76039513-7L0-102714736.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/05b426c81c22.webp"}}]}</script>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><small id="upd">cargando…</small></div>
+  <h1 id="hero-title">Los mejores descuentos en economicos.cl, <em>actualizados hoy.</em></h1>
+  <p class="lead" id="hero-desc">Ofertas destacadas con mayor variación y descuento en Económicos.</p>
+  <div class="stats">
+    <div id="s1">–<span>Ofertas</span></div>
+    <div id="s2">–<span>Tiendas</span></div>
+    <div id="s3">–<span>Descuento promedio</span></div>
+  </div>
+</header>
+</div>
+
+<nav class="tabs-wrap wrap" aria-label="Categorías y Tiendas">
+  <div class="tabs-scroll" id="tabs-nav"></div>
+</nav>
+
+<div class="bar"><div class="wrap">
+  <div class="row">
+    <input id="q" type="search" placeholder="Buscar..." aria-label="Buscar">
+    <select id="min" aria-label="Descuento mínimo"><option value="0">Cualquier descuento</option><option value="20">+20%</option><option value="40">+40%</option><option value="50">+50%</option><option value="70">+70%</option></select>
+    <select id="per" aria-label="Filas por página"><option selected>10</option><option>25</option><option>50</option><option value="1000">Todos</option></select>
+  </div>
+  <div class="chips" id="chips"></div>
+</div></div>
+
+<main class="wrap">
+  <p class="count" id="count"></p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th data-k="title" id="col-item">Producto</th><th data-k="tienda" class="c-store">Tienda</th><th class="r" data-k="precio">Precio</th><th data-k="descuento">Descuento</th><th class="r" data-k="ahorro">Ahorras</th><th class="r">Historial</th><th></th></tr></thead>
+    <tbody id="body"></tbody>
+  </table></div>
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="wrap">© Páginas &amp; Precios · Monitoreo automático de ofertas en Chile. Los precios y disponibilidad son responsabilidad de cada tienda.</footer>
+
+<script>
+window.PAGE_DEFAULT_TAB = "economicos";
+const $ = id => document.getElementById(id),
+  clp = n => "$" + Math.round(n).toLocaleString("es-CL"),
+  esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14"];
+let TABS = [], currentTab = null, B = [], D = [], page = 1, store = -1, key = "descuento", dir = -1, maxD = 1;
+const tabCache = {};
+const tabPath = t => t.path || (t.html_file && t.html_file !== "index.html" ? "/" + t.html_file.replace(".html", "") : "/");
+const tabFromLocation = () => {
+  let p = location.pathname.replace("/index.html", "/").replace(".html", "");
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+  return TABS.find(t => tabPath(t) === p);
+};
+
+fetch("tabs.json", { cache: "no-cache" })
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(data => {
+    TABS = data.tabs || [];
+    renderTabsBar();
+    // Links viejos tipo /#abc: se llevan a la URL limpia /abc
+    const legacy = TABS.find(t => t.id === (location.hash || "").replace("#", "").trim());
+    const found = legacy || tabFromLocation();
+    const initialId = found ? found.id : (TABS.find(t => t.id === window.PAGE_DEFAULT_TAB) || TABS[0])?.id;
+    if (initialId) switchTab(initialId, false);
+    if (legacy) history.replaceState(null, "", tabPath(legacy));
+  })
+  .catch(() => {
+    // Fallback: intentar cargar libros.json directamente
+    fetch("libros.json", { cache: "no-cache" }).then(r => r.json()).then(j => {
+      initTabData({ id: "libros", name: "Libros", item_label: "Libro", headline: "Los mejores descuentos de libros en Chile", subtitle: "Librerías principales de Chile" }, j);
+    }).catch(() => {
+      $("upd").textContent = "sin datos";
+      $("body").innerHTML = `<tr><td colspan="8"><div class="msg">No pude leer los datos.<br><br>Genera las ofertas con <code>python3 script_generator.py</code>.</div></td></tr>`;
+    });
+  });
+
+function renderTabsBar() {
+  const nav = $("tabs-nav");
+  nav.innerHTML = TABS.map(t => `
+    <a class="tab-btn${currentTab && currentTab.id === t.id ? " active" : ""}" href="${tabPath(t)}" data-tab="${t.id}" id="tab-btn-${t.id}">
+      <span class="t-icon">${t.icon || "🏷️"}</span>
+      <span>${esc(t.name)}</span>
+      <span class="t-badge">${t.total || 0}</span>
+    </a>
+  `).join("");
+}
+
+$("tabs-nav").onclick = e => {
+  const btn = e.target.closest(".tab-btn");
+  if (!btn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+  e.preventDefault();
+  const tid = btn.dataset.tab;
+  if (tid && !(currentTab && currentTab.id === tid)) switchTab(tid, true);
+};
+
+window.addEventListener("popstate", () => {
+  const t = tabFromLocation();
+  if (t && (!currentTab || currentTab.id !== t.id)) switchTab(t.id, false);
+});
+
+function switchTab(tabId, updateHash) {
+  const tab = TABS.find(t => t.id === tabId);
+  if (!tab) return;
+  currentTab = tab;
+  if (updateHash) {
+    history.pushState(null, "", tabPath(tab));
+  }
+  document.title = `${tab.name} | Monitor de Ofertas · Descuentos en Chile`;
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const isAct = b.dataset.tab === tabId;
+    b.classList.toggle("active", isAct);
+    if (isAct) b.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+  });
+
+  // Actualizar hero y textos
+  $("hero-title").innerHTML = tab.headline || `Los mejores descuentos en ${esc(tab.name)}, <em>actualizados hoy.</em>`;
+  $("hero-desc").textContent = tab.subtitle || `Monitoreo de precios y descuentos en ${tab.name}.`;
+  $("col-item").dataset.l = tab.item_label || "Producto";
+  $("col-item").textContent = $("col-item").dataset.l;
+  $("q").placeholder = `Buscar en ${tab.name}...`;
+
+  if (tabCache[tabId]) {
+    initTabData(tab, tabCache[tabId]);
+  } else {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ofertas de ${esc(tab.name)}…</div></td></tr>`;
+    fetch(tab.file || `${tabId}.json`, { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(err => {
+        $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al cargar datos de ${esc(tab.name)}.</div></td></tr>`;
+      });
+  }
+}
+
+const fixUrl = b => {
+  if (!b.url) return "";
+  if (/buscalibre/i.test(b.tienda) && !/^https?:/i.test(b.url)) {
+    return new URL(b.url, "https://www.buscalibre.cl/").href;
+  }
+  return b.url;
+};
+
+// Al ir al detalle se guarda cómo estaba el listado (búsqueda, filtros, página, orden, scroll)
+// para dejarlo igual cuando la persona vuelve.
+function saveList() {
+  if (!currentTab) return;
+  try {
+    sessionStorage.setItem("lista:" + currentTab.id, JSON.stringify({ q: $("q").value, min: $("min").value, per: $("per").value, page, store, key, dir, y: window.scrollY }));
+  } catch (e) {}
+}
+function restoreList(tabId) {
+  let s = null;
+  try {
+    s = JSON.parse(sessionStorage.getItem("lista:" + tabId) || "null");
+    sessionStorage.removeItem("lista:" + tabId);
+  } catch (e) {}
+  if (!s) return null;
+  $("q").value = s.q || "";
+  $("min").value = s.min || "0";
+  $("per").value = s.per || "10";
+  page = s.page || 1;
+  store = s.store ?? -1;
+  key = s.key || key;
+  dir = s.dir || dir;
+  if (D.length > 1) document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", +c.dataset.i === store));
+  return s;
+}
+document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList(); });
+
+function initTabData(tab, j) {
+  D = j.dominios || [];
+  document.querySelector("table").classList.toggle("single", D.length < 2);
+  const items = j.items || j.libros || [];
+  B = items.map(b => ({ ...b, ahorro: (b.promedio || 0) - (b.precio || 0), url: fixUrl(b) }));
+  maxD = Math.max(...B.map(b => b.descuento || 0), 1);
+  if (j.generated_at) {
+    $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
+  }
+  $("s1").firstChild.textContent = B.length;
+  $("s2").firstChild.textContent = D.length || 1;
+  $("s3").firstChild.textContent = Math.round(B.reduce((a, b) => a + (b.descuento || 0), 0) / Math.max(B.length, 1)) + "%";
+
+  // Chips de tiendas del tab
+  if (D.length > 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = [{ name: "Todas" }, ...D].map((d, i) =>
+      `<button class="chip${i ? "" : " on"}" data-i="${i ? d.id : -1}">${i ? `<i style="--c:${COLORS[(i - 1) % COLORS.length]}"></i>` : ""}${esc(d.name)}</button>`
+    ).join("");
+  } else if (D.length === 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = `<button class="chip on" data-i="${D[0].id}"><i style="--c:${COLORS[0]}"></i>${esc(D[0].name)}</button>`;
+  } else {
+    $("chips").style.display = "none";
+    $("chips").innerHTML = "";
+  }
+
+  page = 1;
+  store = -1;
+  const sv = restoreList(tab.id);
+  render();
+  if (sv) requestAnimationFrame(() => window.scrollTo(0, sv.y || 0));
+}
+
+const col = id => {
+  const idx = D.findIndex(d => d.id === id);
+  return COLORS[Math.max(idx, 0) % COLORS.length];
+};
+
+$("chips").onclick = e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  store = +b.dataset.i;
+  document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  page = 1;
+  render();
+};
+
+["q", "min", "per"].forEach(id => $(id).addEventListener("input", () => { page = 1; render(); }));
+
+document.querySelector("thead").onclick = e => {
+  const h = e.target.closest("th[data-k]");
+  if (!h) return;
+  const k = h.dataset.k;
+  dir = key === k ? -dir : (k === "title" || k === "tienda" || k === "precio" || k === "promedio" ? 1 : -1);
+  key = k;
+  page = 1;
+  render();
+};
+
+// Mini gráfico del historial de precios (solo muestra la tendencia; el número que manda es el descuento).
+function spark(b) {
+  const h = b.hist;
+  if (!h || h.length < 2) return `<span class="o">—</span>`;
+  const min = Math.min(...h), max = Math.max(...h), rng = max - min, W = 130, H = 40, P = 4;
+  const pts = h.map((v, i) => `${(i / (h.length - 1) * W).toFixed(1)},${(rng === 0 ? H / 2 : H - P - (v - min) / rng * (H - 2 * P)).toFixed(1)}`).join(" ");
+  const c = "var(--dn)";
+  const tip = `Normal ${clp(b.promedio)} · mín ${clp(min)} · máx ${clp(max)} · ${h.length} registros`;
+  return `<div class="sp" title="${tip}"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="${pts} ${W},${H} 0,${H}" fill="${c}" opacity=".13"/><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>`;
+}
+
+function render() {
+  const q = $("q").value.toLowerCase().trim(), m = +$("min").value, PER = +$("per").value;
+  const L = B.filter(b => (store < 0 || b.dominio_id === store) && b.descuento >= m && (!q || (b.title || "").toLowerCase().includes(q)));
+  L.sort((a, b) => (typeof a[key] === "string" ? a[key].localeCompare(b[key], "es") : a[key] - b[key]) * dir);
+  document.querySelectorAll("th[data-k]").forEach(h => {
+    h.dataset.l = h.dataset.l || h.textContent;
+    h.classList.toggle("s", h.dataset.k === key);
+    h.textContent = h.dataset.l + (h.dataset.k === key ? (dir > 0 ? " ↑" : " ↓") : "");
+  });
+  const pages = Math.max(1, Math.ceil(L.length / PER));
+  page = Math.min(page, pages);
+  const st = (page - 1) * PER;
+  $("count").innerHTML = `<b>${L.length}</b> ofertas · mostrando ${L.length ? st + 1 : 0}–${Math.min(st + PER, L.length)}`;
+
+  $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
+    <td class="n">${st + i + 1}</td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
+    <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
+    <td class="r p">${clp(b.precio)}</td>
+    <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
+    <td class="r sv">${clp(b.ahorro)}</td>
+    <td class="r">${spark(b)}</td>
+    <td class="r">${b.url ? `<a class="btn" href="${esc(b.url)}" target="_blank" rel="noopener" data-id="${b.id}" data-pos="${st + i + 1}">Ir a la tienda ↗</a>` : ""}</td>
+  </tr>`).join("") : `<tr><td colspan="8"><div class="msg">Nada por aquí… prueba otra búsqueda 🔍</div></td></tr>`;
+
+  const bt = (l, p, x = "") => `<button ${x} data-p="${p}">${l}</button>`, a = [bt("←", page - 1, page === 1 ? "disabled" : "")];
+  const set = [...new Set([1, 2, page - 1, page, page + 1, pages - 1, pages])].filter(x => x >= 1 && x <= pages).sort((x, y) => x - y);
+  set.forEach((x, i) => {
+    if (i && x - set[i - 1] > 1) a.push("<span>…</span>");
+    a.push(bt(x, x, x === page ? 'class="on"' : ""));
+  });
+  a.push(bt("→", page + 1, page === pages ? "disabled" : ""));
+  $("pager").innerHTML = a.join("");
+}
+
+$("pager").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b || b.disabled) return;
+  page = +b.dataset.p;
+  render();
+  $("count").scrollIntoView({ behavior: "smooth" });
+};
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a.btn[data-id]");
+  if (!a || typeof gtag !== "function") return;
+  const b = B.find(x => String(x.id) === a.dataset.id);
+  if (!b) return;
+  gtag("event", "select_item", {
+    item_list_name: currentTab ? currentTab.name : "Ofertas",
+    currency: "CLP",
+    items: [{ item_id: String(b.id), item_name: b.title, item_brand: b.tienda, price: Math.round(b.precio), discount: Math.round(b.ahorro), index: +a.dataset.pos }]
+  });
+});
+</script>
+</body>
+</html>
