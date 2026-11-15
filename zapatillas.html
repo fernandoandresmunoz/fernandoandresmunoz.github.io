@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>zapatillas | Monitor de Ofertas · Descuentos en Chile</title>
+<meta name="description" content="Ofertas destacadas con mayor variación y descuento en Zapatillas.">
+<link rel="canonical" href="https://fernandoandresmunoz.github.io/zapatillas">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f17;--card:#121a28;--card2:#172235;--hov:#1a253a;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--acc2:#ffc857;--pr:#52e19b;--onacc:#fff;--up:#f87171;--dn:#4ade80;--fl:#94a3b8}
+@media (prefers-color-scheme:light){:root{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--hov:#e9edf5;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--acc2:#b7791f;--pr:#1f9d63;--onacc:#fff;--up:#dc2626;--dn:#16a34a;--fl:#64748b}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.08),transparent)}
+.wrap{max-width:1260px;margin:auto;padding:0 20px}
+.hero{padding:44px 0 20px}
+.brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
+.brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
+.brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
+h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
+.stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stats div{font:800 28px Fraunces,serif}
+.stats span{display:block;font:500 11px Inter;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* Tabs Bar */
+.tabs-wrap{margin:28px auto 16px;display:flex;justify-content:center;width:100%}
+.tabs-scroll{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 10px;margin:0 auto;max-width:100%}
+@media (max-width:768px){.tabs-scroll{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}}
+.tabs-scroll::-webkit-scrollbar{height:5px}
+.tabs-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.tab-btn{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 13px Inter,sans-serif;cursor:pointer;transition:all .2s ease;text-decoration:none;user-select:none}
+.tab-btn:hover{border-color:var(--acc);transform:translateY(-1px);background:var(--hov)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(255,107,61,.18),rgba(255,61,113,.15));border-color:var(--acc);color:var(--ink);box-shadow:0 0 18px -4px rgba(255,107,61,.4)}
+.tab-btn .t-icon{font-size:15px;line-height:1}
+.tab-btn .t-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--mute) 24%,transparent);color:var(--mute);transition:all .2s}
+.tab-btn.active .t-badge{background:var(--acc);color:#fff}
+
+/* Sticky Filter Bar */
+.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-block:1px solid var(--line);padding:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:11px 15px;border-radius:12px;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+input{flex:1 1 240px}input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,107,61,.18)}
+.chips{margin-top:10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:99px;font:500 13px Inter;display:flex;gap:7px;align-items:center;transition:all .15s}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}.chip:hover{border-color:var(--acc)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.count{margin:22px 0 12px;color:var(--mute)}.count b{color:var(--ink)}
+
+/* Table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{text-align:left;font:700 11px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:15px 16px;border-bottom:1px solid var(--line);white-space:nowrap;user-select:none}
+th[data-k]{cursor:pointer}th[data-k]:hover,th.s{color:var(--acc)}
+.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{transition:background .15s}tbody tr:hover{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.n{color:var(--mute);width:44px}
+.bk{display:flex;gap:14px;align-items:center}
+a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
+.mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
+.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
+.st{display:inline-flex;gap:7px;align-items:center;padding:5px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,transparent);font:500 12px Inter;white-space:nowrap}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.o{color:var(--mute);text-decoration:line-through;white-space:nowrap;font-size:13px}
+.p{font:800 17px Fraunces,serif;color:var(--pr);white-space:nowrap}
+.d{display:flex;align-items:center;gap:9px;min-width:130px}
+.d b{font:800 14px Fraunces,serif;width:48px;color:var(--acc2)}.d.hot b{color:var(--acc)}
+.d span{flex:1;height:8px;border-radius:9px;background:color-mix(in srgb,var(--mute) 26%,transparent);overflow:hidden}
+.d span i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--acc2),var(--acc),#ff3d71)}
+.sv{color:var(--acc2);font-weight:600;white-space:nowrap}
+.sp{display:flex;align-items:center;justify-content:flex-end;gap:10px}.sp svg{width:120px;height:34px;flex:none}
+table.single .c-store{display:none}
+.btn{display:inline-block;text-decoration:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:10px;font:700 12px Inter;white-space:nowrap;transition:all .15s}
+tr:hover .btn,.btn:hover{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.msg{text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}.msg code{font:13px monospace;background:var(--hov);padding:3px 8px;border-radius:6px}
+.pager{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:36px 0 16px}
+.pager button{min-width:40px;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Inter;cursor:pointer;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:var(--acc)}.pager button.on{background:linear-gradient(135deg,var(--acc),#ff3d71);border-color:transparent;color:var(--onacc);font-weight:700}
+.pager button:disabled{opacity:.35;cursor:default}.pager span{align-self:center;color:var(--mute)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;color:var(--mute);font-size:13px;text-align:center}
+</style>
+<script type="application/ld+json" id="ld-books">{"@context":"https://schema.org","@type":"ItemList","name":"zapatillas - Ofertas y Descuentos en Chile","numberOfItems":100,"itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Ballerina Niña Rosado (27 A 35)","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883552441/Ballerina-Ni%C3%B1a-Rosado-(27-A-35)-Yamp/883552443"}}},{"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Voltaic Evo Zapatilla Running Hombre Rojo","offers":{"@type":"Offer","price":"34990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80539013/voltaic-evo-zapatilla-running-hombre-rojo-puma/80539535"}}},{"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Azul Cuero","offers":{"@type":"Offer","price":"79990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/17663725/zapatilla-urbana-hombre-azul-cuero-pikolinos/17663727"}}},{"@type":"ListItem","position":4,"item":{"@type":"Product","name":"Zapatilla Ergonómica london niña rosada 28-38","offers":{"@type":"Offer","price":"13190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/150991852/zapatilla-rojo-nina/150991861"}}},{"@type":"ListItem","position":5,"item":{"@type":"Product","name":"Perfume Mujer Eros Pour Femme EDT 100 ml","offers":{"@type":"Offer","price":"57990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80840755/perfume-mujer-eros-pour-femme-edt-100-ml/80840755"}}},{"@type":"ListItem","position":6,"item":{"@type":"Product","name":"Charged Engage 2 Zapatilla Training Y Gimnasio Hombre Negro","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80734890/charged-engage-2-zapatilla-training-y-gimnasio-hombre-negro-under-armour/80734901"}}},{"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Lowland 2.0 Zapatilla Urbana Hombre Cuero Multicolor","offers":{"@type":"Offer","price":"41990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80769763/lowland-2-0-zapatilla-urbana-hombre-cuero-multicolor-vans/80769849"}}},{"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Cuero","offers":{"@type":"Offer","price":"34990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883725080/zapatilla-urbana-hombre-cuero-la-martina/883725088"}}},{"@type":"ListItem","position":9,"item":{"@type":"Product","name":"Court Vision Zapatilla Urbana Hombre Cuero Blanco","offers":{"@type":"Offer","price":"36990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80742039/court-vision-zapatilla-urbana-hombre-cuero-blanco-nike/80742045"}}},{"@type":"ListItem","position":10,"item":{"@type":"Product","name":"Nikolas Zapatilla Urbana Hombre Blanco","offers":{"@type":"Offer","price":"38990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/17551883/Nikolas-Zapatilla-Urbana-Hombre-Blanco-Aldo/17551886"}}},{"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Zapatilla Ergonómica london niño negra 28-38","offers":{"@type":"Offer","price":"13190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/150992560/zapatilla-negro-nino/150992603"}}},{"@type":"ListItem","position":12,"item":{"@type":"Product","name":"Wbk Zapatilla Urbana Hombre Blanco","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80526344/Wbk-Zapatilla-Urbana-Hombre-Blanco-Skechers/80526489"}}},{"@type":"ListItem","position":13,"item":{"@type":"Product","name":"Zapatilla Surfari Negro Infantil","offers":{"@type":"Offer","price":"14990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/146718385/zapatilla-surfari-negro-infantil-maui-and-sons/146718401"}}},{"@type":"ListItem","position":14,"item":{"@type":"Product","name":"Zapatilla Ergonómica berlín niño azul 28-38","offers":{"@type":"Offer","price":"13190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/150993030/zapatilla-cafe-nino/150991936"}}},{"@type":"ListItem","position":15,"item":{"@type":"Product","name":"Zapatilla Tide Negro Infantil","offers":{"@type":"Offer","price":"13990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/146718377/zapatilla-tide-negro-infantil-maui-and-sons/146718378"}}},{"@type":"ListItem","position":16,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Verde","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883643153/Zapatilla-Urbana-Hombre-Verde-Basement/883643158"}}},{"@type":"ListItem","position":17,"item":{"@type":"Product","name":"480 Zapatilla Urbana Hombre Blanco","offers":{"@type":"Offer","price":"39990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80716044/480-zapatilla-urbana-hombre-blanco-new-balance/80716113"}}},{"@type":"ListItem","position":18,"item":{"@type":"Product","name":"Pantufla Tejida Bebé Niño Beige","offers":{"@type":"Offer","price":"5990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/150482268/botin-tejido-beige-bebe/150482269"}}},{"@type":"ListItem","position":19,"item":{"@type":"Product","name":"Hylane Zapatilla Urbana Hombre Cuero Multicolor","offers":{"@type":"Offer","price":"44990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80769760/hylane-zapatilla-urbana-hombre-cuero-multicolor-vans/80769825"}}},{"@type":"ListItem","position":20,"item":{"@type":"Product","name":"Trainer 3 Zapatilla Training Y Gimnasio Hombre Negro","offers":{"@type":"Offer","price":"40990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80007939/trainer-3-zapatilla-training-y-gimnasio-hombre-negro-nike/80008066"}}},{"@type":"ListItem","position":21,"item":{"@type":"Product","name":"Zapatilla Cuero Hombre","offers":{"@type":"Offer","price":"34990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883746026/zapatilla-urbana-hombre-la-martina/883719348"}}},{"@type":"ListItem","position":22,"item":{"@type":"Product","name":"Sandalia Niña Familia Sandalia Outdoor 2710838 Fucsia","offers":{"@type":"Offer","price":"13500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/156943577/sandalia-nina-familia-sandalia-outdoor-2710838-fucsia-ficcus/156957874"}}},{"@type":"ListItem","position":23,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Beige","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883643115/Zapatilla-Urbana-Hombre-Beige-Basement/883643116"}}},{"@type":"ListItem","position":24,"item":{"@type":"Product","name":"Knu Skool Zapatilla Urbana Hombre Blanco","offers":{"@type":"Offer","price":"44990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80543987/knu-skool-zapatilla-urbana-hombre-blanco-vans/80544182"}}},{"@type":"ListItem","position":25,"item":{"@type":"Product","name":"Chuck Taylor All Star Zapatilla Urbana Unisex Adulto Café","offers":{"@type":"Offer","price":"31990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80666438/chuck-taylor-all-star-zapatilla-urbana-unisex-adulto-cafe-converse/80666474"},"image":"https://fernandoandresmunoz.github.io/imagenes/76f6fa6d4cee.webp"}},{"@type":"ListItem","position":26,"item":{"@type":"Product","name":"Perfume Hombre Le Male Edp 125 Ml Paul Gaultier","offers":{"@type":"Offer","price":"99990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/14574258/Perfume-Hombre-Le-Male-Edp-125Ml-Jean-Paul-Gaultier/14574258"}}},{"@type":"ListItem","position":27,"item":{"@type":"Product","name":"Tensaur Sport 3.0 K Zapatilla Urbana Unisex Adulto Negro","offers":{"@type":"Offer","price":"30990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766811/tensaur-sport-3-0-k-zapatilla-urbana-unisex-adulto-negro-adidas/80767165"}}},{"@type":"ListItem","position":28,"item":{"@type":"Product","name":"V5 Rnr Zapatilla Urbana Hombre Negro","offers":{"@type":"Offer","price":"60990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80789737/v5-rnr-zapatilla-urbana-hombre-negro-nike/80790124"}}},{"@type":"ListItem","position":29,"item":{"@type":"Product","name":"Zapatilla urbana niña rosado 21-27","offers":{"@type":"Offer","price":"16790","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/153797232/zapatilla-urbana-nina-rosado-21-27/153797236"}}},{"@type":"ListItem","position":30,"item":{"@type":"Product","name":"Duramo RC2 Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80512514/duramo-rc2-zapatilla-running-hombre-negro-adidas/80512804"}}},{"@type":"ListItem","position":31,"item":{"@type":"Product","name":"Duramo RC2 Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80760648/duramo-rc2-zapatilla-indoor-hombre-negro-adidas/80761134"}}},{"@type":"ListItem","position":32,"item":{"@type":"Product","name":"Rapid Court Low Zapatilla Básquetbol Unisex Adulto Negro","offers":{"@type":"Offer","price":"35990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80760618/rapid-court-low-zapatilla-basquetbol-unisex-adulto-negro-adidas/80760845"}}},{"@type":"ListItem","position":33,"item":{"@type":"Product","name":"Zapatillas Niña Hotshot Kickoff Squad","offers":{"@type":"Offer","price":"21990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/157797529/zapatillas-nina-skechers-hotshot-kickoff-squad/157797570"}}},{"@type":"ListItem","position":34,"item":{"@type":"Product","name":"Breaknet 3.0 El C Zapatilla Urbana Unisex Adulto Negro","offers":{"@type":"Offer","price":"23990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766814/breaknet-3-0-el-c-zapatilla-urbana-unisex-adulto-negro-adidas/80767183"}}},{"@type":"ListItem","position":35,"item":{"@type":"Product","name":"Zapatilla Outdoor Niña Familia Zapatilla Outdoor 2710890 Lila","offers":{"@type":"Offer","price":"17500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/156958022/zapatilla-outdoor-nina-familia-zapatilla-outdoor-2710890-lila-ficcus/156958029"}}},{"@type":"ListItem","position":36,"item":{"@type":"Product","name":"Assert 11 Zapatilla Running Hombre Azul","offers":{"@type":"Offer","price":"41990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80678570/Assert-11-Zapatilla-Running-Hombre-Azul-Under-Armour/80678648"}}},{"@type":"ListItem","position":37,"item":{"@type":"Product","name":"Ascend Zapatilla Running Hombre Gris","offers":{"@type":"Offer","price":"44990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80678563/Ascend-Zapatilla-Running-Hombre-Gris-Under-Armour/80678593"}}},{"@type":"ListItem","position":38,"item":{"@type":"Product","name":"Pantufla Primeros Pasos Antideslizante","offers":{"@type":"Offer","price":"5590","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/154913814/pantufla-antideslizante-nino-azul/154913817"}}},{"@type":"ListItem","position":39,"item":{"@type":"Product","name":"Flexfocus Lite Mod Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"27990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80018714/flexfocus-lite-mod-zapatilla-running-hombre-negro-puma/80018781"}}},{"@type":"ListItem","position":40,"item":{"@type":"Product","name":"Maxima Pro Zapatilla Running Hombre Azul","offers":{"@type":"Offer","price":"48990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80773363/maxima-pro-zapatilla-running-hombre-azul-puma/80773612"}}},{"@type":"ListItem","position":41,"item":{"@type":"Product","name":"Ballerina Niña Celeste (22 A 26)","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883551594/Ballerina-Ni%C3%B1a-Celeste-(22-A-26)-Yamp/883551598"},"image":"https://fernandoandresmunoz.github.io/imagenes/7cb799642ded.webp"}},{"@type":"ListItem","position":42,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Cuero Café","offers":{"@type":"Offer","price":"24990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80128971/ZAPATILLA-HOM-PLH0015A04V0103-CA/80600838"}}},{"@type":"ListItem","position":43,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Cuero Violeta","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80668904/Zapatilla-Urbana-Hombre-Cuero-Violeta-Skechers/80669196"}}},{"@type":"ListItem","position":44,"item":{"@type":"Product","name":"Assert 11 Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"41990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80678569/Assert-11-Zapatilla-Running-Hombre-Negro-Under-Armour/80678640"}}},{"@type":"ListItem","position":45,"item":{"@type":"Product","name":"Zapatilla lona niño azul 21-27","offers":{"@type":"Offer","price":"13790","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/153792618/zapatilla-lona-nino-azul-21-27/153792619"}}},{"@type":"ListItem","position":46,"item":{"@type":"Product","name":"Pounce Lite 2 Engineered Zapatilla Running Hombre Gris","offers":{"@type":"Offer","price":"36990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80773387/pounce-lite-2-engineered-zapatilla-running-hombre-gris-puma/80773800"},"image":"https://fernandoandresmunoz.github.io/imagenes/bc9bd5f07e4e.webp"}},{"@type":"ListItem","position":47,"item":{"@type":"Product","name":"Zapatilla Ergonómica Seattle niña blanca 28-38","offers":{"@type":"Offer","price":"13990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/150992392/zapatilla-blanco-nina/150992399"}}},{"@type":"ListItem","position":48,"item":{"@type":"Product","name":"Predator Club FT Zapatilla Fútbol Hombre Rosado","offers":{"@type":"Offer","price":"41990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80760666/predator-club-ft-zapatilla-futbol-hombre-miscelaneos-adidas/80761308"}}},{"@type":"ListItem","position":49,"item":{"@type":"Product","name":"Lockdown 7 Zapatilla De Básquetbol Hombre Azul","offers":{"@type":"Offer","price":"51990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80678565/Lockdown-7-Zapatilla-De-B%C3%A1squetbol-Hombre-Azul-Under-Armour/80678612"}}},{"@type":"ListItem","position":50,"item":{"@type":"Product","name":"Old Skool Zapatilla Urbana Hombre Cuero Verde","offers":{"@type":"Offer","price":"48990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80682055/old-skool-zapatilla-urbana-hombre-cuero-vans/80682087"}}},{"@type":"ListItem","position":51,"item":{"@type":"Product","name":"Charged Commit Tr 5 Zapatilla Training Y Gimnasio Hombre Gris","offers":{"@type":"Offer","price":"62990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80678576/Charged-Commit-Tr-5-Zapatilla-Training-Y-Gimnasio-Hombre-Gris-Under-Armour/80678686"}}},{"@type":"ListItem","position":52,"item":{"@type":"Product","name":"Tensaur Sport 3.0 K Zapatilla Urbana Unisex Adulto Negro","offers":{"@type":"Offer","price":"30990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766811/tensaur-sport-3-0-k-zapatilla-urbana-unisex-adulto-negro-adidas/80767168"}}},{"@type":"ListItem","position":53,"item":{"@type":"Product","name":"Technochaos 2000 Zapatilla Urbana Hombre Negro","offers":{"@type":"Offer","price":"55990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80659353/Technochaos-2000-Zapatilla-Urbana-Hombre-Negro-Adidas/80659814"}}},{"@type":"ListItem","position":54,"item":{"@type":"Product","name":"Pantufla dormir niña blanca 22/23-26/27","offers":{"@type":"Offer","price":"6490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/150993853/pantufla-blanco-nina/150993856"}}},{"@type":"ListItem","position":55,"item":{"@type":"Product","name":"Assert 11 Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"41990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80678579/Assert-11-Zapatilla-Running-Hombre-Negro-Under-Armour/80678712"}}},{"@type":"ListItem","position":56,"item":{"@type":"Product","name":"Breaknet 3.0 El C Zapatilla Urbana Unisex Adulto Negro","offers":{"@type":"Offer","price":"23990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766806/breaknet-3-0-el-c-zapatilla-urbana-unisex-adulto-negro-adidas/80767125"}}},{"@type":"ListItem","position":57,"item":{"@type":"Product","name":"Zapatilla Hombre","offers":{"@type":"Offer","price":"34990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883472568/Zapatilla-Urbana-Hombre-Blanco-La-Martina/883643585"}}},{"@type":"ListItem","position":58,"item":{"@type":"Product","name":"Shuffle Downtown SD Zapatilla Urbana Hombre Negro","offers":{"@type":"Offer","price":"41990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80538977/shuffle-downtown-sd-zapatilla-urbana-hombre-negro-puma/80539171"}}},{"@type":"ListItem","position":59,"item":{"@type":"Product","name":"Rickie Classic V Ps Zapatilla Urbana Niño Blanco (28 A 35)","offers":{"@type":"Offer","price":"20990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80691407/puma-rickie-classic-v-ps-zapatilla-urbana-nino-blanco-28-a-35-puma/80691448"},"image":"https://fernandoandresmunoz.github.io/imagenes/ed4581c8893f.webp"}},{"@type":"ListItem","position":60,"item":{"@type":"Product","name":"Zapatilla Cuero Hombre","offers":{"@type":"Offer","price":"39990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883382455/zapatilla-urbana-hombre-la-martina/883810020"}}},{"@type":"ListItem","position":61,"item":{"@type":"Product","name":"Sandalia Niña Familia Sandalia Outdoor 2710881 Menta","offers":{"@type":"Offer","price":"13500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/156958107/sandalia-nina-familia-sandalia-outdoor-2710881-menta-ficcus/156958123"}}},{"@type":"ListItem","position":62,"item":{"@type":"Product","name":"Court Graffik SE Zapatilla Lifestyle Hombre Cuero Rojo","offers":{"@type":"Offer","price":"55990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80669961/court-graffik-se-zapatilla-lifestyle-hombre-cuero-rojo-dc-shoes/80670033"}}},{"@type":"ListItem","position":63,"item":{"@type":"Product","name":"Pantufla Térmica Futaleufú Flex NU-B Foam Niño","offers":{"@type":"Offer","price":"14990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/152807243/pantufla-termica-nino-futaleufu-azul-petroleo-print-atakama-outdoor/152807529"}}},{"@type":"ListItem","position":64,"item":{"@type":"Product","name":"Zapatilla Escolar Niño Cuero Negro (27 a 40)","offers":{"@type":"Offer","price":"9990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883641019/zapatilla-escolar-nino-cuero-negro-27-a-40-federation/883650841"}}},{"@type":"ListItem","position":65,"item":{"@type":"Product","name":"Duramo SL2 Zapatilla Running Mujer Negro","offers":{"@type":"Offer","price":"37990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80063130/duramo-sl2-zapatilla-running-mujer-negro-adidas/80063310"}}},{"@type":"ListItem","position":66,"item":{"@type":"Product","name":"Killshot 2 Leather Na14 Zapatilla Urbana Hombre Cuero Café","offers":{"@type":"Offer","price":"52990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80619223/Killshot-2-Leather-Na14-Zapatilla-Urbana-Hombre-Cuero-Caf%C3%A9-Nike/80619955"}}},{"@type":"ListItem","position":67,"item":{"@type":"Product","name":"Bota de agua negra unisex 28-38","offers":{"@type":"Offer","price":"12490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/152285540/bota-negro-unisex-nino/152285544"},"image":"https://fernandoandresmunoz.github.io/imagenes/02b6f34ff6c3.webp"}},{"@type":"ListItem","position":68,"item":{"@type":"Product","name":"Skyrocket Lite 2 Zapatilla Urbana Unisex Niño Negro (35.5 a 38)","offers":{"@type":"Offer","price":"27990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80676273/skyrocket-lite-2-zapatilla-urbana-unisex-nino-negro-35-5-a-38-puma/80676758"}}},{"@type":"ListItem","position":69,"item":{"@type":"Product","name":"Air Winflo 12 Zapatilla Running Hombre Amarillo","offers":{"@type":"Offer","price":"78990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80739862/air-winflo-12-zapatilla-running-hombre-amarillo-nike/80740125"}}},{"@type":"ListItem","position":70,"item":{"@type":"Product","name":"Bailarina Reina Blanca Niña - Confort y Estilo Floral","offers":{"@type":"Offer","price":"13990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/139628258/reina-nina-blanco-2597-1-colloky/139628262"},"image":"https://fernandoandresmunoz.github.io/imagenes/77ca731bd19b.webp"}},{"@type":"ListItem","position":71,"item":{"@type":"Product","name":"Convergence Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"21990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80133520/Convergence-Zapatilla-Running-Hombre-Negro-Saucony/80133551"}}},{"@type":"ListItem","position":72,"item":{"@type":"Product","name":"Ballerina Niña Fucsia (22 A 26)","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883551354/ballerina-nina-fucsia-22-a-26-yamp/883551358"}}},{"@type":"ListItem","position":73,"item":{"@type":"Product","name":"Runfalcon 5 Zapatilla Indoor Hombre Negro","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80760606/runfalcon-5-zapatilla-indoor-hombre-negro-adidas/80760721"}}},{"@type":"ListItem","position":74,"item":{"@type":"Product","name":"Skyrocket Lite 2 Zapatilla Running Hombre Negro","offers":{"@type":"Offer","price":"30990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80773353/skyrocket-lite-2-zapatilla-running-hombre-negro-puma/80773530"}}},{"@type":"ListItem","position":75,"item":{"@type":"Product","name":"Rebound Retro Zapatilla Urbana Hombre Multicolor","offers":{"@type":"Offer","price":"48990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80076136/rebound-retro-zapatilla-urbana-hombre-multicolor-puma/80076116"}}},{"@type":"ListItem","position":76,"item":{"@type":"Product","name":"Perfume Mujer Rosé Eau De Parfum 100 Ml","offers":{"@type":"Offer","price":"9990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883658785/Perfume-Mujer-Chayanne-Ros%C3%A9-Eau-De-Parfum-100-Ml/883658786"}}},{"@type":"ListItem","position":77,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Negro","offers":{"@type":"Offer","price":"34990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80716844/zapatilla-urbana-hombre-negro-16-hrs/80716897"}}},{"@type":"ListItem","position":78,"item":{"@type":"Product","name":"Breaknet 3.0 El C Zapatilla Urbana Unisex Adulto Negro","offers":{"@type":"Offer","price":"23990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766806/breaknet-3-0-el-c-zapatilla-urbana-unisex-adulto-negro-adidas/80767121"},"image":"https://fernandoandresmunoz.github.io/imagenes/5897e1550365.webp"}},{"@type":"ListItem","position":79,"item":{"@type":"Product","name":"Daily 4.0 Zapatilla Urbana Hombre Blanco","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80512508/Daily-4.0-Zapatilla-Urbana-Hombre-Blanco-Adidas/80512751"}}},{"@type":"ListItem","position":80,"item":{"@type":"Product","name":"Adistar Control 3 Zapatilla Urbana Unisex Adulto Blanco","offers":{"@type":"Offer","price":"69990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80762088/adistar-control-3-zapatilla-urbana-unisex-adulto-blanco-adidas-originals/80762133"}}},{"@type":"ListItem","position":81,"item":{"@type":"Product","name":"Bobs Moda Flex Z Zapatilla Urbana Hombre Negro","offers":{"@type":"Offer","price":"37990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80836292/bobs-moda-flex-z-zapatilla-urbana-hombre-negro-skechers/80836300"}}},{"@type":"ListItem","position":82,"item":{"@type":"Product","name":"Lite Racer Adapt 8.0 K Zapatilla Urbana Unisex Niño Negro (28 a 35)","offers":{"@type":"Offer","price":"25990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766775/lite-racer-adapt-8-0-k-zapatilla-urbana-unisex-adulto-negro-adidas/80766856"},"image":"https://fernandoandresmunoz.github.io/imagenes/a7a12a86fa6d.webp"}},{"@type":"ListItem","position":83,"item":{"@type":"Product","name":"Zapatilla Pro Blaze Classic Cuero Unisex Café","offers":{"@type":"Offer","price":"46990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/148578218/zapatilla-converse-pro-blaze-classic-cuero-unisex-cafe/148578220"},"image":"https://fernandoandresmunoz.github.io/imagenes/dafe5e4caf6c.webp"}},{"@type":"ListItem","position":84,"item":{"@type":"Product","name":"Zapatilla Sport Niño Familia Zapatilla Sport 2710913 Negro","offers":{"@type":"Offer","price":"15000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/156945983/zapatilla-sport-nino-familia-zapatilla-sport-2710913-negro-ficcus/156958184"}}},{"@type":"ListItem","position":85,"item":{"@type":"Product","name":"Knu Skool Zapatilla Urbana Hombre Cuero Negro","offers":{"@type":"Offer","price":"62990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80791313/knu-skool-zapatilla-urbana-hombre-cuero-negro-vans/80791341"}}},{"@type":"ListItem","position":86,"item":{"@type":"Product","name":"Zapatillas Hombre Court Ace Cuero Blanco","offers":{"@type":"Offer","price":"62993","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/157721729/zapatillas-hombre-lacoste-court-ace-cuero-blanco/157721768"}}},{"@type":"ListItem","position":87,"item":{"@type":"Product","name":"Zapatillas Campus 00s","offers":{"@type":"Offer","price":"69990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/143775142/Zapatillas-Campus-00s/144567480"}}},{"@type":"ListItem","position":88,"item":{"@type":"Product","name":"Zapatillas Hombre L001 Blanco","offers":{"@type":"Offer","price":"83993","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/157708652/zapatillas-hombre-lacoste-l001-blanco/157708658"},"image":"https://fernandoandresmunoz.github.io/imagenes/778fb21b9c7c.webp"}},{"@type":"ListItem","position":89,"item":{"@type":"Product","name":"Predator Club FT EL TF J Zapatilla Fútbol Unisex Adulto Blanco","offers":{"@type":"Offer","price":"33990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766787/predator-club-ft-el-tf-j-zapatilla-futbol-unisex-adulto-blanco-adidas/80766945"}}},{"@type":"ListItem","position":90,"item":{"@type":"Product","name":"Cl98 Zapatilla Urbana Hombre Cuero Café","offers":{"@type":"Offer","price":"39990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80707149/converse-cl98-zapatilla-urbana-hombre-cuero-cafe-converse/80707150"}}},{"@type":"ListItem","position":91,"item":{"@type":"Product","name":"Body Mist Be Delicious 250ml","offers":{"@type":"Offer","price":"8490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80028949/body-mist-be-delicious-250ml-dkny/80028949"}}},{"@type":"ListItem","position":92,"item":{"@type":"Product","name":"Sandalia jelly niña rosado 21-27","offers":{"@type":"Offer","price":"13590","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/153791185/sandalia-jelly-nina-rosado-21-27/153791207"},"image":"https://fernandoandresmunoz.github.io/imagenes/23abcc4b7eeb.webp"}},{"@type":"ListItem","position":93,"item":{"@type":"Product","name":"X_PLR Path Zapatilla Urbana Hombre Negro","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/50348477/xplr-path-zapatilla-urbana-hombre-negro-adidas/50348482"}}},{"@type":"ListItem","position":94,"item":{"@type":"Product","name":"Zapatilla Urbana Hombre Cuero Café","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80591136/zapatilla-urbana-hombre-cuero-cafe-panama-jack/80591176"}}},{"@type":"ListItem","position":95,"item":{"@type":"Product","name":"Botín de fútbol Zapatos F50 Hyperfast Pro sin","offers":{"@type":"Offer","price":"111990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/155769480/botin-de-futbol-adidas-zapatos-f50-hyperfast-pro-sin/156221009"}}},{"@type":"ListItem","position":96,"item":{"@type":"Product","name":"Sandalia Niña Familia Sandalia Outdoor 2710837 Rosado","offers":{"@type":"Offer","price":"13500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/156943573/sandalia-nina-familia-sandalia-outdoor-2710837-rosado-ficcus/156957868"}}},{"@type":"ListItem","position":97,"item":{"@type":"Product","name":"Vs Switch Base K Zapatilla Urbana Unisex Adulto Negro","offers":{"@type":"Offer","price":"26990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80766781/vs-switch-base-k-zapatilla-urbana-unisex-adulto-negro-adidas/80766906"},"image":"https://fernandoandresmunoz.github.io/imagenes/59f974273c51.webp"}},{"@type":"ListItem","position":98,"item":{"@type":"Product","name":"Zapatilla Hombre Outdoor","offers":{"@type":"Offer","price":"39990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/146245196/Zapatilla-Hombre-Outdoor-Gris/146245308"}}},{"@type":"ListItem","position":99,"item":{"@type":"Product","name":"Bamtel Zapatilla Urbana Hombre Azul","offers":{"@type":"Offer","price":"24990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/883808443/bamtel-zapatilla-urbana-hombre-azul-diadora/883808445"},"image":"https://fernandoandresmunoz.github.io/imagenes/a2a3f90909f1.webp"}},{"@type":"ListItem","position":100,"item":{"@type":"Product","name":"Lowland 2.0 Zapatilla Urbana Hombre Cuero Multicolor","offers":{"@type":"Offer","price":"50990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/80754627/lowland-2-0-zapatilla-urbana-hombre-cuero-multicolor-vans/80754635"}}}]}</script>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><small id="upd">cargando…</small></div>
+  <h1 id="hero-title">Los mejores descuentos en Zapatillas, <em>actualizados hoy.</em></h1>
+  <p class="lead" id="hero-desc">Ofertas destacadas con mayor variación y descuento en Zapatillas.</p>
+  <div class="stats">
+    <div id="s1">–<span>Ofertas</span></div>
+    <div id="s2">–<span>Tiendas</span></div>
+    <div id="s3">–<span>Descuento promedio</span></div>
+  </div>
+</header>
+</div>
+
+<nav class="tabs-wrap wrap" aria-label="Categorías y Tiendas">
+  <div class="tabs-scroll" id="tabs-nav"></div>
+</nav>
+
+<div class="bar"><div class="wrap">
+  <div class="row">
+    <input id="q" type="search" placeholder="Buscar..." aria-label="Buscar">
+    <select id="min" aria-label="Descuento mínimo"><option value="0">Cualquier descuento</option><option value="20">+20%</option><option value="40">+40%</option><option value="50">+50%</option><option value="70">+70%</option></select>
+    <select id="per" aria-label="Filas por página"><option selected>10</option><option>25</option><option>50</option><option value="1000">Todos</option></select>
+  </div>
+  <div class="chips" id="chips"></div>
+</div></div>
+
+<main class="wrap">
+  <p class="count" id="count"></p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th data-k="title" id="col-item">Producto</th><th data-k="tienda" class="c-store">Tienda</th><th class="r" data-k="precio">Precio</th><th data-k="descuento">Descuento</th><th class="r" data-k="ahorro">Ahorras</th><th class="r">Historial</th><th></th></tr></thead>
+    <tbody id="body"></tbody>
+  </table></div>
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="wrap">© Páginas &amp; Precios · Monitoreo automático de ofertas en Chile. Los precios y disponibilidad son responsabilidad de cada tienda.</footer>
+
+<script>
+window.PAGE_DEFAULT_TAB = "zapatillas";
+const $ = id => document.getElementById(id),
+  clp = n => "$" + Math.round(n).toLocaleString("es-CL"),
+  esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14"];
+let TABS = [], currentTab = null, B = [], D = [], page = 1, store = -1, key = "descuento", dir = -1, maxD = 1;
+const tabCache = {};
+const tabPath = t => t.path || (t.html_file && t.html_file !== "index.html" ? "/" + t.html_file.replace(".html", "") : "/");
+const tabFromLocation = () => {
+  let p = location.pathname.replace("/index.html", "/").replace(".html", "");
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+  return TABS.find(t => tabPath(t) === p);
+};
+
+fetch("tabs.json", { cache: "no-cache" })
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(data => {
+    TABS = data.tabs || [];
+    renderTabsBar();
+    // Links viejos tipo /#abc: se llevan a la URL limpia /abc
+    const legacy = TABS.find(t => t.id === (location.hash || "").replace("#", "").trim());
+    const found = legacy || tabFromLocation();
+    const initialId = found ? found.id : (TABS.find(t => t.id === window.PAGE_DEFAULT_TAB) || TABS[0])?.id;
+    if (initialId) switchTab(initialId, false);
+    if (legacy) history.replaceState(null, "", tabPath(legacy));
+  })
+  .catch(() => {
+    // Fallback: intentar cargar libros.json directamente
+    fetch("libros.json", { cache: "no-cache" }).then(r => r.json()).then(j => {
+      initTabData({ id: "libros", name: "Libros", item_label: "Libro", headline: "Los mejores descuentos de libros en Chile", subtitle: "Librerías principales de Chile" }, j);
+    }).catch(() => {
+      $("upd").textContent = "sin datos";
+      $("body").innerHTML = `<tr><td colspan="8"><div class="msg">No pude leer los datos.<br><br>Genera las ofertas con <code>python3 script_generator.py</code>.</div></td></tr>`;
+    });
+  });
+
+function renderTabsBar() {
+  const nav = $("tabs-nav");
+  nav.innerHTML = TABS.map(t => `
+    <a class="tab-btn${currentTab && currentTab.id === t.id ? " active" : ""}" href="${tabPath(t)}" data-tab="${t.id}" id="tab-btn-${t.id}">
+      <span class="t-icon">${t.icon || "🏷️"}</span>
+      <span>${esc(t.name)}</span>
+      <span class="t-badge">${t.total || 0}</span>
+    </a>
+  `).join("");
+}
+
+$("tabs-nav").onclick = e => {
+  const btn = e.target.closest(".tab-btn");
+  if (!btn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+  e.preventDefault();
+  const tid = btn.dataset.tab;
+  if (tid && !(currentTab && currentTab.id === tid)) switchTab(tid, true);
+};
+
+window.addEventListener("popstate", () => {
+  const t = tabFromLocation();
+  if (t && (!currentTab || currentTab.id !== t.id)) switchTab(t.id, false);
+});
+
+function switchTab(tabId, updateHash) {
+  const tab = TABS.find(t => t.id === tabId);
+  if (!tab) return;
+  currentTab = tab;
+  if (updateHash) {
+    history.pushState(null, "", tabPath(tab));
+  }
+  document.title = `${tab.name} | Monitor de Ofertas · Descuentos en Chile`;
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const isAct = b.dataset.tab === tabId;
+    b.classList.toggle("active", isAct);
+    if (isAct) b.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+  });
+
+  // Actualizar hero y textos
+  $("hero-title").innerHTML = tab.headline || `Los mejores descuentos en ${esc(tab.name)}, <em>actualizados hoy.</em>`;
+  $("hero-desc").textContent = tab.subtitle || `Monitoreo de precios y descuentos en ${tab.name}.`;
+  $("col-item").dataset.l = tab.item_label || "Producto";
+  $("col-item").textContent = $("col-item").dataset.l;
+  $("q").placeholder = `Buscar en ${tab.name}...`;
+
+  if (tabCache[tabId]) {
+    initTabData(tab, tabCache[tabId]);
+  } else {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ofertas de ${esc(tab.name)}…</div></td></tr>`;
+    fetch(tab.file || `${tabId}.json`, { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(err => {
+        $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al cargar datos de ${esc(tab.name)}.</div></td></tr>`;
+      });
+  }
+}
+
+const fixUrl = b => {
+  if (!b.url) return "";
+  if (/buscalibre/i.test(b.tienda) && !/^https?:/i.test(b.url)) {
+    return new URL(b.url, "https://www.buscalibre.cl/").href;
+  }
+  return b.url;
+};
+
+// Al ir al detalle se guarda cómo estaba el listado (búsqueda, filtros, página, orden, scroll)
+// para dejarlo igual cuando la persona vuelve.
+function saveList() {
+  if (!currentTab) return;
+  try {
+    sessionStorage.setItem("lista:" + currentTab.id, JSON.stringify({ q: $("q").value, min: $("min").value, per: $("per").value, page, store, key, dir, y: window.scrollY }));
+  } catch (e) {}
+}
+function restoreList(tabId) {
+  let s = null;
+  try {
+    s = JSON.parse(sessionStorage.getItem("lista:" + tabId) || "null");
+    sessionStorage.removeItem("lista:" + tabId);
+  } catch (e) {}
+  if (!s) return null;
+  $("q").value = s.q || "";
+  $("min").value = s.min || "0";
+  $("per").value = s.per || "10";
+  page = s.page || 1;
+  store = s.store ?? -1;
+  key = s.key || key;
+  dir = s.dir || dir;
+  if (D.length > 1) document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", +c.dataset.i === store));
+  return s;
+}
+document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList(); });
+
+function initTabData(tab, j) {
+  D = j.dominios || [];
+  document.querySelector("table").classList.toggle("single", D.length < 2);
+  const items = j.items || j.libros || [];
+  B = items.map(b => ({ ...b, ahorro: (b.promedio || 0) - (b.precio || 0), url: fixUrl(b) }));
+  maxD = Math.max(...B.map(b => b.descuento || 0), 1);
+  if (j.generated_at) {
+    $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
+  }
+  $("s1").firstChild.textContent = B.length;
+  $("s2").firstChild.textContent = D.length || 1;
+  $("s3").firstChild.textContent = Math.round(B.reduce((a, b) => a + (b.descuento || 0), 0) / Math.max(B.length, 1)) + "%";
+
+  // Chips de tiendas del tab
+  if (D.length > 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = [{ name: "Todas" }, ...D].map((d, i) =>
+      `<button class="chip${i ? "" : " on"}" data-i="${i ? d.id : -1}">${i ? `<i style="--c:${COLORS[(i - 1) % COLORS.length]}"></i>` : ""}${esc(d.name)}</button>`
+    ).join("");
+  } else if (D.length === 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = `<button class="chip on" data-i="${D[0].id}"><i style="--c:${COLORS[0]}"></i>${esc(D[0].name)}</button>`;
+  } else {
+    $("chips").style.display = "none";
+    $("chips").innerHTML = "";
+  }
+
+  page = 1;
+  store = -1;
+  const sv = restoreList(tab.id);
+  render();
+  if (sv) requestAnimationFrame(() => window.scrollTo(0, sv.y || 0));
+}
+
+const col = id => {
+  const idx = D.findIndex(d => d.id === id);
+  return COLORS[Math.max(idx, 0) % COLORS.length];
+};
+
+$("chips").onclick = e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  store = +b.dataset.i;
+  document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  page = 1;
+  render();
+};
+
+["q", "min", "per"].forEach(id => $(id).addEventListener("input", () => { page = 1; render(); }));
+
+document.querySelector("thead").onclick = e => {
+  const h = e.target.closest("th[data-k]");
+  if (!h) return;
+  const k = h.dataset.k;
+  dir = key === k ? -dir : (k === "title" || k === "tienda" || k === "precio" || k === "promedio" ? 1 : -1);
+  key = k;
+  page = 1;
+  render();
+};
+
+// Mini gráfico del historial de precios (solo muestra la tendencia; el número que manda es el descuento).
+function spark(b) {
+  const h = b.hist;
+  if (!h || h.length < 2) return `<span class="o">—</span>`;
+  const min = Math.min(...h), max = Math.max(...h), rng = max - min, W = 130, H = 40, P = 4;
+  const pts = h.map((v, i) => `${(i / (h.length - 1) * W).toFixed(1)},${(rng === 0 ? H / 2 : H - P - (v - min) / rng * (H - 2 * P)).toFixed(1)}`).join(" ");
+  const c = "var(--dn)";
+  const tip = `Normal ${clp(b.promedio)} · mín ${clp(min)} · máx ${clp(max)} · ${h.length} registros`;
+  return `<div class="sp" title="${tip}"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="${pts} ${W},${H} 0,${H}" fill="${c}" opacity=".13"/><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>`;
+}
+
+function render() {
+  const q = $("q").value.toLowerCase().trim(), m = +$("min").value, PER = +$("per").value;
+  const L = B.filter(b => (store < 0 || b.dominio_id === store) && b.descuento >= m && (!q || (b.title || "").toLowerCase().includes(q)));
+  L.sort((a, b) => (typeof a[key] === "string" ? a[key].localeCompare(b[key], "es") : a[key] - b[key]) * dir);
+  document.querySelectorAll("th[data-k]").forEach(h => {
+    h.dataset.l = h.dataset.l || h.textContent;
+    h.classList.toggle("s", h.dataset.k === key);
+    h.textContent = h.dataset.l + (h.dataset.k === key ? (dir > 0 ? " ↑" : " ↓") : "");
+  });
+  const pages = Math.max(1, Math.ceil(L.length / PER));
+  page = Math.min(page, pages);
+  const st = (page - 1) * PER;
+  $("count").innerHTML = `<b>${L.length}</b> ofertas · mostrando ${L.length ? st + 1 : 0}–${Math.min(st + PER, L.length)}`;
+
+  $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
+    <td class="n">${st + i + 1}</td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
+    <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
+    <td class="r p">${clp(b.precio)}</td>
+    <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
+    <td class="r sv">${clp(b.ahorro)}</td>
+    <td class="r">${spark(b)}</td>
+    <td class="r">${b.url ? `<a class="btn" href="${esc(b.url)}" target="_blank" rel="noopener" data-id="${b.id}" data-pos="${st + i + 1}">Ir a la tienda ↗</a>` : ""}</td>
+  </tr>`).join("") : `<tr><td colspan="8"><div class="msg">Nada por aquí… prueba otra búsqueda 🔍</div></td></tr>`;
+
+  const bt = (l, p, x = "") => `<button ${x} data-p="${p}">${l}</button>`, a = [bt("←", page - 1, page === 1 ? "disabled" : "")];
+  const set = [...new Set([1, 2, page - 1, page, page + 1, pages - 1, pages])].filter(x => x >= 1 && x <= pages).sort((x, y) => x - y);
+  set.forEach((x, i) => {
+    if (i && x - set[i - 1] > 1) a.push("<span>…</span>");
+    a.push(bt(x, x, x === page ? 'class="on"' : ""));
+  });
+  a.push(bt("→", page + 1, page === pages ? "disabled" : ""));
+  $("pager").innerHTML = a.join("");
+}
+
+$("pager").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b || b.disabled) return;
+  page = +b.dataset.p;
+  render();
+  $("count").scrollIntoView({ behavior: "smooth" });
+};
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a.btn[data-id]");
+  if (!a || typeof gtag !== "function") return;
+  const b = B.find(x => String(x.id) === a.dataset.id);
+  if (!b) return;
+  gtag("event", "select_item", {
+    item_list_name: currentTab ? currentTab.name : "Ofertas",
+    currency: "CLP",
+    items: [{ item_id: String(b.id), item_name: b.title, item_brand: b.tienda, price: Math.round(b.precio), discount: Math.round(b.ahorro), index: +a.dataset.pos }]
+  });
+});
+</script>
+</body>
+</html>

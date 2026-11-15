@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>celulares | Monitor de Ofertas · Descuentos en Chile</title>
+<meta name="description" content="Ofertas destacadas con mayor variación y descuento en Celulares.">
+<link rel="canonical" href="https://fernandoandresmunoz.github.io/celulares">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f17;--card:#121a28;--card2:#172235;--hov:#1a253a;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--acc2:#ffc857;--pr:#52e19b;--onacc:#fff;--up:#f87171;--dn:#4ade80;--fl:#94a3b8}
+@media (prefers-color-scheme:light){:root{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--hov:#e9edf5;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--acc2:#b7791f;--pr:#1f9d63;--onacc:#fff;--up:#dc2626;--dn:#16a34a;--fl:#64748b}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.08),transparent)}
+.wrap{max-width:1260px;margin:auto;padding:0 20px}
+.hero{padding:44px 0 20px}
+.brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
+.brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
+.brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
+h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
+.stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stats div{font:800 28px Fraunces,serif}
+.stats span{display:block;font:500 11px Inter;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* Tabs Bar */
+.tabs-wrap{margin:28px auto 16px;display:flex;justify-content:center;width:100%}
+.tabs-scroll{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 10px;margin:0 auto;max-width:100%}
+@media (max-width:768px){.tabs-scroll{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}}
+.tabs-scroll::-webkit-scrollbar{height:5px}
+.tabs-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.tab-btn{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 13px Inter,sans-serif;cursor:pointer;transition:all .2s ease;text-decoration:none;user-select:none}
+.tab-btn:hover{border-color:var(--acc);transform:translateY(-1px);background:var(--hov)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(255,107,61,.18),rgba(255,61,113,.15));border-color:var(--acc);color:var(--ink);box-shadow:0 0 18px -4px rgba(255,107,61,.4)}
+.tab-btn .t-icon{font-size:15px;line-height:1}
+.tab-btn .t-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--mute) 24%,transparent);color:var(--mute);transition:all .2s}
+.tab-btn.active .t-badge{background:var(--acc);color:#fff}
+
+/* Sticky Filter Bar */
+.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-block:1px solid var(--line);padding:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:11px 15px;border-radius:12px;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+input{flex:1 1 240px}input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,107,61,.18)}
+.chips{margin-top:10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:99px;font:500 13px Inter;display:flex;gap:7px;align-items:center;transition:all .15s}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}.chip:hover{border-color:var(--acc)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.count{margin:22px 0 12px;color:var(--mute)}.count b{color:var(--ink)}
+
+/* Table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{text-align:left;font:700 11px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:15px 16px;border-bottom:1px solid var(--line);white-space:nowrap;user-select:none}
+th[data-k]{cursor:pointer}th[data-k]:hover,th.s{color:var(--acc)}
+.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{transition:background .15s}tbody tr:hover{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.n{color:var(--mute);width:44px}
+.bk{display:flex;gap:14px;align-items:center}
+a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
+.mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
+.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
+.st{display:inline-flex;gap:7px;align-items:center;padding:5px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,transparent);font:500 12px Inter;white-space:nowrap}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.o{color:var(--mute);text-decoration:line-through;white-space:nowrap;font-size:13px}
+.p{font:800 17px Fraunces,serif;color:var(--pr);white-space:nowrap}
+.d{display:flex;align-items:center;gap:9px;min-width:130px}
+.d b{font:800 14px Fraunces,serif;width:48px;color:var(--acc2)}.d.hot b{color:var(--acc)}
+.d span{flex:1;height:8px;border-radius:9px;background:color-mix(in srgb,var(--mute) 26%,transparent);overflow:hidden}
+.d span i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--acc2),var(--acc),#ff3d71)}
+.sv{color:var(--acc2);font-weight:600;white-space:nowrap}
+.sp{display:flex;align-items:center;justify-content:flex-end;gap:10px}.sp svg{width:120px;height:34px;flex:none}
+table.single .c-store{display:none}
+.btn{display:inline-block;text-decoration:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:10px;font:700 12px Inter;white-space:nowrap;transition:all .15s}
+tr:hover .btn,.btn:hover{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.msg{text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}.msg code{font:13px monospace;background:var(--hov);padding:3px 8px;border-radius:6px}
+.pager{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:36px 0 16px}
+.pager button{min-width:40px;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Inter;cursor:pointer;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:var(--acc)}.pager button.on{background:linear-gradient(135deg,var(--acc),#ff3d71);border-color:transparent;color:var(--onacc);font-weight:700}
+.pager button:disabled{opacity:.35;cursor:default}.pager span{align-self:center;color:var(--mute)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;color:var(--mute);font-size:13px;text-align:center}
+</style>
+<script type="application/ld+json" id="ld-books">{"@context":"https://schema.org","@type":"ItemList","name":"celulares - Ofertas y Descuentos en Chile","numberOfItems":99,"itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Pixel Watch 3 (2024) 41mm - Reacondicionado","offers":{"@type":"Offer","price":"137990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/154298088/google-pixel-watch-3-2024-41mm-gg3hh-refurbished-gps-only-no-cellular-grade-a/154298089"}}},{"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Teléfono Senior 4g Bluetooth 2.8 Adulto Mayor","offers":{"@type":"Offer","price":"34990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/131806305/Telefono-Senior-Tecnolab-4g-Bluetooth-2.8-Adulto-Mayor/131806306"},"image":"https://fernandoandresmunoz.github.io/imagenes/4d0a014e34dd.webp"}},{"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Cable Original Usb a Lightning 1Mt","offers":{"@type":"Offer","price":"8990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/156964420/cable-original-usb-a-lightning-1mt-apple/156964421"}}},{"@type":"ListItem","position":4,"item":{"@type":"Product","name":"IPhone XR 64 gb Blanco - Reacondicionado","offers":{"@type":"Offer","price":"141990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114199504/iPhone-XR-64-gb-Blanco-Reacondicionado/114199505"}}},{"@type":"ListItem","position":5,"item":{"@type":"Product","name":"IPhone XR 64 gb Coral - Reacondicionado","offers":{"@type":"Offer","price":"151990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114199563/iPhone-XR-64-gb-Coral-Reacondicionado/114199564"}}},{"@type":"ListItem","position":6,"item":{"@type":"Product","name":"Smartwatch Watch Fit Se Negro","offers":{"@type":"Offer","price":"39990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17655426/smartwatch-watch-fit-se-negro-huawei/17655426"},"image":"https://fernandoandresmunoz.github.io/imagenes/b2b113d6303d.webp"}},{"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Iphone 11 128GB - Plata - Reacondicionado","offers":{"@type":"Offer","price":"199990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/132928546/iphone-11-128GB-Plata-Reacondicionado/132928547"}}},{"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Pulsera Inteligente Smart Band 10 Blanco Perla-Monitor Cardiaco SpO2 Sueño-Deportes-5ATM","offers":{"@type":"Offer","price":"47990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/150533890/xiaomi-smart-band-10-pearl-white/150533891"}}},{"@type":"ListItem","position":9,"item":{"@type":"Product","name":"PAD Lite 128GB +6GB RAM Wifi - Negro","offers":{"@type":"Offer","price":"199990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/154758264/oneplus-pad-lite-128gb-6gb-ram-negro/154758265"}}},{"@type":"ListItem","position":10,"item":{"@type":"Product","name":"2 Radio Transmisor Walkie Talkie Bf-888s","offers":{"@type":"Offer","price":"15990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/113348651/2-Radio-Transmisor-Walkie-Talkie-Bf-777s-Baofeng/113348652"}}},{"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Signature 12+512GB Swarovski","offers":{"@type":"Offer","price":"999990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/153814441/motorola-signature-16gb1tb-swarovski/153814442"}}},{"@type":"ListItem","position":12,"item":{"@type":"Product","name":"Rastreador Choice Smart Li Tag Mili","offers":{"@type":"Offer","price":"9990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/80748219/rastreador-choice-smart-li-tag-mili-honor/80748219"}}},{"@type":"ListItem","position":13,"item":{"@type":"Product","name":"400 Smart 256GB 8GB RAM Pantalla 6.8″ Cámara 108MP Batería 5000mAh Liberado","offers":{"@type":"Offer","price":"229990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/150147708/honor-400-smart-256gb-8gb-ram-dorado-pantalla-6-8-camara-108mp-bateria-5000mah-liberado/159686920"}}},{"@type":"ListItem","position":14,"item":{"@type":"Product","name":"Galaxy Z Flip 4 5G 256GB morado Reacondicionado","offers":{"@type":"Offer","price":"309990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/150184880/samsung-galaxy-z-flip-4-5g-256gb-morado-reacondicionado/150184881"}}},{"@type":"ListItem","position":15,"item":{"@type":"Product","name":"Smartwatch S4 41Mm Gold","offers":{"@type":"Offer","price":"159990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17585852/Smartwatch-Xiaomi-S4-41Mm-Gold/17585852"},"image":"https://fernandoandresmunoz.github.io/imagenes/abfa507c7620.webp"}},{"@type":"ListItem","position":16,"item":{"@type":"Product","name":"P30 Pro 8 + 256g negro Reacondicionado","offers":{"@type":"Offer","price":"209990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143274419/Huawei-p30-Pro-8-+-256g-negro-Reacondicionado/143274420"}}},{"@type":"ListItem","position":17,"item":{"@type":"Product","name":"Band 10","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17387970/Band-10-Huawei/17387970"}}},{"@type":"ListItem","position":18,"item":{"@type":"Product","name":"Galaxy Z Flip 7 5G 512 GB12 GB Dual Sim Negro","offers":{"@type":"Offer","price":"899990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/146780695/Samsung-Galaxy-Z-Flip-7-5G-512-GB12-GB-Dual-Sim-Negro/146780696"}}},{"@type":"ListItem","position":19,"item":{"@type":"Product","name":"IPhone SE 2020 64 gb Blanco - Reacondicionado","offers":{"@type":"Offer","price":"122990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114324339/iPhone-SE-2020-64-gb-Blanco-Reacondicionado/114324340"}}},{"@type":"ListItem","position":20,"item":{"@type":"Product","name":"IPhone 12 64 gb Negro - Reacondicionado","offers":{"@type":"Offer","price":"236990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/120313133/iPhone-12-64-gb-Negro-Reacondicionado/120313134"}}},{"@type":"ListItem","position":21,"item":{"@type":"Product","name":"Galaxy Z Flip 7 5G 512 GB12 GB Dual Sim Azul.","offers":{"@type":"Offer","price":"899990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/146780689/Samsung-Galaxy-Z-Flip-7-5G-512-GB12-GB-Dual-Sim-Azul/146780690"}}},{"@type":"ListItem","position":22,"item":{"@type":"Product","name":"Cargador Portátil Power Bank 5.000 mAh Tipo C Negro","offers":{"@type":"Offer","price":"8990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/129612080/Cargador-Portatil-Power-Bank-5.000-mAh-Tipo-C-Negro/129612081"}}},{"@type":"ListItem","position":23,"item":{"@type":"Product","name":"P30 Pro 8 + 512g Color del cielo Reacondicionado","offers":{"@type":"Offer","price":"244990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/144050514/Huawei-p30-Pro-8-+-512g-Color-del-cielo-Reacondicionado/144050515"}}},{"@type":"ListItem","position":24,"item":{"@type":"Product","name":"17 Ultra Negro 16GB RAM 1024GB Memoria","offers":{"@type":"Offer","price":"1459990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/152975269/xiaomi-17-ultra-negro-16gb-ram-1024gb-memoria/152975270"}}},{"@type":"ListItem","position":25,"item":{"@type":"Product","name":"Galaxy Z Fold 7 256GB Negro","offers":{"@type":"Offer","price":"1469990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/146634513/Samsung-Galaxy-Z-Fold-7-256GB-Negro/146634514"}}},{"@type":"ListItem","position":26,"item":{"@type":"Product","name":"Pixel 9A 128 GB/12 GB Negro","offers":{"@type":"Offer","price":"449990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/148832041/Google-Pixel-9A-128-GB-12-GB-Negro/148832042"}}},{"@type":"ListItem","position":27,"item":{"@type":"Product","name":"Cable Original USB-C Lightning 1mt","offers":{"@type":"Offer","price":"10990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/130775592/cable-original-apple-usb-c-lightning-1mt/130775593"}}},{"@type":"ListItem","position":28,"item":{"@type":"Product","name":"Telefono Celular Senior Sos 4g 9312 Nexstore","offers":{"@type":"Offer","price":"33990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/138535316/Telefono-Celular-Senior-Sos-4g-9312-Nexstore/138535317"}}},{"@type":"ListItem","position":29,"item":{"@type":"Product","name":"IPhone 13 128 gb Negro - Reacondicionado","offers":{"@type":"Offer","price":"331990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114151143/iPhone-13-128-gb-Negro-Reacondicionado/114151144"},"image":"https://fernandoandresmunoz.github.io/imagenes/308a6c251608.webp"}},{"@type":"ListItem","position":30,"item":{"@type":"Product","name":"Celular Nubia Air 8+256GB Negro","offers":{"@type":"Offer","price":"269990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17671052/celular-nubia-air-8256gb-negro-zte/17671052"}}},{"@type":"ListItem","position":31,"item":{"@type":"Product","name":"IPhone XR 64 gb Negro - Reacondicionado","offers":{"@type":"Offer","price":"141990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114199476/iphone-xr-64-gb-negro-reacondicionado/114199477"}}},{"@type":"ListItem","position":32,"item":{"@type":"Product","name":"Smartwatch Redmi Watch 6 Active Naranjo","offers":{"@type":"Offer","price":"36990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17764876/smartwatch-redmi-watch-6-active-naranjo-xiaomi/17764876"}}},{"@type":"ListItem","position":33,"item":{"@type":"Product","name":"Smartwatch 2I Black","offers":{"@type":"Offer","price":"29990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17441649/HONOR-WATCH-2I-BLACK-SMARTWATCH/17441649"}}},{"@type":"ListItem","position":34,"item":{"@type":"Product","name":"IPhone SE 2020 64 gb Rojo - Seminuevo","offers":{"@type":"Offer","price":"122990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114324992/iPhone-SE-2020-64-gb-Rojo-Seminuevo/114324993"}}},{"@type":"ListItem","position":35,"item":{"@type":"Product","name":"Razr 70 12+512GB","offers":{"@type":"Offer","price":"799990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/153777366/motorola-razr-70-12512gb/153777369"}}},{"@type":"ListItem","position":36,"item":{"@type":"Product","name":"Pantalla Completa para IPHONE 17 pro max OLED GX","offers":{"@type":"Offer","price":"114900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/155930425/pantalla-completa-para-iphone-17-pro-max/155930426"},"image":"https://fernandoandresmunoz.github.io/imagenes/8bee93da4a63.webp"}},{"@type":"ListItem","position":37,"item":{"@type":"Product","name":"Galaxy S22 Plus 5G 256GB - Negro - Reacondicionado","offers":{"@type":"Offer","price":"329990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/118351097/Samsung-Galaxy-S22-Plus-5G-256GB-Negro-Reacondicionado/118351098"}}},{"@type":"ListItem","position":38,"item":{"@type":"Product","name":"Galaxy Z Fold 7 5G 512 GB12 GB Dual SIM Azul","offers":{"@type":"Offer","price":"1569990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/146634517/Samsung-Galaxy-Z-Fold-7-5G-512-GB12-GB-Dual-SIM-Azul/146634518"}}},{"@type":"ListItem","position":39,"item":{"@type":"Product","name":"IPhone SE 2020 64 gb Blanco - Seminuevo","offers":{"@type":"Offer","price":"122990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114324893/iPhone-SE-2020-64-gb-Blanco-Seminuevo/114324894"},"image":"https://fernandoandresmunoz.github.io/imagenes/26e34b42ce55.webp"}},{"@type":"ListItem","position":40,"item":{"@type":"Product","name":"Teléfono Celular Senior Adulto Mayor COD 9556 Negro","offers":{"@type":"Offer","price":"27990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/153300803/telefono-mlab-senior-4g-lte-dual-sim-card-mlab-9556-negro/153300804"}}},{"@type":"ListItem","position":41,"item":{"@type":"Product","name":"IPhone SE 2020 64 gb Negro - Seminuevo","offers":{"@type":"Offer","price":"122990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114324968/iPhone-SE-2020-64-gb-Negro-Seminuevo/114324970"}}},{"@type":"ListItem","position":42,"item":{"@type":"Product","name":"IPhone 13 Pro 256GB - Grafito - Reacondicionado","offers":{"@type":"Offer","price":"539990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/121109122/iPhone-13-Pro-256GB-Grafito-Reacondicionado/121109123"}}},{"@type":"ListItem","position":43,"item":{"@type":"Product","name":"Galaxy S24 Ultra 5G 256GB - Gris - Reacondicionado","offers":{"@type":"Offer","price":"749990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/139870594/Samsung-Galaxy-S24-Ultra-5G-256GB-Gris-Reacondicionado/139870595"}}},{"@type":"ListItem","position":44,"item":{"@type":"Product","name":"Galaxy Z Flip 7 5G 512 GB12 GB Dual Sim Rosa","offers":{"@type":"Offer","price":"899990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/146780693/Samsung-Galaxy-Z-Flip-7-5G-512-GB12-GB-Dual-Sim-Rosa/146780694"}}},{"@type":"ListItem","position":45,"item":{"@type":"Product","name":"Galaxy A37 5G 128GB - Negro","offers":{"@type":"Offer","price":"319990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/152798218/samsung-galaxy-a37-5g-128gb-negro/152798219"},"image":"https://fernandoandresmunoz.github.io/imagenes/88e1cfca56cd.webp"}},{"@type":"ListItem","position":46,"item":{"@type":"Product","name":"Celular Pixel 11 Pro XL 5G 256GB 12GB RAM (Dual Esim | Global Version)","offers":{"@type":"Offer","price":"1299990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/157807766/celular-google-pixel-11-pro-xl-5g-256gb-12gb-ram-dual-esim-usa-version/157807768"}}},{"@type":"ListItem","position":47,"item":{"@type":"Product","name":"Galaxy Z Fold 7 5G 512 GB12 GB Dual SIM Negro","offers":{"@type":"Offer","price":"1599990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/146634519/Samsung-Galaxy-Z-Fold-7-5G-512-GB12-GB-Dual-SIM-Negro/146634520"}}},{"@type":"ListItem","position":48,"item":{"@type":"Product","name":"IPhone SE 2020 64 gb Blanco - Seminuevo","offers":{"@type":"Offer","price":"122990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/114107522/iPhone-SE-2020-64-gb-Blanco-Seminuevo/114107523"}}},{"@type":"ListItem","position":49,"item":{"@type":"Product","name":"Watch Series 6 44mm GPS Azul Reacondicionado","offers":{"@type":"Offer","price":"149990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143600403/Apple-Watch-Series-6-44mm-GPS-Azul-Reacondicionado/143600404"}}},{"@type":"ListItem","position":50,"item":{"@type":"Product","name":"IPhone 11 64 gb Rojo - Reacondicionado","offers":{"@type":"Offer","price":"189990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/120259865/iPhone-11-64-gb-Rojo-Reacondicionado/120259866"}}},{"@type":"ListItem","position":51,"item":{"@type":"Product","name":"Galaxy Z Flip 4 5G 256GB Champagne Gold Reacondicionado","offers":{"@type":"Offer","price":"309990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/154967379/samsung-galaxy-z-flip-4-5g-256gb-champagne-gold-reacondicionado/154967380"}}},{"@type":"ListItem","position":52,"item":{"@type":"Product","name":"Smartwatch Redmi Watch 6 Active Gris","offers":{"@type":"Offer","price":"36990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17764874/smartwatch-redmi-watch-6-active-gris-xiaomi/17764874"}}},{"@type":"ListItem","position":53,"item":{"@type":"Product","name":"IPhone 16 Plus 5G 128GB Negro Reacondicionado","offers":{"@type":"Offer","price":"729990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/148723904/apple-iphone-16-plus-5g-128gb-negro-reacondicionado/148723905"}}},{"@type":"ListItem","position":54,"item":{"@type":"Product","name":"Galaxy S25 Plus 256GB 12GB Azul Plateado","offers":{"@type":"Offer","price":"749990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143219732/Samsung-Galaxy-S25-Plus-256GB-12GB-Azul-Plateado/143219733"}}},{"@type":"ListItem","position":55,"item":{"@type":"Product","name":"Smartwatch Redmi Watch 6 Active Negro","offers":{"@type":"Offer","price":"36990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17764873/smartwatch-redmi-watch-6-active-negro-xiaomi/17764873"}}},{"@type":"ListItem","position":56,"item":{"@type":"Product","name":"Galaxy S25 Plus 256GB 12GB Azul Titanio","offers":{"@type":"Offer","price":"749990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143219730/Samsung-Galaxy-S25-Plus-256GB-12GB-Azul-Titanio/143219731"}}},{"@type":"ListItem","position":57,"item":{"@type":"Product","name":"Cable C A Lightning 2 Metro Original","offers":{"@type":"Offer","price":"14990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/131017464/Cable-C-A-Lightning-2-Metro-Apple-Original./131017465"},"image":"https://fernandoandresmunoz.github.io/imagenes/448b6a702c1b.webp"}},{"@type":"ListItem","position":58,"item":{"@type":"Product","name":"Smartband 11 Active","offers":{"@type":"Offer","price":"24990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17764877/smartband-11-active-xiaomi/17764878"}}},{"@type":"ListItem","position":59,"item":{"@type":"Product","name":"Galaxy S25 Plus 256GB 12GB RAM Plata","offers":{"@type":"Offer","price":"749990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/144230879/Samsung-Galaxy-S25-Plus-256GB-12GB-RAM-Plata/144230880"}}},{"@type":"ListItem","position":60,"item":{"@type":"Product","name":"Cargador USB-C 20W Original Con Cable C Lightning 1mt","offers":{"@type":"Offer","price":"15990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/148214580/cargador-apple-usb-c-20w-original-con-cable-c-lightning-1mt/148214581"},"image":"https://fernandoandresmunoz.github.io/imagenes/7ff2302e2899.webp"}},{"@type":"ListItem","position":61,"item":{"@type":"Product","name":"Galaxy S25 Ultra 5G 512GB - Negro - Reacondicionado","offers":{"@type":"Offer","price":"899990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/152846933/samsung-galaxy-s25-ultra-5g-512gb-negro-reacondicionado/152846934"},"image":"https://fernandoandresmunoz.github.io/imagenes/d14d9658ee11.webp"}},{"@type":"ListItem","position":62,"item":{"@type":"Product","name":"Usb-C To Light Woven Cb 1M cargador iPhone","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/16614291/Usb-C-To-Light-Woven-Cb-1M-Apple/16614291"}}},{"@type":"ListItem","position":63,"item":{"@type":"Product","name":"Galaxy A57 5G 128GB - Navy","offers":{"@type":"Offer","price":"389990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/152803597/samsung-galaxy-a57-5g-128gb-navy/152803598"},"image":"https://fernandoandresmunoz.github.io/imagenes/ca4a153e8717.webp"}},{"@type":"ListItem","position":64,"item":{"@type":"Product","name":"Galaxy S22 Plus 5G 128GB - Negro - Reacondicionado","offers":{"@type":"Offer","price":"319990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/117358978/Samsung-Galaxy-S22-Plus-5G-128GB-Negro-Reacondicionado/117358979"}}},{"@type":"ListItem","position":65,"item":{"@type":"Product","name":"NOTE 50PRO 8RAM 256GB TITANIUM GREY.","offers":{"@type":"Offer","price":"299990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/150221800/infinix-note-50pro-8ram-256gb-titanium-grey/150221801"}}},{"@type":"ListItem","position":66,"item":{"@type":"Product","name":"IPhone 11 64GB - Negro - Reacondicionado","offers":{"@type":"Offer","price":"219990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/113856962/iPhone-11-64GB-Negro-Reacondicionado/113856963"}}},{"@type":"ListItem","position":67,"item":{"@type":"Product","name":"Galaxy S25 Ultra 5G 512GB - Plateado - Reacondicionado","offers":{"@type":"Offer","price":"899990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/152847078/samsung-galaxy-s25-ultra-5g-512gb-plateado-reacondicionado/152847079"}}},{"@type":"ListItem","position":68,"item":{"@type":"Product","name":"P30 Pro 8 + 256g Color naranja Reacondicionado","offers":{"@type":"Offer","price":"239990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143274421/Huawei-p30-Pro-8-+-256g-Color-naranja-Reacondicionado/143274422"}}},{"@type":"ListItem","position":69,"item":{"@type":"Product","name":"Cargador 20W Original + Cable C - C 1mt iPhone 15 16 17","offers":{"@type":"Offer","price":"17990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/148214570/cargador-apple-20w-original-cable-c-c-1mt-iphone-15-16-17/148214571"}}},{"@type":"ListItem","position":70,"item":{"@type":"Product","name":"Galaxy S25 Ultra 5G 512GB - Rosa - Reacondicionado","offers":{"@type":"Offer","price":"899990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/152847108/samsung-galaxy-s25-ultra-5g-512gb-rosa-reacondicionado/152847109"}}},{"@type":"ListItem","position":71,"item":{"@type":"Product","name":"Estabilizador Para Celulares Osmo Mobile 8","offers":{"@type":"Offer","price":"129990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/158505896/estabilizador-para-celulares-dji-osmo-mobile-8/158505897"}}},{"@type":"ListItem","position":72,"item":{"@type":"Product","name":"Iphone SE 3 5G 2022 64GB Blanco Reacondicionado","offers":{"@type":"Offer","price":"179990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/118970465/apple-iphone-se-3-5g-2022-64gb-blanco-reacondicionado/118970466"},"image":"https://fernandoandresmunoz.github.io/imagenes/2ddfa16e13db.webp"}},{"@type":"ListItem","position":73,"item":{"@type":"Product","name":"Galaxy A27 5G","offers":{"@type":"Offer","price":"249990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/156689875/samsung-galaxy-a27-5g-128gb/156689878"}}},{"@type":"ListItem","position":74,"item":{"@type":"Product","name":"Cargador USB-C 20W Original Con Cable C a C","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/153427584/cargador-apple-usb-c-20w-original-con-cable-c-a-c/153427585"}}},{"@type":"ListItem","position":75,"item":{"@type":"Product","name":"IPhone 14 Plus 128GB - Reacondicionado","offers":{"@type":"Offer","price":"399990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/148525843/iPhone-14-Plus-128GB-Negro-Reacondicionado/154985209"}}},{"@type":"ListItem","position":76,"item":{"@type":"Product","name":"Pixel 9 Pro 256 GB12 GB Dual Sim Gris","offers":{"@type":"Offer","price":"804990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143747070/Google-Pixel-9-Pro-256-GB12-GB-Dual-Sim-Gris/143747071"}}},{"@type":"ListItem","position":77,"item":{"@type":"Product","name":"Cargador USB-C 20W Original Con Cable C a C","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/154035259/cargador-apple-usb-c-20w-original-con-cable-c-a-c/154035260"}}},{"@type":"ListItem","position":78,"item":{"@type":"Product","name":"IPhone 12 Pro Max 128GB - Gold - Reacondicionado","offers":{"@type":"Offer","price":"419990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/119631906/iphone-12-pro-max-128gb-gold-reacondicionado/119631907"}}},{"@type":"ListItem","position":79,"item":{"@type":"Product","name":"Galaxy S25 Ultra 512GB 12GB Blanco Plateado","offers":{"@type":"Offer","price":"1099990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143219750/Samsung-Galaxy-S25-Ultra-512GB-12GB-Blanco-Plateado/143219751"}}},{"@type":"ListItem","position":80,"item":{"@type":"Product","name":"IPhone 15 Plus 256GB Negro Reacondicionado","offers":{"@type":"Offer","price":"629990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/138778268/apple-iphone-15-plus-5g-256gb-negro-reacondicionado/138778269"}}},{"@type":"ListItem","position":81,"item":{"@type":"Product","name":"IPhone 14 Pro Max 256GB - Reacondicionado","offers":{"@type":"Offer","price":"669990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/155004819/iphone-14-pro-max-256gb-reacondicionado/155004821"}}},{"@type":"ListItem","position":82,"item":{"@type":"Product","name":"Galaxy A37 5G 128GB - Verde","offers":{"@type":"Offer","price":"319990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/154963581/samsung-galaxy-a37-5g-128gb-verde/154963582"}}},{"@type":"ListItem","position":83,"item":{"@type":"Product","name":"17 12GB 256GB Global, Homologado para Chile","offers":{"@type":"Offer","price":"799990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/155393482/xiaomi-17-12gb-256gb-version-global-ice-blue/155393483"}}},{"@type":"ListItem","position":84,"item":{"@type":"Product","name":"Smartwatch Epix Pro G2 51Mm Saph Crbngry Blk","offers":{"@type":"Offer","price":"699990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17654222/smartwatch-garmin-epix-pro-g2-51mm-saph-crbngry-blk/17654222"}}},{"@type":"ListItem","position":85,"item":{"@type":"Product","name":"IPhone 12 64GB - Negro - Reacondicionado","offers":{"@type":"Offer","price":"259990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/116389072/iphone-12-64gb-negro-reacondicionado/116389074"}}},{"@type":"ListItem","position":86,"item":{"@type":"Product","name":"Galaxy S23 FE 5G 128GB - Morado - Reacondicionado","offers":{"@type":"Offer","price":"369990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/139871117/Samsung-Galaxy-S23-FE-5G-128GB-Morado-Reacondicionado/139871118"}}},{"@type":"ListItem","position":87,"item":{"@type":"Product","name":"Smartwatch Redmi Watch 6 Active","offers":{"@type":"Offer","price":"37990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/157101769/smartwatch-xiaomi-redmi-watch-6-active-negro/157101770"}}},{"@type":"ListItem","position":88,"item":{"@type":"Product","name":"Galaxy Z Fold5 5G 1TB - Reacondicionado - Celeste","offers":{"@type":"Offer","price":"929990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/147452777/Samsung-Galaxy-Z-Fold5-5G-1TB-Reacondicionado-Celeste/147452778"}}},{"@type":"ListItem","position":89,"item":{"@type":"Product","name":"Razr 70 Ultra 16GB+1TB","offers":{"@type":"Offer","price":"1399990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/153777340/motorola-razr-70-ultra-16gb1tb/157541586"},"image":"https://fernandoandresmunoz.github.io/imagenes/5543f6e886b7.webp"}},{"@type":"ListItem","position":90,"item":{"@type":"Product","name":"IPhone 13 5G 256GB Rojo Reacondicionado","offers":{"@type":"Offer","price":"379990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/125434375/apple-iphone-13-5g-256gb-rojo-reacondicionado/125434376"},"image":"https://fernandoandresmunoz.github.io/imagenes/e3ad5a4ced6f.webp"}},{"@type":"ListItem","position":91,"item":{"@type":"Product","name":"Pack 2 Radio Transmisor Walkie Talkie Bf-888s Manos Libres","offers":{"@type":"Offer","price":"12990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/129315713/Pack-2-Radio-Transmisor-Walkie-Talkie-Bf-888s-Manos-Libres/129315715"}}},{"@type":"ListItem","position":92,"item":{"@type":"Product","name":"Galaxy S25 Ultra 256GB 12GB Azul Plateado","offers":{"@type":"Offer","price":"999990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143219744/Samsung-Galaxy-S25-Ultra-256GB-12GB-Azul-Plateado/143219745"}}},{"@type":"ListItem","position":93,"item":{"@type":"Product","name":"Smartwatch Fenix 9 47Mm Carbón Dlc Negro","offers":{"@type":"Offer","price":"1199990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/17767292/smartwatch-fenix-9-47mm-carbon-dlc-negro-garmin/17767292"}}},{"@type":"ListItem","position":94,"item":{"@type":"Product","name":"Smartwatch Redmi Watch 6 Lite Amoled Negro","offers":{"@type":"Offer","price":"59990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/157360181/smartwatch-xiaomi-redmi-watch-6-lite-amoled-negro/157360182"}}},{"@type":"ListItem","position":95,"item":{"@type":"Product","name":"Galaxy S25 Ultra 256GB 12GB Blanco","offers":{"@type":"Offer","price":"999990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/143219742/Samsung-Galaxy-S25-Ultra-256GB-12GB-Blanco/143219743"}}},{"@type":"ListItem","position":96,"item":{"@type":"Product","name":"12 Pro 5G 256GB - Gris - Reacondicionado","offers":{"@type":"Offer","price":"289990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/126513888/Xiaomi-12-Pro-5G-256GB-Gris-Reacondicionado/126513889"}}},{"@type":"ListItem","position":97,"item":{"@type":"Product","name":"IPhone 14 128GB - Rojo - Reacondicionado","offers":{"@type":"Offer","price":"429990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/126763588/iPhone-14-128GB-Rojo-Reacondicionado/126763589"}}},{"@type":"ListItem","position":98,"item":{"@type":"Product","name":"Cargador Carga Rápida 20w + Cable 1m Usb-c A Lightning Blanco","offers":{"@type":"Offer","price":"17990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/129445783/Cargador-Carga-Rapida-20w-Apple-+-Cable-1m-Usb-c-A-Lightning-Blanco/129445784"}}},{"@type":"ListItem","position":99,"item":{"@type":"Product","name":"Pixel 10 Pro XL 5G 256GB Nergo","offers":{"@type":"Offer","price":"1149990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-celulares.com"},"url":"https://www.falabella.com/falabella-cl/product/147348009/Google-Pixel-10-Pro-XL-5G-256GB-Nergo/147348011"}}}]}</script>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><small id="upd">cargando…</small></div>
+  <h1 id="hero-title">Los mejores descuentos en Celulares, <em>actualizados hoy.</em></h1>
+  <p class="lead" id="hero-desc">Ofertas destacadas con mayor variación y descuento en Celulares.</p>
+  <div class="stats">
+    <div id="s1">–<span>Ofertas</span></div>
+    <div id="s2">–<span>Tiendas</span></div>
+    <div id="s3">–<span>Descuento promedio</span></div>
+  </div>
+</header>
+</div>
+
+<nav class="tabs-wrap wrap" aria-label="Categorías y Tiendas">
+  <div class="tabs-scroll" id="tabs-nav"></div>
+</nav>
+
+<div class="bar"><div class="wrap">
+  <div class="row">
+    <input id="q" type="search" placeholder="Buscar..." aria-label="Buscar">
+    <select id="min" aria-label="Descuento mínimo"><option value="0">Cualquier descuento</option><option value="20">+20%</option><option value="40">+40%</option><option value="50">+50%</option><option value="70">+70%</option></select>
+    <select id="per" aria-label="Filas por página"><option selected>10</option><option>25</option><option>50</option><option value="1000">Todos</option></select>
+  </div>
+  <div class="chips" id="chips"></div>
+</div></div>
+
+<main class="wrap">
+  <p class="count" id="count"></p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th data-k="title" id="col-item">Producto</th><th data-k="tienda" class="c-store">Tienda</th><th class="r" data-k="precio">Precio</th><th data-k="descuento">Descuento</th><th class="r" data-k="ahorro">Ahorras</th><th class="r">Historial</th><th></th></tr></thead>
+    <tbody id="body"></tbody>
+  </table></div>
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="wrap">© Páginas &amp; Precios · Monitoreo automático de ofertas en Chile. Los precios y disponibilidad son responsabilidad de cada tienda.</footer>
+
+<script>
+window.PAGE_DEFAULT_TAB = "celulares";
+const $ = id => document.getElementById(id),
+  clp = n => "$" + Math.round(n).toLocaleString("es-CL"),
+  esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14"];
+let TABS = [], currentTab = null, B = [], D = [], page = 1, store = -1, key = "descuento", dir = -1, maxD = 1;
+const tabCache = {};
+const tabPath = t => t.path || (t.html_file && t.html_file !== "index.html" ? "/" + t.html_file.replace(".html", "") : "/");
+const tabFromLocation = () => {
+  let p = location.pathname.replace("/index.html", "/").replace(".html", "");
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+  return TABS.find(t => tabPath(t) === p);
+};
+
+fetch("tabs.json", { cache: "no-cache" })
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(data => {
+    TABS = data.tabs || [];
+    renderTabsBar();
+    // Links viejos tipo /#abc: se llevan a la URL limpia /abc
+    const legacy = TABS.find(t => t.id === (location.hash || "").replace("#", "").trim());
+    const found = legacy || tabFromLocation();
+    const initialId = found ? found.id : (TABS.find(t => t.id === window.PAGE_DEFAULT_TAB) || TABS[0])?.id;
+    if (initialId) switchTab(initialId, false);
+    if (legacy) history.replaceState(null, "", tabPath(legacy));
+  })
+  .catch(() => {
+    // Fallback: intentar cargar libros.json directamente
+    fetch("libros.json", { cache: "no-cache" }).then(r => r.json()).then(j => {
+      initTabData({ id: "libros", name: "Libros", item_label: "Libro", headline: "Los mejores descuentos de libros en Chile", subtitle: "Librerías principales de Chile" }, j);
+    }).catch(() => {
+      $("upd").textContent = "sin datos";
+      $("body").innerHTML = `<tr><td colspan="8"><div class="msg">No pude leer los datos.<br><br>Genera las ofertas con <code>python3 script_generator.py</code>.</div></td></tr>`;
+    });
+  });
+
+function renderTabsBar() {
+  const nav = $("tabs-nav");
+  nav.innerHTML = TABS.map(t => `
+    <a class="tab-btn${currentTab && currentTab.id === t.id ? " active" : ""}" href="${tabPath(t)}" data-tab="${t.id}" id="tab-btn-${t.id}">
+      <span class="t-icon">${t.icon || "🏷️"}</span>
+      <span>${esc(t.name)}</span>
+      <span class="t-badge">${t.total || 0}</span>
+    </a>
+  `).join("");
+}
+
+$("tabs-nav").onclick = e => {
+  const btn = e.target.closest(".tab-btn");
+  if (!btn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+  e.preventDefault();
+  const tid = btn.dataset.tab;
+  if (tid && !(currentTab && currentTab.id === tid)) switchTab(tid, true);
+};
+
+window.addEventListener("popstate", () => {
+  const t = tabFromLocation();
+  if (t && (!currentTab || currentTab.id !== t.id)) switchTab(t.id, false);
+});
+
+function switchTab(tabId, updateHash) {
+  const tab = TABS.find(t => t.id === tabId);
+  if (!tab) return;
+  currentTab = tab;
+  if (updateHash) {
+    history.pushState(null, "", tabPath(tab));
+  }
+  document.title = `${tab.name} | Monitor de Ofertas · Descuentos en Chile`;
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const isAct = b.dataset.tab === tabId;
+    b.classList.toggle("active", isAct);
+    if (isAct) b.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+  });
+
+  // Actualizar hero y textos
+  $("hero-title").innerHTML = tab.headline || `Los mejores descuentos en ${esc(tab.name)}, <em>actualizados hoy.</em>`;
+  $("hero-desc").textContent = tab.subtitle || `Monitoreo de precios y descuentos en ${tab.name}.`;
+  $("col-item").dataset.l = tab.item_label || "Producto";
+  $("col-item").textContent = $("col-item").dataset.l;
+  $("q").placeholder = `Buscar en ${tab.name}...`;
+
+  if (tabCache[tabId]) {
+    initTabData(tab, tabCache[tabId]);
+  } else {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ofertas de ${esc(tab.name)}…</div></td></tr>`;
+    fetch(tab.file || `${tabId}.json`, { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(err => {
+        $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al cargar datos de ${esc(tab.name)}.</div></td></tr>`;
+      });
+  }
+}
+
+const fixUrl = b => {
+  if (!b.url) return "";
+  if (/buscalibre/i.test(b.tienda) && !/^https?:/i.test(b.url)) {
+    return new URL(b.url, "https://www.buscalibre.cl/").href;
+  }
+  return b.url;
+};
+
+// Al ir al detalle se guarda cómo estaba el listado (búsqueda, filtros, página, orden, scroll)
+// para dejarlo igual cuando la persona vuelve.
+function saveList() {
+  if (!currentTab) return;
+  try {
+    sessionStorage.setItem("lista:" + currentTab.id, JSON.stringify({ q: $("q").value, min: $("min").value, per: $("per").value, page, store, key, dir, y: window.scrollY }));
+  } catch (e) {}
+}
+function restoreList(tabId) {
+  let s = null;
+  try {
+    s = JSON.parse(sessionStorage.getItem("lista:" + tabId) || "null");
+    sessionStorage.removeItem("lista:" + tabId);
+  } catch (e) {}
+  if (!s) return null;
+  $("q").value = s.q || "";
+  $("min").value = s.min || "0";
+  $("per").value = s.per || "10";
+  page = s.page || 1;
+  store = s.store ?? -1;
+  key = s.key || key;
+  dir = s.dir || dir;
+  if (D.length > 1) document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", +c.dataset.i === store));
+  return s;
+}
+document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList(); });
+
+function initTabData(tab, j) {
+  D = j.dominios || [];
+  document.querySelector("table").classList.toggle("single", D.length < 2);
+  const items = j.items || j.libros || [];
+  B = items.map(b => ({ ...b, ahorro: (b.promedio || 0) - (b.precio || 0), url: fixUrl(b) }));
+  maxD = Math.max(...B.map(b => b.descuento || 0), 1);
+  if (j.generated_at) {
+    $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
+  }
+  $("s1").firstChild.textContent = B.length;
+  $("s2").firstChild.textContent = D.length || 1;
+  $("s3").firstChild.textContent = Math.round(B.reduce((a, b) => a + (b.descuento || 0), 0) / Math.max(B.length, 1)) + "%";
+
+  // Chips de tiendas del tab
+  if (D.length > 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = [{ name: "Todas" }, ...D].map((d, i) =>
+      `<button class="chip${i ? "" : " on"}" data-i="${i ? d.id : -1}">${i ? `<i style="--c:${COLORS[(i - 1) % COLORS.length]}"></i>` : ""}${esc(d.name)}</button>`
+    ).join("");
+  } else if (D.length === 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = `<button class="chip on" data-i="${D[0].id}"><i style="--c:${COLORS[0]}"></i>${esc(D[0].name)}</button>`;
+  } else {
+    $("chips").style.display = "none";
+    $("chips").innerHTML = "";
+  }
+
+  page = 1;
+  store = -1;
+  const sv = restoreList(tab.id);
+  render();
+  if (sv) requestAnimationFrame(() => window.scrollTo(0, sv.y || 0));
+}
+
+const col = id => {
+  const idx = D.findIndex(d => d.id === id);
+  return COLORS[Math.max(idx, 0) % COLORS.length];
+};
+
+$("chips").onclick = e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  store = +b.dataset.i;
+  document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  page = 1;
+  render();
+};
+
+["q", "min", "per"].forEach(id => $(id).addEventListener("input", () => { page = 1; render(); }));
+
+document.querySelector("thead").onclick = e => {
+  const h = e.target.closest("th[data-k]");
+  if (!h) return;
+  const k = h.dataset.k;
+  dir = key === k ? -dir : (k === "title" || k === "tienda" || k === "precio" || k === "promedio" ? 1 : -1);
+  key = k;
+  page = 1;
+  render();
+};
+
+// Mini gráfico del historial de precios (solo muestra la tendencia; el número que manda es el descuento).
+function spark(b) {
+  const h = b.hist;
+  if (!h || h.length < 2) return `<span class="o">—</span>`;
+  const min = Math.min(...h), max = Math.max(...h), rng = max - min, W = 130, H = 40, P = 4;
+  const pts = h.map((v, i) => `${(i / (h.length - 1) * W).toFixed(1)},${(rng === 0 ? H / 2 : H - P - (v - min) / rng * (H - 2 * P)).toFixed(1)}`).join(" ");
+  const c = "var(--dn)";
+  const tip = `Normal ${clp(b.promedio)} · mín ${clp(min)} · máx ${clp(max)} · ${h.length} registros`;
+  return `<div class="sp" title="${tip}"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="${pts} ${W},${H} 0,${H}" fill="${c}" opacity=".13"/><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>`;
+}
+
+function render() {
+  const q = $("q").value.toLowerCase().trim(), m = +$("min").value, PER = +$("per").value;
+  const L = B.filter(b => (store < 0 || b.dominio_id === store) && b.descuento >= m && (!q || (b.title || "").toLowerCase().includes(q)));
+  L.sort((a, b) => (typeof a[key] === "string" ? a[key].localeCompare(b[key], "es") : a[key] - b[key]) * dir);
+  document.querySelectorAll("th[data-k]").forEach(h => {
+    h.dataset.l = h.dataset.l || h.textContent;
+    h.classList.toggle("s", h.dataset.k === key);
+    h.textContent = h.dataset.l + (h.dataset.k === key ? (dir > 0 ? " ↑" : " ↓") : "");
+  });
+  const pages = Math.max(1, Math.ceil(L.length / PER));
+  page = Math.min(page, pages);
+  const st = (page - 1) * PER;
+  $("count").innerHTML = `<b>${L.length}</b> ofertas · mostrando ${L.length ? st + 1 : 0}–${Math.min(st + PER, L.length)}`;
+
+  $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
+    <td class="n">${st + i + 1}</td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
+    <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
+    <td class="r p">${clp(b.precio)}</td>
+    <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
+    <td class="r sv">${clp(b.ahorro)}</td>
+    <td class="r">${spark(b)}</td>
+    <td class="r">${b.url ? `<a class="btn" href="${esc(b.url)}" target="_blank" rel="noopener" data-id="${b.id}" data-pos="${st + i + 1}">Ir a la tienda ↗</a>` : ""}</td>
+  </tr>`).join("") : `<tr><td colspan="8"><div class="msg">Nada por aquí… prueba otra búsqueda 🔍</div></td></tr>`;
+
+  const bt = (l, p, x = "") => `<button ${x} data-p="${p}">${l}</button>`, a = [bt("←", page - 1, page === 1 ? "disabled" : "")];
+  const set = [...new Set([1, 2, page - 1, page, page + 1, pages - 1, pages])].filter(x => x >= 1 && x <= pages).sort((x, y) => x - y);
+  set.forEach((x, i) => {
+    if (i && x - set[i - 1] > 1) a.push("<span>…</span>");
+    a.push(bt(x, x, x === page ? 'class="on"' : ""));
+  });
+  a.push(bt("→", page + 1, page === pages ? "disabled" : ""));
+  $("pager").innerHTML = a.join("");
+}
+
+$("pager").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b || b.disabled) return;
+  page = +b.dataset.p;
+  render();
+  $("count").scrollIntoView({ behavior: "smooth" });
+};
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a.btn[data-id]");
+  if (!a || typeof gtag !== "function") return;
+  const b = B.find(x => String(x.id) === a.dataset.id);
+  if (!b) return;
+  gtag("event", "select_item", {
+    item_list_name: currentTab ? currentTab.name : "Ofertas",
+    currency: "CLP",
+    items: [{ item_id: String(b.id), item_name: b.title, item_brand: b.tienda, price: Math.round(b.precio), discount: Math.round(b.ahorro), index: +a.dataset.pos }]
+  });
+});
+</script>
+</body>
+</html>
