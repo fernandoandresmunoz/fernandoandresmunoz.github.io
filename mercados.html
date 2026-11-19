@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>Mercados | Páginas &amp; Precios · Monedas, índices y commodities frente a su promedio</title>
+<meta name="description" content="Monedas, índices, acciones y commodities frente a su promedio histórico, con sus anomalías primero. Se actualiza automáticamente.">
+<link rel="canonical" href="https://fernandoandresmunoz.github.io/mercados">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f17;--card:#121a28;--card2:#172235;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--acc2:#ffc857;--up:#f87171;--dn:#4ade80;--warn:#ffb020;--tip:#0b0f17}
+@media (prefers-color-scheme:light){:root{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--acc2:#b7791f;--up:#dc2626;--dn:#16a34a;--warn:#b7791f;--tip:#fff}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.06),transparent)}
+.wrap{max-width:1200px;margin:auto;padding:0 20px}
+.brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:28px;font:800 20px Fraunces,Georgia,serif}
+.brand b{color:var(--acc)}
+.brand small{font:500 12px Inter,sans-serif;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+.snav{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.snav a{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:10px;color:var(--mute);font:600 13px Inter,sans-serif;text-decoration:none}
+.snav a.on{background:var(--ink);color:var(--bg)}
+h1{font:800 clamp(32px,5vw,56px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.03em;margin:36px 0 12px}
+h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:640px}
+.bar{margin-top:28px;border-block:1px solid var(--line);background:color-mix(in srgb,var(--bg) 85%,transparent)}
+.tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--mute);min-height:38px;padding:0 14px;border-radius:9px;font:600 13px Inter,sans-serif;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.cnt{font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(141,153,174,.25)}
+.opt{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;cursor:pointer}
+.opt input{accent-color:var(--acc);width:16px;height:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:20px;padding:28px 0 56px}
+.mc{position:relative;height:236px;border-radius:20px;border:1px solid var(--line);background:var(--card);overflow:hidden}
+.mc.a{border-color:var(--warn);box-shadow:0 0 0 1px color-mix(in srgb,var(--warn) 25%,transparent)}
+.ch{position:absolute;left:0;right:0;bottom:22px;width:100%;height:130px;display:block;cursor:crosshair}
+.ch.g{color:var(--dn)}.ch.r{color:var(--up)}
+.ar{fill:currentColor;opacity:.14}
+.ln{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.av{fill:none;stroke:var(--warn);stroke-width:1.2;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.hd{position:absolute;top:16px;left:18px;right:18px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;pointer-events:none}
+.tt{font-weight:600;font-size:13px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.tt i{font-style:normal;color:var(--mute);font-weight:500}
+.tt svg{color:var(--warn)}
+.bd{font:700 11px Inter,sans-serif;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.bd.g{background:color-mix(in srgb,var(--dn) 15%,transparent);color:var(--dn)}
+.bd.r{background:color-mix(in srgb,var(--up) 15%,transparent);color:var(--up)}
+.vl{position:absolute;top:50px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
+.lb{display:block;font:600 10px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.n{font:800 36px/1.05 Fraunces,serif;letter-spacing:-.01em}
+.n.g{color:var(--dn)}.n.r{color:var(--up)}
+.p{font:600 16px Inter,sans-serif;display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.p u{display:inline-block;width:14px;border-top:2px dashed var(--warn)}
+.xl{position:absolute;bottom:6px;font-size:10px;color:var(--mute);pointer-events:none}
+.cr{position:absolute;top:84px;bottom:22px;width:1px;background:var(--mute);opacity:.6;display:none;pointer-events:none}
+.dt{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--bg);border:2px solid currentColor;display:none;pointer-events:none}
+.dt.g{color:var(--dn)}.dt.r{color:var(--up)}
+.tp{position:absolute;top:104px;padding:8px 10px;border-radius:10px;background:var(--tip);border:1px solid var(--line);font-size:11px;line-height:1.5;color:var(--mute);display:none;pointer-events:none;white-space:nowrap}
+.tp b{color:var(--ink);font-size:12px}
+.msg{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}
+footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--mute);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="warn" viewBox="0 0 24 24"><path d="M12 3L22 21H2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10V15M12 18V18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios</span>
+    <nav class="snav" aria-label="Secciones"><a href="/">Ofertas</a><a href="/mercados" class="on" aria-current="page">Mercados</a></nav>
+    <small id="upd">cargando…</small></div>
+  <h1>Mercados, <em>de un vistazo.</em></h1>
+  <p class="lead">Monedas, índices, acciones y commodities frente a su promedio. Las anomalías aparecen primero.</p>
+</div>
+
+<div class="bar"><div class="wrap"><div class="tools">
+  <div class="seg" role="group" aria-label="Filtro"><button id="f-all" class="on" aria-pressed="true">Todas <span class="cnt" id="c-all">0</span></button><button id="f-an" aria-pressed="false">Anomalías <span class="cnt" id="c-an">0</span></button></div>
+  <label class="opt"><input type="checkbox" id="first" checked>Anomalías primero</label>
+</div></div></div>
+
+<main class="wrap"><div class="grid" id="grid"><div class="msg">Cargando…</div></div></main>
+<footer class="wrap">© Páginas &amp; Precios · Datos de mercado de referencia (fuente: mercados.larrainvial.com), actualizados automáticamente. No constituyen asesoría financiera.</footer>
+
+<script>
+const $ = id => document.getElementById(id),
+  esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let ITEMS = [], BY = {}, onlyAn = false;
+
+// Decimales según magnitud: 10.636 · 7.529,7 · 997,4 · 88,82 · 3,24
+const fmtN = v => { const d = Math.abs(v) >= 10000 ? 0 : Math.abs(v) >= 100 ? 1 : 2; return v.toLocaleString("es-CL", { minimumFractionDigits: d, maximumFractionDigits: d }); };
+const fdm = ts => new Date(ts * 1000).toLocaleDateString("es-CL", { day: "2-digit", month: "short" }).replace(".", "").replace(" ", "-");
+const fdt = ts => new Date(ts * 1000).toLocaleString("es-CL", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+const sgn = x => { const r = Math.round(x); return r === 0 ? "0%" : (r > 0 ? "+" : "−") + Math.abs(r) + "%"; };
+const WARN = `<svg width="14" height="14" role="img" aria-label="Anomalía"><use href="#warn" width="14" height="14"/></svg>`;
+
+function geom(it) {
+  const s = it.s, t0 = s[0][0], t1 = Math.max(s[s.length - 1][0], t0 + 1);
+  const vs = s.map(p => p[1]).concat([it.promedio]);
+  const lo = Math.min(...vs), hi = Math.max(...vs), pad = (hi - lo) * 0.08 || Math.abs(hi) * 0.05 || 1, y0 = lo - pad, y1 = hi + pad;
+  const X = t => (t - t0) / (t1 - t0) * 300, Y = v => 6 + (y1 - v) / (y1 - y0) * 118;
+  return { t0, t1, X, Y };
+}
+
+function card(it) {
+  const g = it.variacion >= 0, c = g ? "g" : "r", { t0, t1, X, Y } = geom(it);
+  const line = it.s.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+  return `<article class="mc${it.anomalia ? " a" : ""}" data-id="${it.id}">
+  <svg class="ch ${c}" viewBox="0 0 300 130" preserveAspectRatio="none" role="img" aria-label="Historial de ${esc(it.name)}: actual ${fmtN(it.precio)}, promedio ${fmtN(it.promedio)}"><path class="ar" d="${line}L300 130L0 130Z"/><path class="av" d="M0 ${Y(it.promedio).toFixed(1)}H300"/><path class="ln" d="${line}"/></svg>
+  <div class="hd"><div class="tt">${it.anomalia ? WARN : ""}${esc(it.name)} <i>${esc(it.category)}</i></div><span class="bd ${c}">${g ? "↑" : "↓"} ${Math.round(Math.abs(it.variacion))}%</span></div>
+  <div class="vl"><div><span class="lb">Actual</span><span class="n ${c}">${fmtN(it.precio)}</span></div><div><span class="lb" style="text-align:right">Promedio</span><span class="p"><u></u>${fmtN(it.promedio)}</span></div></div>
+  <span class="xl" style="left:18px">${fdm(t0)}</span><span class="xl" style="right:18px">${fdm(t1)}</span>
+  <div class="cr"></div><span class="dt ${c}"></span><div class="tp"></div>
+</article>`;
+}
+
+// Todas / Anomalías y "Anomalías primero" trabajan sobre los datos ya cargados
+function render() {
+  let L = ITEMS.filter(i => !onlyAn || i.anomalia);
+  if ($("first").checked) L = [...L.filter(i => i.anomalia), ...L.filter(i => !i.anomalia)];
+  $("grid").innerHTML = L.length ? L.map(card).join("") : `<div class="msg">No hay anomalías ahora mismo.</div>`;
+}
+
+fetch("mercados.json", { cache: "no-cache" })
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(j => {
+    ITEMS = (j.items || []).filter(i => i.s && i.s.length > 1);
+    ITEMS.forEach(i => BY[i.id] = i);
+    $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
+    $("c-all").textContent = ITEMS.length;
+    $("c-an").textContent = ITEMS.filter(i => i.anomalia).length;
+    render();
+  })
+  .catch(() => { $("upd").textContent = "sin datos"; $("grid").innerHTML = `<div class="msg">No pude cargar los mercados. Intenta de nuevo en unos minutos.</div>`; });
+
+function setFilter(an) {
+  onlyAn = an;
+  $("f-all").classList.toggle("on", !an); $("f-an").classList.toggle("on", an);
+  $("f-all").setAttribute("aria-pressed", String(!an)); $("f-an").setAttribute("aria-pressed", String(an));
+  render();
+}
+$("f-all").onclick = () => setFilter(false);
+$("f-an").onclick = () => setFilter(true);
+$("first").onchange = render;
+
+// Hover sobre la curva: fecha, valor y diferencia vs. promedio
+function hide(card) { card.querySelector(".cr").style.display = card.querySelector(".dt").style.display = card.querySelector(".tp").style.display = "none"; }
+$("grid").addEventListener("pointermove", e => {
+  const card = e.target.closest(".mc");
+  document.querySelectorAll(".mc").forEach(c => { if (c !== card) hide(c); });
+  if (!card) return;
+  const it = BY[card.dataset.id], svg = card.querySelector("svg.ch"), r = svg.getBoundingClientRect();
+  if (!it || e.clientY < r.top || e.clientY > r.bottom) return hide(card);
+  const f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), { t0, t1, Y } = geom(it), t = t0 + f * (t1 - t0);
+  let p = it.s[0];
+  for (const q of it.s) if (Math.abs(q[0] - t) < Math.abs(p[0] - t)) p = q;
+  const cr = card.querySelector(".cr"), dt = card.querySelector(".dt"), tp = card.querySelector(".tp"), left = f < 0.6;
+  cr.style.display = dt.style.display = tp.style.display = "block";
+  cr.style.left = dt.style.left = (f * 100) + "%";
+  dt.style.top = (card.clientHeight - 22 - 130 + Y(p[1])) + "px";
+  tp.style.left = left ? `calc(${f * 100}% + 12px)` : "auto";
+  tp.style.right = left ? "auto" : `calc(${(1 - f) * 100}% + 12px)`;
+  tp.innerHTML = `<span>${fdt(p[0])}</span><br><b>Valor ${fmtN(p[1])}</b><br><span>vs. promedio ${sgn((p[1] - it.promedio) / it.promedio * 100)}</span>`;
+});
+$("grid").addEventListener("pointerleave", () => document.querySelectorAll(".mc").forEach(hide));
+</script>
+</body>
+</html>

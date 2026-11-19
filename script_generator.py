@@ -63,6 +63,11 @@ HIST_PAGE_SIZE = 1000  # registros que se piden por producto (máx.)
 HIST_PUNTOS = 40       # puntos que se guardan en el JSON (muestreo parejo, incluye primero y último)
 DET_REGISTROS = 8      # filas de "Últimos registros" en la página de detalle
 
+# Página /mercados (tarjetas): lista de onesource con los ids de interés
+LISTA_MERCADOS = 18
+MERCADOS_REGISTROS = 5000   # registros que se piden por mercado (igual que el Market Monitor)
+MERCADOS_PUNTOS = 80        # tramos del gráfico: se guarda el mínimo y el máximo de cada uno
+
 TABS_CONFIG = [
     {
         "id": "libros",
@@ -720,6 +725,9 @@ body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sa
 .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
 .brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
 .brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+.snav{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.snav a{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:10px;color:var(--mute);font:600 13px Inter,sans-serif;text-decoration:none}
+.snav a.on{background:var(--ink);color:var(--bg)}
 h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
 h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
@@ -789,7 +797,7 @@ footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;colo
 <body>
 <div class="wrap">
 <header class="hero">
-  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><small id="upd">cargando…</small></div>
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><nav class="snav" aria-label="Secciones"><a href="/" class="on" aria-current="page">Ofertas</a><a href="/mercados">Mercados</a></nav><small id="upd">cargando…</small></div>
   <h1 id="hero-title">__HERO_TITLE__</h1>
   <p class="lead" id="hero-desc">__HERO_SUBTITLE__</p>
   <div class="stats">
@@ -1542,6 +1550,9 @@ def generar_sitemap(active_tabs_data, slugs_productos, fecha):
         filas.append(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{fecha}</lastmod>\n"
                      f"    <changefreq>daily</changefreq>\n    <priority>{prio}</priority>\n  </url>")
 
+    filas.append(f"  <url>\n    <loc>{SITE_URL}/mercados</loc>\n    <lastmod>{fecha}</lastmod>\n"
+                 f"    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>")
+
     for slug in slugs_productos:
         loc = f"{SITE_URL}/producto/{slug}/".replace("&", "&amp;")
         filas.append(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{fecha}</lastmod>\n"
@@ -1558,6 +1569,65 @@ def generar_sitemap(active_tabs_data, slugs_productos, fecha):
     if not os.path.exists(robots):
         with open(robots, "w", encoding="utf-8") as f:
             f.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n")
+
+
+def _reducir_serie(puntos, cubos):
+    """Reduce [(ts, valor)] conservando el mínimo y el máximo de cada tramo, para no perder picos."""
+    if len(puntos) <= cubos * 2:
+        return puntos
+    tam = -(-len(puntos) // cubos)
+    salida = []
+    for i in range(0, len(puntos), tam):
+        tramo = puntos[i:i + tam]
+        lo = min(tramo, key=lambda p: p[1])
+        hi = max(tramo, key=lambda p: p[1])
+        salida += sorted({lo, hi}, key=lambda p: p[0])
+    if salida[0] != puntos[0]:
+        salida.insert(0, puntos[0])
+    if salida[-1] != puntos[-1]:
+        salida.append(puntos[-1])
+    return salida
+
+
+def generar_mercados(now_iso):
+    """mercados.json (página /mercados): una tarjeta por item de la lista LISTA_MERCADOS."""
+    resp = get(f"/my-lists/{LISTA_MERCADOS}/", page_size=40)
+    filas = resp.get("results", [])
+    while resp.get("next"):
+        resp = get(resp["next"])
+        filas += resp.get("results", [])
+
+    def uno(fila):
+        titulo = limpiar_texto(fila.get("product_title") or "")
+        m = re.match(r"^(.*?)\s*\(\s*([^()]*?)\s*\)\s*$", titulo)  # "GAS NATURAL ( Commodities )"
+        nombre, categoria = (m.group(1), m.group(2)) if m else (titulo, "")
+        try:
+            r = get(f"{REGISTERS_BASE}/registers/", article=fila["id"], ordering="-obtained", page_size=MERCADOS_REGISTROS)
+        except Exception as e:
+            print(f"  ✗ {nombre}: {e}")
+            return None
+        pts = [(_a_epoch(x.get("obtained")), x["precio"]) for x in reversed(r.get("results", [])) if x.get("precio") is not None]
+        pts = [(t, v) for t, v in pts if t is not None]
+        if len(pts) < 2:
+            return None
+        valores = [v for _, v in pts]
+        media = sum(valores) / len(valores)
+        desv = (sum((v - media) ** 2 for v in valores) / len(valores)) ** 0.5
+        ap = fila.get("analysis_price") or {}
+        precio = ap.get("precio", valores[-1])
+        z = (precio - media) / desv if desv else 0   # anomalía: |z-score| >= 2
+        return {
+            "id": fila["id"], "name": nombre, "category": categoria, "link": fila.get("product_link"),
+            "precio": precio, "promedio": ap.get("promedio", media), "minimo": ap.get("precio_minimo", min(valores)),
+            "variacion": round(ap.get("variacion_promedio") or 0, 2),
+            "z": round(z, 2), "anomalia": abs(z) >= 2, "n": len(pts),
+            "s": [[t, round(v, 4)] for t, v in _reducir_serie(pts, MERCADOS_PUNTOS)],
+        }
+
+    with ThreadPoolExecutor(4) as ex:
+        items = [i for i in ex.map(uno, filas) if i]
+    guardar_json_atomico(os.path.join(DIR_BASE, "mercados.json"), {"generated_at": now_iso, "lista": LISTA_MERCADOS, "items": items})
+    print(f"✓ Guardado mercados.json ({len(items)} mercados, {sum(1 for i in items if i['anomalia'])} anomalías).")
 
 
 def guardar_json_atomico(ruta, datos):
@@ -1746,6 +1816,12 @@ def main():
     # Generar páginas físicas SEO de cada producto con historial
     print("\nGenerando páginas de producto físicas (SEO /producto/<id-slug>/)...")
     slugs_productos = generar_paginas_producto(active_tabs_data, now_iso)
+
+    print("\nGenerando mercados.json...")
+    try:
+        generar_mercados(now_iso)
+    except Exception as e:  # una falla aquí no debe frenar el resto del sitio
+        print(f"✗ No se pudo generar mercados.json: {e}")
 
     generar_sitemap(active_tabs_data, slugs_productos, now_iso[:10])
     print(f"✓ Generado sitemap.xml con {len(active_tabs_data) + len(slugs_productos)} URLs.")
