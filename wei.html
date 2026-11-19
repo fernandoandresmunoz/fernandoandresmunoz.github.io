@@ -29,6 +29,9 @@ body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sa
 .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
 .brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
 .brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+.snav{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.snav a{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:10px;color:var(--mute);font:600 13px Inter,sans-serif;text-decoration:none}
+.snav a.on{background:var(--ink);color:var(--bg)}
 h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
 h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
@@ -98,7 +101,7 @@ footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;colo
 <body>
 <div class="wrap">
 <header class="hero">
-  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><small id="upd">cargando…</small></div>
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><nav class="snav" aria-label="Secciones"><a href="/" class="on" aria-current="page">Ofertas</a><a href="/mercados">Mercados</a></nav><small id="upd">cargando…</small></div>
   <h1 id="hero-title">Los mejores descuentos en Wei.cl, <em>actualizados hoy.</em></h1>
   <p class="lead" id="hero-desc">Computación, hardware, periféricos y accesorios gamer al mejor precio.</p>
   <div class="stats">
