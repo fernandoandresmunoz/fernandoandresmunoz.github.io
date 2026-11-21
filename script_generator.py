@@ -192,7 +192,7 @@ TABS_CONFIG = [
         "domains": [66],
         "top": 100,
         "por_dominio": 100,
-        "max_descuento": 90.0,
+        "max_descuento": 80.0,
         "json_file": "unimarc.json",
         "html_file": "unimarc.html",
     },
