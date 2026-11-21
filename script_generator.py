@@ -839,7 +839,7 @@ const $ = id => document.getElementById(id),
   clp = n => "$" + Math.round(n).toLocaleString("es-CL"),
   esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14"];
+const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14", "#e879f9", "#38bdf8", "#a3e635", "#f43f5e", "#fbbf24", "#34d399", "#818cf8"];
 let TABS = [], currentTab = null, B = [], D = [], page = 1, store = -1, key = "descuento", dir = -1, maxD = 1;
 const tabCache = {};
 const tabPath = t => t.path || (t.html_file && t.html_file !== "index.html" ? "/" + t.html_file.replace(".html", "") : "/");
@@ -853,6 +853,24 @@ fetch("tabs.json", { cache: "no-cache" })
   .then(r => { if (!r.ok) throw 0; return r.json(); })
   .then(data => {
     TABS = data.tabs || [];
+    if (!TABS.some(t => t.id === "global")) {
+      const tot = TABS.reduce((acc, t) => acc + (t.total || 0), 0);
+      const avg = Math.round(TABS.reduce((acc, t) => acc + (t.avg_discount || 0) * (t.total || 0), 0) / (tot || 1));
+      TABS.unshift({
+        id: "global",
+        name: "Ranking Global",
+        icon: "🌐",
+        headline: "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+        subtitle: "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+        item_label: "Producto",
+        file: "global.json",
+        html_file: "global.html",
+        path: "/global",
+        total: tot,
+        avg_discount: avg,
+        dominios: []
+      });
+    }
     renderTabsBar();
     // Links viejos tipo /#abc: se llevan a la URL limpia /abc
     const legacy = TABS.find(t => t.id === (location.hash || "").replace("#", "").trim());
@@ -914,10 +932,21 @@ function switchTab(tabId, updateHash) {
   $("hero-desc").textContent = tab.subtitle || `Monitoreo de precios y descuentos en ${tab.name}.`;
   $("col-item").dataset.l = tab.item_label || "Producto";
   $("col-item").textContent = $("col-item").dataset.l;
-  $("q").placeholder = `Buscar en ${tab.name}...`;
+  $("q").placeholder = tab.id === "global" ? "Buscar en todas las tiendas..." : `Buscar en ${tab.name}...`;
 
   if (tabCache[tabId]) {
     initTabData(tab, tabCache[tabId]);
+  } else if (tabId === "global") {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ranking global de todas las tiendas…</div></td></tr>`;
+    fetch(tab.file || "global.json", { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(() => {
+        consolidateGlobalFromTabs(tab);
+      });
   } else {
     $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ofertas de ${esc(tab.name)}…</div></td></tr>`;
     fetch(tab.file || `${tabId}.json`, { cache: "no-cache" })
@@ -930,6 +959,59 @@ function switchTab(tabId, updateHash) {
         $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al cargar datos de ${esc(tab.name)}.</div></td></tr>`;
       });
   }
+}
+
+function consolidateGlobalFromTabs(tab) {
+  const tabsToFetch = TABS.filter(t => t.id !== "global" && t.file);
+  Promise.all(tabsToFetch.map(t => {
+    if (tabCache[t.id]) return Promise.resolve(tabCache[t.id]);
+    return fetch(t.file, { cache: "no-cache" })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => { if (j) tabCache[t.id] = j; return j; })
+      .catch(() => null);
+  })).then(results => {
+    const allItems = [];
+    const domMap = new Map();
+    const seen = new Set();
+    let genAt = null;
+    results.forEach(res => {
+      if (!res) return;
+      if (res.generated_at && !genAt) genAt = res.generated_at;
+      (res.dominios || []).forEach(d => {
+        if (!domMap.has(d.id)) domMap.set(d.id, d);
+      });
+      const list = res.items || res.libros || [];
+      list.forEach(item => {
+        const key = (item.dominio_id || 0) + ":" + (item.id || item.slug || item.title);
+        if (!seen.has(key)) {
+          seen.add(key);
+          allItems.push(item);
+        }
+      });
+    });
+    allItems.sort((a, b) => (b.descuento || 0) - (a.descuento || 0));
+    const domArray = Array.from(domMap.values());
+    const avgDisc = allItems.length ? Math.round(allItems.reduce((a, b) => a + (b.descuento || 0), 0) / allItems.length) : 0;
+    const globalData = {
+      id: "global",
+      name: "Ranking Global",
+      item_label: "Producto",
+      headline: "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+      subtitle: "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+      generated_at: genAt || new Date().toISOString(),
+      total: allItems.length,
+      avg_discount: avgDisc,
+      dominios: domArray,
+      items: allItems
+    };
+    tabCache["global"] = globalData;
+    tab.total = allItems.length;
+    tab.avg_discount = avgDisc;
+    renderTabsBar();
+    initTabData(tab, globalData);
+  }).catch(() => {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al consolidar ofertas globales.</div></td></tr>`;
+  });
 }
 
 const fixUrl = b => {
@@ -969,14 +1051,14 @@ document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList
 
 function initTabData(tab, j) {
   D = j.dominios || [];
-  document.querySelector("table").classList.toggle("single", D.length < 2);
+  document.querySelector("table").classList.toggle("single", tab.id !== "global" && D.length < 2);
   const items = j.items || j.libros || [];
   B = items.map(b => ({ ...b, ahorro: (b.promedio || 0) - (b.precio || 0), url: fixUrl(b) }));
   maxD = Math.max(...B.map(b => b.descuento || 0), 1);
   if (j.generated_at) {
     $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
   }
-  $("s1").firstChild.textContent = B.length;
+  $("s1").firstChild.textContent = B.length.toLocaleString("es-CL");
   $("s2").firstChild.textContent = D.length || 1;
   $("s3").firstChild.textContent = Math.round(B.reduce((a, b) => a + (b.descuento || 0), 0) / Math.max(B.length, 1)) + "%";
 
@@ -1551,6 +1633,8 @@ def generar_sitemap(active_tabs_data, slugs_productos, fecha):
         filas.append(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{fecha}</lastmod>\n"
                      f"    <changefreq>daily</changefreq>\n    <priority>{prio}</priority>\n  </url>")
 
+    filas.append(f"  <url>\n    <loc>{SITE_URL}/global</loc>\n    <lastmod>{fecha}</lastmod>\n"
+                 f"    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>")
     filas.append(f"  <url>\n    <loc>{SITE_URL}/mercados</loc>\n    <lastmod>{fecha}</lastmod>\n"
                  f"    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>")
 
@@ -1747,7 +1831,57 @@ def main():
 
     # Preparar tabs.json metadata
     now_iso = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    tabs_meta = []
+
+    # Construir Ranking Global consolidado de todos los dominios
+    dom_vistos = set()
+    todos_los_dominios_global = []
+    for tab in active_tabs_data:
+        for d in tab["dominios"]:
+            if d["id"] not in dom_vistos:
+                dom_vistos.add(d["id"])
+                todos_los_dominios_global.append(d)
+
+    items_global = []
+    items_vistos = set()
+    for tab in active_tabs_data:
+        for it in tab["items"]:
+            k = (it.get("dominio_id"), it.get("id"))
+            if k not in items_vistos:
+                items_vistos.add(k)
+                items_global.append(it)
+
+    items_global.sort(key=lambda b: (-b.get("descuento", 0), b.get("precio", 0)))
+    avg_desc_global = round(sum(b.get("descuento", 0) for b in items_global) / max(len(items_global), 1))
+
+    global_tab_cfg = {
+        "id": "global",
+        "name": "Ranking Global",
+        "icon": "🌐",
+        "headline": "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+        "subtitle": "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+        "item_label": "Producto",
+        "json_file": "global.json",
+        "html_file": "global.html",
+        "path": "/global",
+        "top": len(items_global),
+        "por_dominio": 100,
+        "max_descuento": 99.0,
+    }
+
+    tabs_meta = [{
+        "id": "global",
+        "name": "Ranking Global",
+        "icon": "🌐",
+        "headline": global_tab_cfg["headline"],
+        "subtitle": global_tab_cfg["subtitle"],
+        "item_label": "Producto",
+        "file": "global.json",
+        "html_file": "global.html",
+        "path": "/global",
+        "total": len(items_global),
+        "avg_discount": avg_desc_global,
+        "dominios": todos_los_dominios_global,
+    }]
     for tab in active_tabs_data:
         cfg = tab["config"]
         tabs_meta.append({
@@ -1771,7 +1905,23 @@ def main():
         "total_tabs": len(tabs_meta),
         "tabs": tabs_meta,
     })
-    print(f"✓ Guardado tabs.json con {len(tabs_meta)} tabs.")
+    print(f"✓ Guardado tabs.json con {len(tabs_meta)} tabs (incluyendo Ranking Global).")
+
+    # Guardar global.json
+    guardar_json_atomico(os.path.join(DIR_BASE, "global.json"), {
+        "id": "global",
+        "name": "Ranking Global",
+        "icon": "🌐",
+        "headline": global_tab_cfg["headline"],
+        "subtitle": global_tab_cfg["subtitle"],
+        "item_label": "Producto",
+        "generated_at": now_iso,
+        "total": len(items_global),
+        "avg_discount": avg_desc_global,
+        "dominios": todos_los_dominios_global,
+        "items": [{k: v for k, v in b.items() if v is not None and not k.startswith("_")} for b in items_global],
+    })
+    print(f"✓ Guardado global.json ({len(items_global)} items consolidados).")
 
     # Guardar JSON individual de cada tab
     for tab in active_tabs_data:
@@ -1832,6 +1982,14 @@ def main():
             with open(h_path, "w", encoding="utf-8") as f:
                 f.write(html_content)
             print(f"✓ Generado {cfg['html_file']}")
+
+    # Generar página HTML dedicada para Ranking Global
+    global_ld = generar_json_ld(items_global[:100], global_tab_cfg)
+    global_html_content = render_html_page(global_tab_cfg, global_ld, default_tab_id="global")
+    global_path = os.path.join(DIR_BASE, "global.html")
+    with open(global_path, "w", encoding="utf-8") as f:
+        f.write(global_html_content)
+    print(f"✓ Generado global.html")
 
     # Generar index.html principal (con tab 'libros' por defecto si existe, o el primero)
     primary_tab = next((t for t in active_tabs_data if t["config"]["id"] == "libros"), active_tabs_data[0])

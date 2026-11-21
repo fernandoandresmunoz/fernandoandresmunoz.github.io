@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>Ranking Global | Monitor de Ofertas · Descuentos en Chile</title>
+<meta name="description" content="Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.">
+<link rel="canonical" href="https://fernandoandresmunoz.github.io/global">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f17;--card:#121a28;--card2:#172235;--hov:#1a253a;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--acc2:#ffc857;--pr:#52e19b;--onacc:#fff;--up:#f87171;--dn:#4ade80;--fl:#94a3b8}
+@media (prefers-color-scheme:light){:root{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--hov:#e9edf5;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--acc2:#b7791f;--pr:#1f9d63;--onacc:#fff;--up:#dc2626;--dn:#16a34a;--fl:#64748b}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.08),transparent)}
+.wrap{max-width:1260px;margin:auto;padding:0 20px}
+.hero{padding:44px 0 20px}
+.brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
+.brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
+.brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+.snav{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.snav a{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:10px;color:var(--mute);font:600 13px Inter,sans-serif;text-decoration:none}
+.snav a.on{background:var(--ink);color:var(--bg)}
+h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
+h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
+.stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stats div{font:800 28px Fraunces,serif}
+.stats span{display:block;font:500 11px Inter;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* Tabs Bar */
+.tabs-wrap{margin:28px auto 16px;display:flex;justify-content:center;width:100%}
+.tabs-scroll{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 10px;margin:0 auto;max-width:100%}
+@media (max-width:768px){.tabs-scroll{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}}
+.tabs-scroll::-webkit-scrollbar{height:5px}
+.tabs-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.tab-btn{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 13px Inter,sans-serif;cursor:pointer;transition:all .2s ease;text-decoration:none;user-select:none}
+.tab-btn:hover{border-color:var(--acc);transform:translateY(-1px);background:var(--hov)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(255,107,61,.18),rgba(255,61,113,.15));border-color:var(--acc);color:var(--ink);box-shadow:0 0 18px -4px rgba(255,107,61,.4)}
+.tab-btn .t-icon{font-size:15px;line-height:1}
+.tab-btn .t-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--mute) 24%,transparent);color:var(--mute);transition:all .2s}
+.tab-btn.active .t-badge{background:var(--acc);color:#fff}
+
+/* Sticky Filter Bar */
+.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-block:1px solid var(--line);padding:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:11px 15px;border-radius:12px;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+input{flex:1 1 240px}input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,107,61,.18)}
+.chips{margin-top:10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:99px;font:500 13px Inter;display:flex;gap:7px;align-items:center;transition:all .15s}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}.chip:hover{border-color:var(--acc)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.count{margin:22px 0 12px;color:var(--mute)}.count b{color:var(--ink)}
+
+/* Table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{text-align:left;font:700 11px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:15px 16px;border-bottom:1px solid var(--line);white-space:nowrap;user-select:none}
+th[data-k]{cursor:pointer}th[data-k]:hover,th.s{color:var(--acc)}
+.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{transition:background .15s}tbody tr:hover{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.n{color:var(--mute);width:44px}
+.bk{display:flex;gap:14px;align-items:center}
+a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
+.mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
+.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
+.st{display:inline-flex;gap:7px;align-items:center;padding:5px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,transparent);font:500 12px Inter;white-space:nowrap}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.o{color:var(--mute);text-decoration:line-through;white-space:nowrap;font-size:13px}
+.p{font:800 17px Fraunces,serif;color:var(--pr);white-space:nowrap}
+.d{display:flex;align-items:center;gap:9px;min-width:130px}
+.d b{font:800 14px Fraunces,serif;width:48px;color:var(--acc2)}.d.hot b{color:var(--acc)}
+.d span{flex:1;height:8px;border-radius:9px;background:color-mix(in srgb,var(--mute) 26%,transparent);overflow:hidden}
+.d span i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--acc2),var(--acc),#ff3d71)}
+.sv{color:var(--acc2);font-weight:600;white-space:nowrap}
+.sp{display:flex;align-items:center;justify-content:flex-end;gap:10px}.sp svg{width:120px;height:34px;flex:none}
+table.single .c-store{display:none}
+.btn{display:inline-block;text-decoration:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:10px;font:700 12px Inter;white-space:nowrap;transition:all .15s}
+tr:hover .btn,.btn:hover{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.msg{text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}.msg code{font:13px monospace;background:var(--hov);padding:3px 8px;border-radius:6px}
+.pager{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:36px 0 16px}
+.pager button{min-width:40px;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Inter;cursor:pointer;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:var(--acc)}.pager button.on{background:linear-gradient(135deg,var(--acc),#ff3d71);border-color:transparent;color:var(--onacc);font-weight:700}
+.pager button:disabled{opacity:.35;cursor:default}.pager span{align-self:center;color:var(--mute)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;color:var(--mute);font-size:13px;text-align:center}
+</style>
+<script type="application/ld+json" id="ld-books">{"@context":"https://schema.org","@type":"ItemList","name":"Ranking Global - Ofertas y Descuentos en Chile","numberOfItems":100,"itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Nuez mariposa blanca 100gr","offers":{"@type":"Offer","price":"2199","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Unimarc"},"url":"https://www.unimarc.cl/product/nuez-mariposa-blanca-kg"},"image":"https://fernandoandresmunoz.github.io/imagenes/b059cb2544e5.webp"}},{"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Croissant recto mantequilla 20% europastry 100gr","offers":{"@type":"Offer","price":"859","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Unimarc"},"url":"https://www.unimarc.cl/product/croissant-recto-manteq-20-europastry-kg"},"image":"https://fernandoandresmunoz.github.io/imagenes/64d936735c5f.webp"}},{"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Jamón colonial winter laminado granel 100gr","offers":{"@type":"Offer","price":"916","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Unimarc"},"url":"https://www.unimarc.cl/product/jamon-colonial-winter-kg"},"image":"https://fernandoandresmunoz.github.io/imagenes/09e2ccd6e28b.webp"}},{"@type":"ListItem","position":4,"item":{"@type":"Product","name":"Lector De Codigo De Barras 2d Unitech Ms838","offers":{"@type":"Offer","price":"74990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/lector-de-codigo-de-barras-2d-unitech-ms838-MKYR92U9S5.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/b2b53b2f61ba.webp"}},{"@type":"ListItem","position":5,"item":{"@type":"Product","name":"Monitor 20\" AOC 20E1H TN HD+ LED 60Hz","offers":{"@type":"Offer","price":"72990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/monitor-20-aoc-20e1h-tn-hd-led-60hz-MKO4HDSWZK.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/b734fe0530c5.webp"}},{"@type":"ListItem","position":6,"item":{"@type":"Product","name":"Funda Fibra Fire HD10 (9-10Gen) Color Azul","offers":{"@type":"Offer","price":"3990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fibra-fire-hd10-9-10gen-color-azul-MKFNV2RJFS.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/8d86562d846a.webp"}},{"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Disco Duro Externo Toshiba Canvio Basics 2TB USB 3.0 Negro","offers":{"@type":"Offer","price":"131990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/disco-duro-externo-toshiba-canvio-basics-2tb-usb-30-negro-MKS8CCE8NG.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/9ee6af38f219.webp"}},{"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Trust Maxo Cargador Usb-C De 20 W - White","offers":{"@type":"Offer","price":"2990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/trust-maxo-cargador-usb-c-de-20-w---white/28737335.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/404e2a04d263.webp"}},{"@type":"ListItem","position":9,"item":{"@type":"Product","name":"Funda Fibra Fire HD8 Diseño Rojo","offers":{"@type":"Offer","price":"3900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fibra-fire-hd8-diseno-rojo-MK72WBUZ77.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/092f861dc88d.webp"}},{"@type":"ListItem","position":10,"item":{"@type":"Product","name":"Soporte de TV Gravity Pixel 32\" - 55\" Articulado","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/soporte-de-tv-gravity-pixel-32---55-articulado/27789684.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/80cc0a88608d.webp"}},{"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Trust Maxo Cargador Usb-C De 65 W - White","offers":{"@type":"Offer","price":"9990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/trust-maxo-cargador-usb-c-de-65-w---white/28737327.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/f73e8fc61384.webp"}},{"@type":"ListItem","position":12,"item":{"@type":"Product","name":"EL VIEJO MALESTAR DEL NUEVO MUNDO","offers":{"@type":"Offer","price":"5100","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Feria Chilena del Libro"},"url":"https://feriachilenadellibro.cl/producto/9789569948329-el-viejo-malestar-del-nuevo-mundo/"},"image":"https://fernandoandresmunoz.github.io/imagenes/2fc47866e53f.webp"}},{"@type":"ListItem","position":13,"item":{"@type":"Product","name":"Soporte de TV Gravity Pixel 32\" - 70\" Inclinable","offers":{"@type":"Offer","price":"4441","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/soporte-de-tv-gravity-pixel-32---70-inclinable/27789676.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/46a417416296.webp"}},{"@type":"ListItem","position":14,"item":{"@type":"Product","name":"ABRAZATE","offers":{"@type":"Offer","price":"5100","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Feria Chilena del Libro"},"url":"https://feriachilenadellibro.cl/producto/9789564083469-abrazate/"},"image":"https://fernandoandresmunoz.github.io/imagenes/d3a08a9ff1cb.webp"}},{"@type":"ListItem","position":15,"item":{"@type":"Product","name":"Funda Fibra Fire HD10 (9-10Gen) Color Negro","offers":{"@type":"Offer","price":"4900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fibra-fire-hd10-9-10gen-color-negro-MK0Q23UXIW.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/33a5ea8df1e9.webp"}},{"@type":"ListItem","position":16,"item":{"@type":"Product","name":"Harvard Business Review 10 Must Reads On Teams (With Featured Article","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/harvard-business-review-10-must-reads-on-teams-with-featured-article-9781422189870.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/3d45a8390e29.webp"}},{"@type":"ListItem","position":17,"item":{"@type":"Product","name":"Great Rivers Of The World","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/great-rivers-of-the-world-9788854005518.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/1221d50cf178.webp"}},{"@type":"ListItem","position":18,"item":{"@type":"Product","name":"Van Gogh: A Power Seething","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/van-gogh-a-power-seething-9780544343733.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/c97937eed097.webp"}},{"@type":"ListItem","position":19,"item":{"@type":"Product","name":"X Men La Batalla Del Atomo Vol. 2 De 2","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/x-men-la-batalla-del-atomo-vol-2-de-2-9789871966745.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/40191761e189.webp"}},{"@type":"ListItem","position":20,"item":{"@type":"Product","name":"Juegos Ecologicos Con Piedras Y Palos","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/juegos-ecologicos-con-piedras-y-palos-9788497290401.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/60243bd61b27.webp"}},{"@type":"ListItem","position":21,"item":{"@type":"Product","name":"Mirame, Sienteme. Estrategias Para La","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/mirame-sienteme-estrategias-para-la-9788433028983.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5e046dc380ad.webp"}},{"@type":"ListItem","position":22,"item":{"@type":"Product","name":"Una Mirada Femenina De La Educacion Moral","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/una-mirada-femenina-de-la-educacion-moral-9788433029751.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/7985a250f882.webp"}},{"@type":"ListItem","position":23,"item":{"@type":"Product","name":"Suspect","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/suspect-9780399161483.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/db41a3a72058.webp"}},{"@type":"ListItem","position":24,"item":{"@type":"Product","name":"Organizacion En El Punto De Venta. Manual Básico De Gestión De Tienda","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/organizacion-en-el-punto-de-venta-manual-basico-de-gestion-de-tienda-9788498391503.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4e7f557d0879.webp"}},{"@type":"ListItem","position":25,"item":{"@type":"Product","name":"Preparacion De Masas Y Piezas Carnicas. Tecnicas Procesos Utiles Y Her","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/preparacion-de-masas-y-piezas-carnicas-tecnicas-procesos-utiles-y-her-9788496585249.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/a276327edcc7.webp"}},{"@type":"ListItem","position":26,"item":{"@type":"Product","name":"Operaciones De Recepcion. Gestione Las Tareas Administrativas De Recep","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/operaciones-de-recepcion-gestione-las-tareas-administrativas-de-recep-9788498390193.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/341908c13b26.webp"}},{"@type":"ListItem","position":27,"item":{"@type":"Product","name":"Revestimientos De Cubiertas Con Tejas. Cómo Revestir Cubiertas Con Tej","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/revestimientos-de-cubiertas-con-tejas-como-revestir-cubiertas-con-tej-9788496585973.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4db98fdf60b3.webp"}},{"@type":"ListItem","position":28,"item":{"@type":"Product","name":"Gestion De Unidades De Informacion Y Distribucion Turistica. Las Unida","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/gestion-de-unidades-de-informacion-y-distribucion-turistica-las-unida-9788498391039.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/73045cf6d3d4.webp"}},{"@type":"ListItem","position":29,"item":{"@type":"Product","name":"La Organizacion Del Trabajo. La Gestión Eficaz De Los Recursos Humanos","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/la-organizacion-del-trabajo-la-gestion-eficaz-de-los-recursos-humanos-9788496578449.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/fb04ddf359c6.webp"}},{"@type":"ListItem","position":30,"item":{"@type":"Product","name":"Tecnicas De Envasado, Etiquetado, Empaquetado Y Almacenado","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/tecnicas-de-envasado-etiquetado-empaquetado-y-almacenado-9788496153851.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ea48a615c9e0.webp"}},{"@type":"ListItem","position":31,"item":{"@type":"Product","name":"Seleccion De Imágenes. Tecnicas De Selección Y Preparacion De Imágenes","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/seleccion-de-imagenes-tecnicas-de-seleccion-y-preparacion-de-imagenes-9788496153509.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e68bcafcf7a7.webp"}},{"@type":"ListItem","position":32,"item":{"@type":"Product","name":"Tecnicas De Inmovilizacion Y Traslado Del Paciente 2º Edicion. Tecnica","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/tecnicas-de-inmovilizacion-y-traslado-del-paciente-2-edicion-tecnica-9788498391305.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/bee273a85fec.webp"}},{"@type":"ListItem","position":33,"item":{"@type":"Product","name":"Comportamientos Ligados A La Seguridad E Higiene","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/comportamientos-ligados-a-la-seguridad-e-higiene-9788498391466.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/9c980500bdb3.webp"}},{"@type":"ListItem","position":34,"item":{"@type":"Product","name":"Zapatilla Niño Bubblegummers Bio Fit Blanco-Green","offers":{"@type":"Offer","price":"7000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/133113308/zapatilla-nino-bubblegummers-bio-fit-blanco-green/133113312"}}},{"@type":"ListItem","position":35,"item":{"@type":"Product","name":"Vacunacion En Adulto 2º Edicion","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/vacunacion-en-adulto-2-edicion-9789701035559.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/7038782052b3.webp"}},{"@type":"ListItem","position":36,"item":{"@type":"Product","name":"Funda Fibra Fire HD10 (9-10Gen) Color Rojo","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fibra-fire-hd10-9-10gen-color-rojo-MKRDF0LE5O.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/08789d75b402.webp"}},{"@type":"ListItem","position":37,"item":{"@type":"Product","name":"Como Gestionar Y Animar Reuniones","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/como-gestionar-y-animar-reuniones-9788429320473.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/1118d8b46c0f.webp"}},{"@type":"ListItem","position":38,"item":{"@type":"Product","name":"Introduccion A La Informatica Y Al Uso Y Manejo De Aplicaciones Comerc","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/introduccion-a-la-informatica-y-al-uso-y-manejo-de-aplicaciones-comerc-9788498391367.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/465bba7d023b.webp"}},{"@type":"ListItem","position":39,"item":{"@type":"Product","name":"Construccion De Obra De Fabrica Con Ladrillo Visto. Confección De Muro","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/construccion-de-obra-de-fabrica-con-ladrillo-visto-confeccion-de-muro-9788496585959.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/47f5505646f9.webp"}},{"@type":"ListItem","position":40,"item":{"@type":"Product","name":"Tratamientos De Curacion, Secado Y Calor En La Elaboracion. Tecnicas P","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/tratamientos-de-curacion-secado-y-calor-en-la-elaboracion-tecnicas-p-9788496153844.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/2100d12ac278.webp"}},{"@type":"ListItem","position":41,"item":{"@type":"Product","name":"Funda Fire 7 - Diseño Beige","offers":{"@type":"Offer","price":"4900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fire-7-diseno-beige-MKJ223RP70.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e180b35645df.webp"}},{"@type":"ListItem","position":42,"item":{"@type":"Product","name":"Funda Fibra Kindle Oasis Color Rojo","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fibra-kindle-oasis-color-rojo-MK7F54UVMR.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/544bf042f503.webp"}},{"@type":"ListItem","position":43,"item":{"@type":"Product","name":"Asterix En Los Juegos Olimpicos. La Pelicula","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/asterix-en-los-juegos-olimpicos-la-pelicula-9788434506640.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/606d1edd318b.webp"}},{"@type":"ListItem","position":44,"item":{"@type":"Product","name":"Funda Kindle Fire 7 - Celeste","offers":{"@type":"Offer","price":"4900","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-kindle-fire-7-celeste-MK6Y3MJT0E.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d512d078a0ad.webp"}},{"@type":"ListItem","position":45,"item":{"@type":"Product","name":"Barnabo De Las Montañas","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/barnabo-de-las-montanas-9788493603335.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d5e502315cf8.webp"}},{"@type":"ListItem","position":46,"item":{"@type":"Product","name":"El Papa Francisco Y Las Familias","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/el-papa-francisco-y-las-familias-9788428543910.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/37ed7c47bf95.webp"}},{"@type":"ListItem","position":47,"item":{"@type":"Product","name":"Organizacion De Procesos De Venta (Edicion 2013)","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/organizacion-de-procesos-de-venta-edicion-2013-9788415994985.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/cb5c9d0a0d8b.webp"}},{"@type":"ListItem","position":48,"item":{"@type":"Product","name":"Las Leyes De La Bioetica","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/las-leyes-de-la-bioetica-9788474329803.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4e3a83806b43.webp"}},{"@type":"ListItem","position":49,"item":{"@type":"Product","name":"Transporte Y Almacenamiento De Cultivos Herbaceos","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/transporte-y-almacenamiento-de-cultivos-herbaceos-9788497328715.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/8284f076d086.webp"}},{"@type":"ListItem","position":50,"item":{"@type":"Product","name":"Recoleccion, Transporte, Almacenamiento Y Acondicionamiento De La Frut","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/recoleccion-transporte-almacenamiento-y-acondicionamiento-de-la-frut-9788428333832.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e9d9914cff5d.webp"}},{"@type":"ListItem","position":51,"item":{"@type":"Product","name":"Organizacion Y Gestion De La Empresa Agraria","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/organizacion-y-gestion-de-la-empresa-agraria-9788428397575.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d5d62555584b.webp"}},{"@type":"ListItem","position":52,"item":{"@type":"Product","name":"Funda Fire 7 - Diseño Rojo","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fire-7-diseno-rojo-MKVSPYTJ82.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/998d01d43080.webp"}},{"@type":"ListItem","position":53,"item":{"@type":"Product","name":"Elegias Del 4 De Junio","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/elegias-del-4-de-junio-9788489624894.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/cf6787a75536.webp"}},{"@type":"ListItem","position":54,"item":{"@type":"Product","name":"Funda Fibra Fire HD8 Diseño Beige","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Paris"},"url":"https://www.paris.cl/funda-fibra-fire-hd8-diseno-beige-MKSYJVE7UI.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ee82d0231ce1.webp"}},{"@type":"ListItem","position":55,"item":{"@type":"Product","name":"Teoria Y Estructura De Las Relaciones Publicas","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/teoria-y-estructura-de-las-relaciones-publicas9788448139896.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/348a6d9b37e4.webp"}},{"@type":"ListItem","position":56,"item":{"@type":"Product","name":"Aprendiendo A Ser Padres","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/aprendiendo-a-ser-padres-9789562013581.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/1bc3fadfa368.webp"}},{"@type":"ListItem","position":57,"item":{"@type":"Product","name":"Atencion Al Cliente","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/atencion-al-cliente-9788428335751.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/66c243cf181d.webp"}},{"@type":"ListItem","position":58,"item":{"@type":"Product","name":"Calientacama Gama Wide Doble 2 Plazas","offers":{"@type":"Offer","price":"19150","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/calientacama-gama-wide-doble-2-plazas/19525414.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/2b381405eed2.webp"}},{"@type":"ListItem","position":59,"item":{"@type":"Product","name":"El Billete De Un Millon De Libras (Td)","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/el-billete-de-un-millon-de-libras-td-9788494244353.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4fc75dbe5fc5.webp"}},{"@type":"ListItem","position":60,"item":{"@type":"Product","name":"Second Chance","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/second-chance-9781612680460.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/6631fd6f6191.webp"}},{"@type":"ListItem","position":61,"item":{"@type":"Product","name":"The 8Th Habit: From Effectiveness To Greatness","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/the-8th-habit-from-effectiveness-to-greatness-9780743287937.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e6df468d06f9.webp"}},{"@type":"ListItem","position":62,"item":{"@type":"Product","name":"Zip Y Candy","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/zip-y-candy-9788415208617.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/33626d0e5540.webp"}},{"@type":"ListItem","position":63,"item":{"@type":"Product","name":"Siete Meses","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/siete-meses-9788416942008.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ae0eddf269a8.webp"}},{"@type":"ListItem","position":64,"item":{"@type":"Product","name":"Un Dia Especial","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/un-dia-especial-9788490611326.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/b8857d76a98d.webp"}},{"@type":"ListItem","position":65,"item":{"@type":"Product","name":"Ghost Ship","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/ghost-ship-9780399170508.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ca8412ef6a53.webp"}},{"@type":"ListItem","position":66,"item":{"@type":"Product","name":"El Marketing En El Pequeño Comercio. Una Visión Estratégica Para Incre","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/el-marketing-en-el-pequeno-comercio-una-vision-estrategica-para-incre-9788496578470.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ccb613bdc329.webp"}},{"@type":"ListItem","position":67,"item":{"@type":"Product","name":"Presentaciones Eficaces. Conceptos Y Herramientas Basicas Para Hacer E","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/presentaciones-eficaces-conceptos-y-herramientas-basicas-para-hacer-e-9788493455316.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/667a3b275a24.webp"}},{"@type":"ListItem","position":68,"item":{"@type":"Product","name":"Mensajeros Valientes","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/mensajeros-valientes-9788475776484.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e160ce67ccd6.webp"}},{"@type":"ListItem","position":69,"item":{"@type":"Product","name":"Serie Aprendizaje Wb Batman","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/serie-aprendizaje-wb-batman-9786074049480.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/b70b24d5c8bd.webp"}},{"@type":"ListItem","position":70,"item":{"@type":"Product","name":"Dirección Por Servicio","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/direccion-por-servicio-9789701024003.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/4b4b5fab0644.webp"}},{"@type":"ListItem","position":71,"item":{"@type":"Product","name":"El Cerebro Del Mundo. La Cara Oculta De La Globalizacion","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/el-cerebro-del-mundo-la-cara-oculta-de-la-globalizacion-9789588220314.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ec15212222a4.webp"}},{"@type":"ListItem","position":72,"item":{"@type":"Product","name":"Soporte de Pared Fijo Fiddler MV301S","offers":{"@type":"Offer","price":"3551","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/soporte-de-pared-fijo-fiddler-mv301s/28804709.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d6e65ee0f2cd.webp"}},{"@type":"ListItem","position":73,"item":{"@type":"Product","name":"Rumbo A China 2005","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/rumbo-a-china-2005-9789706767974.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/37ee833af790.webp"}},{"@type":"ListItem","position":74,"item":{"@type":"Product","name":"Ventilador de Pedestal Thomas TH-16CP","offers":{"@type":"Offer","price":"14990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/ventilador-de-pedestal-thomas-th-16cp/27393730.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/ce0a49da6c5d.webp"}},{"@type":"ListItem","position":75,"item":{"@type":"Product","name":"La Organizacion En La Era De La Informatica","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/la-organizacion-en-la-era-de-la-informatica-9788448107918.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/cb66f4c452b5.webp"}},{"@type":"ListItem","position":76,"item":{"@type":"Product","name":"CIUDAD ETERNA, LA","offers":{"@type":"Offer","price":"6100","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Feria Chilena del Libro"},"url":"https://feriachilenadellibro.cl/producto/9789563607925-ciudad-eterna-la/"},"image":"https://fernandoandresmunoz.github.io/imagenes/6d704eb03af2.webp"}},{"@type":"ListItem","position":77,"item":{"@type":"Product","name":"El Vuelo De La Flecha","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/el-vuelo-de-la-flecha-9788498004496.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/79ee55e69e06.webp"}},{"@type":"ListItem","position":78,"item":{"@type":"Product","name":"Guia Practica Photoshop Cc. Aplicacion Defectos Y Filtros","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/guia-practica-photoshop-cc-aplicacion-defectos-y-filtros-9786123042585.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/be4120c0f416.webp"}},{"@type":"ListItem","position":79,"item":{"@type":"Product","name":"Orlando Enamorado, Orlando Furioso Tapa Blanda","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/orlando-enamorado-orlando-furioso-tapa-blanda-9788494179914.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d136e4e1c21a.webp"}},{"@type":"ListItem","position":80,"item":{"@type":"Product","name":"Five Days Left","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/five-days-left-9780399172694.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/92d5cb009282.webp"}},{"@type":"ListItem","position":81,"item":{"@type":"Product","name":"Saneamiento Aglomeraciones Urbanas 1º Edicion","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/saneamiento-aglomeraciones-urbanas-1-edicion-9788429120455.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/9ac3c7a10a04.webp"}},{"@type":"ListItem","position":82,"item":{"@type":"Product","name":"Lantern City #1","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/lantern-city-1-9788416387496.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/6c8a77e9e2d6.webp"}},{"@type":"ListItem","position":83,"item":{"@type":"Product","name":"Jmj Madrid 2011: Una Aventura Con Benedicto Xvi. Todos Los Mensajes De","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/jmj-madrid-2011-una-aventura-con-benedicto-xvi-todos-los-mensajes-de-9788498405484.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/2700e0bb2239.webp"}},{"@type":"ListItem","position":84,"item":{"@type":"Product","name":"Veronica Mars: An Original Mystery By Rob Thomas: The Thousand-Dollar","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/veronica-mars-an-original-mystery-by-rob-thomas-the-thousand-dollar-9780804170703.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/f951c18b1dc2.webp"}},{"@type":"ListItem","position":85,"item":{"@type":"Product","name":"Procesos De Elaboracion De Conservas De Productos De La Pesca. Guia Pa","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/procesos-de-elaboracion-de-conservas-de-productos-de-la-pesca-guia-pa-9788496153776.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/dc849d10dd41.webp"}},{"@type":"ListItem","position":86,"item":{"@type":"Product","name":"Berlin Then And Now (Then & Now Thunder Bay)","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/berlin-then-and-now-then-y-now-thunder-bay-9781607107514.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/2ed7649075b9.webp"}},{"@type":"ListItem","position":87,"item":{"@type":"Product","name":"Audífonos On Ear Logitech 29LOGHD390","offers":{"@type":"Offer","price":"9990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/audifonos-on-ear-logitech-29loghd390/28829906.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/6684de84dc85.webp"}},{"@type":"ListItem","position":88,"item":{"@type":"Product","name":"Gorro Beanie Hombre Soviet","offers":{"@type":"Offer","price":"2500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/gorro-beanie-hombre-soviet/639171.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/d5fac78949fe.webp"}},{"@type":"ListItem","position":89,"item":{"@type":"Product","name":"New Indoorpool Design Hardcover","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/new-indoorpool-design-hardcover-9783937718279.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/00bbc709a274.webp"}},{"@type":"ListItem","position":90,"item":{"@type":"Product","name":"Gorro Beanie Hombre Soviet","offers":{"@type":"Offer","price":"2500","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"abc"},"url":"https://www.lapolar.cl/gorro-beanie-hombre-soviet/639172.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/7bb8f93e2f5e.webp"}},{"@type":"ListItem","position":91,"item":{"@type":"Product","name":"Jefe Por Primera Vez","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/jefe-por-primera-vez-9786123041939.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/5c4bc4b6d07f.webp"}},{"@type":"ListItem","position":92,"item":{"@type":"Product","name":"SE IRRESISTIBLE","offers":{"@type":"Offer","price":"5100","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Feria Chilena del Libro"},"url":"https://feriachilenadellibro.cl/producto/9789564086552-se-irresistible/"},"image":"https://fernandoandresmunoz.github.io/imagenes/abeaeb0880ad.webp"}},{"@type":"ListItem","position":93,"item":{"@type":"Product","name":"Lantern City #3","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/lantern-city-3-9788416387502.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/6d0aca88bbd8.webp"}},{"@type":"ListItem","position":94,"item":{"@type":"Product","name":"Diseño De Infraestructura Autocad Land Desktop (Incluye Cd)","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/diseno-de-infraestructura-autocad-land-desktop-incluye-cd-9786124034275.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/40af30386dbe.webp"}},{"@type":"ListItem","position":95,"item":{"@type":"Product","name":"Aprovisionamiento De Materias Primas En Cocina","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/aprovisionamiento-de-materias-primas-en-cocina-9788428334518.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/fd699ffd59f8.webp"}},{"@type":"ListItem","position":96,"item":{"@type":"Product","name":"Mantenimiento Preventivo De Redes De Distribución De Agua Y Saneamient","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/mantenimiento-preventivo-de-redes-de-distribucion-de-agua-y-saneamient-9788415648840.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/340c77a1352a.webp"}},{"@type":"ListItem","position":97,"item":{"@type":"Product","name":"Construccion De Obra De Fabrica Ordinaria. Útiles Y Herramientas Neces","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/construccion-de-obra-de-fabrica-ordinaria-utiles-y-herramientas-neces-9788496585942.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/70b6d23781ae.webp"}},{"@type":"ListItem","position":98,"item":{"@type":"Product","name":"Educación Y Transformación Social","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/educacion-y-transformacion-social-9789561705838.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/856840b96ed5.webp"}},{"@type":"ListItem","position":99,"item":{"@type":"Product","name":"Diseño Latinoamerica: Competitividad Producto Mercado","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/diseno-latinoamerica-competitividad-producto-mercado-9789568679002.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/e014f33913f1.webp"}},{"@type":"ListItem","position":100,"item":{"@type":"Product","name":"The Road To Global Prosperity","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Antártica"},"url":"https://www.antartica.cl/the-road-to-global-prosperity-9781476769998.html"},"image":"https://fernandoandresmunoz.github.io/imagenes/a4ddf78aea31.webp"}}]}</script>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><nav class="snav" aria-label="Secciones"><a href="/" class="on" aria-current="page">Ofertas</a><a href="/mercados">Mercados</a></nav><small id="upd">cargando…</small></div>
+  <h1 id="hero-title">Ranking Global de las mejores ofertas, <em>todos los dominios.</em></h1>
+  <p class="lead" id="hero-desc">Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.</p>
+  <div class="stats">
+    <div id="s1">–<span>Ofertas</span></div>
+    <div id="s2">–<span>Tiendas</span></div>
+    <div id="s3">–<span>Descuento promedio</span></div>
+  </div>
+</header>
+</div>
+
+<nav class="tabs-wrap wrap" aria-label="Categorías y Tiendas">
+  <div class="tabs-scroll" id="tabs-nav"></div>
+</nav>
+
+<div class="bar"><div class="wrap">
+  <div class="row">
+    <input id="q" type="search" placeholder="Buscar..." aria-label="Buscar">
+    <select id="min" aria-label="Descuento mínimo"><option value="0">Cualquier descuento</option><option value="20">+20%</option><option value="40">+40%</option><option value="50">+50%</option><option value="70">+70%</option></select>
+    <select id="per" aria-label="Filas por página"><option selected>10</option><option>25</option><option>50</option><option value="1000">Todos</option></select>
+  </div>
+  <div class="chips" id="chips"></div>
+</div></div>
+
+<main class="wrap">
+  <p class="count" id="count"></p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th data-k="title" id="col-item">Producto</th><th data-k="tienda" class="c-store">Tienda</th><th class="r" data-k="precio">Precio</th><th data-k="descuento">Descuento</th><th class="r" data-k="ahorro">Ahorras</th><th class="r">Historial</th><th></th></tr></thead>
+    <tbody id="body"></tbody>
+  </table></div>
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="wrap">© Páginas &amp; Precios · Monitoreo automático de ofertas en Chile. Los precios y disponibilidad son responsabilidad de cada tienda.</footer>
+
+<script>
+window.PAGE_DEFAULT_TAB = "global";
+const $ = id => document.getElementById(id),
+  clp = n => "$" + Math.round(n).toLocaleString("es-CL"),
+  esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14", "#e879f9", "#38bdf8", "#a3e635", "#f43f5e", "#fbbf24", "#34d399", "#818cf8"];
+let TABS = [], currentTab = null, B = [], D = [], page = 1, store = -1, key = "descuento", dir = -1, maxD = 1;
+const tabCache = {};
+const tabPath = t => t.path || (t.html_file && t.html_file !== "index.html" ? "/" + t.html_file.replace(".html", "") : "/");
+const tabFromLocation = () => {
+  let p = location.pathname.replace("/index.html", "/").replace(".html", "");
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+  return TABS.find(t => tabPath(t) === p);
+};
+
+fetch("tabs.json", { cache: "no-cache" })
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(data => {
+    TABS = data.tabs || [];
+    if (!TABS.some(t => t.id === "global")) {
+      const tot = TABS.reduce((acc, t) => acc + (t.total || 0), 0);
+      const avg = Math.round(TABS.reduce((acc, t) => acc + (t.avg_discount || 0) * (t.total || 0), 0) / (tot || 1));
+      TABS.unshift({
+        id: "global",
+        name: "Ranking Global",
+        icon: "🌐",
+        headline: "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+        subtitle: "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+        item_label: "Producto",
+        file: "global.json",
+        html_file: "global.html",
+        path: "/global",
+        total: tot,
+        avg_discount: avg,
+        dominios: []
+      });
+    }
+    renderTabsBar();
+    // Links viejos tipo /#abc: se llevan a la URL limpia /abc
+    const legacy = TABS.find(t => t.id === (location.hash || "").replace("#", "").trim());
+    const found = legacy || tabFromLocation();
+    const initialId = found ? found.id : (TABS.find(t => t.id === window.PAGE_DEFAULT_TAB) || TABS[0])?.id;
+    if (initialId) switchTab(initialId, false);
+    if (legacy) history.replaceState(null, "", tabPath(legacy));
+  })
+  .catch(() => {
+    // Fallback: intentar cargar libros.json directamente
+    fetch("libros.json", { cache: "no-cache" }).then(r => r.json()).then(j => {
+      initTabData({ id: "libros", name: "Libros", item_label: "Libro", headline: "Los mejores descuentos de libros en Chile", subtitle: "Librerías principales de Chile" }, j);
+    }).catch(() => {
+      $("upd").textContent = "sin datos";
+      $("body").innerHTML = `<tr><td colspan="8"><div class="msg">No pude leer los datos.<br><br>Genera las ofertas con <code>python3 script_generator.py</code>.</div></td></tr>`;
+    });
+  });
+
+function renderTabsBar() {
+  const nav = $("tabs-nav");
+  nav.innerHTML = TABS.map(t => `
+    <a class="tab-btn${currentTab && currentTab.id === t.id ? " active" : ""}" href="${tabPath(t)}" data-tab="${t.id}" id="tab-btn-${t.id}">
+      <span class="t-icon">${t.icon || "🏷️"}</span>
+      <span>${esc(t.name)}</span>
+      <span class="t-badge">${t.total || 0}</span>
+    </a>
+  `).join("");
+}
+
+$("tabs-nav").onclick = e => {
+  const btn = e.target.closest(".tab-btn");
+  if (!btn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+  e.preventDefault();
+  const tid = btn.dataset.tab;
+  if (tid && !(currentTab && currentTab.id === tid)) switchTab(tid, true);
+};
+
+window.addEventListener("popstate", () => {
+  const t = tabFromLocation();
+  if (t && (!currentTab || currentTab.id !== t.id)) switchTab(t.id, false);
+});
+
+function switchTab(tabId, updateHash) {
+  const tab = TABS.find(t => t.id === tabId);
+  if (!tab) return;
+  currentTab = tab;
+  if (updateHash) {
+    history.pushState(null, "", tabPath(tab));
+  }
+  document.title = `${tab.name} | Monitor de Ofertas · Descuentos en Chile`;
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const isAct = b.dataset.tab === tabId;
+    b.classList.toggle("active", isAct);
+    if (isAct) b.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+  });
+
+  // Actualizar hero y textos
+  $("hero-title").innerHTML = tab.headline || `Los mejores descuentos en ${esc(tab.name)}, <em>actualizados hoy.</em>`;
+  $("hero-desc").textContent = tab.subtitle || `Monitoreo de precios y descuentos en ${tab.name}.`;
+  $("col-item").dataset.l = tab.item_label || "Producto";
+  $("col-item").textContent = $("col-item").dataset.l;
+  $("q").placeholder = tab.id === "global" ? "Buscar en todas las tiendas..." : `Buscar en ${tab.name}...`;
+
+  if (tabCache[tabId]) {
+    initTabData(tab, tabCache[tabId]);
+  } else if (tabId === "global") {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ranking global de todas las tiendas…</div></td></tr>`;
+    fetch(tab.file || "global.json", { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(() => {
+        consolidateGlobalFromTabs(tab);
+      });
+  } else {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ofertas de ${esc(tab.name)}…</div></td></tr>`;
+    fetch(tab.file || `${tabId}.json`, { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(err => {
+        $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al cargar datos de ${esc(tab.name)}.</div></td></tr>`;
+      });
+  }
+}
+
+function consolidateGlobalFromTabs(tab) {
+  const tabsToFetch = TABS.filter(t => t.id !== "global" && t.file);
+  Promise.all(tabsToFetch.map(t => {
+    if (tabCache[t.id]) return Promise.resolve(tabCache[t.id]);
+    return fetch(t.file, { cache: "no-cache" })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => { if (j) tabCache[t.id] = j; return j; })
+      .catch(() => null);
+  })).then(results => {
+    const allItems = [];
+    const domMap = new Map();
+    const seen = new Set();
+    let genAt = null;
+    results.forEach(res => {
+      if (!res) return;
+      if (res.generated_at && !genAt) genAt = res.generated_at;
+      (res.dominios || []).forEach(d => {
+        if (!domMap.has(d.id)) domMap.set(d.id, d);
+      });
+      const list = res.items || res.libros || [];
+      list.forEach(item => {
+        const key = (item.dominio_id || 0) + ":" + (item.id || item.slug || item.title);
+        if (!seen.has(key)) {
+          seen.add(key);
+          allItems.push(item);
+        }
+      });
+    });
+    allItems.sort((a, b) => (b.descuento || 0) - (a.descuento || 0));
+    const domArray = Array.from(domMap.values());
+    const avgDisc = allItems.length ? Math.round(allItems.reduce((a, b) => a + (b.descuento || 0), 0) / allItems.length) : 0;
+    const globalData = {
+      id: "global",
+      name: "Ranking Global",
+      item_label: "Producto",
+      headline: "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+      subtitle: "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+      generated_at: genAt || new Date().toISOString(),
+      total: allItems.length,
+      avg_discount: avgDisc,
+      dominios: domArray,
+      items: allItems
+    };
+    tabCache["global"] = globalData;
+    tab.total = allItems.length;
+    tab.avg_discount = avgDisc;
+    renderTabsBar();
+    initTabData(tab, globalData);
+  }).catch(() => {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al consolidar ofertas globales.</div></td></tr>`;
+  });
+}
+
+const fixUrl = b => {
+  if (!b.url) return "";
+  if (/buscalibre/i.test(b.tienda) && !/^https?:/i.test(b.url)) {
+    return new URL(b.url, "https://www.buscalibre.cl/").href;
+  }
+  return b.url;
+};
+
+// Al ir al detalle se guarda cómo estaba el listado (búsqueda, filtros, página, orden, scroll)
+// para dejarlo igual cuando la persona vuelve.
+function saveList() {
+  if (!currentTab) return;
+  try {
+    sessionStorage.setItem("lista:" + currentTab.id, JSON.stringify({ q: $("q").value, min: $("min").value, per: $("per").value, page, store, key, dir, y: window.scrollY }));
+  } catch (e) {}
+}
+function restoreList(tabId) {
+  let s = null;
+  try {
+    s = JSON.parse(sessionStorage.getItem("lista:" + tabId) || "null");
+    sessionStorage.removeItem("lista:" + tabId);
+  } catch (e) {}
+  if (!s) return null;
+  $("q").value = s.q || "";
+  $("min").value = s.min || "0";
+  $("per").value = s.per || "10";
+  page = s.page || 1;
+  store = s.store ?? -1;
+  key = s.key || key;
+  dir = s.dir || dir;
+  if (D.length > 1) document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", +c.dataset.i === store));
+  return s;
+}
+document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList(); });
+
+function initTabData(tab, j) {
+  D = j.dominios || [];
+  document.querySelector("table").classList.toggle("single", tab.id !== "global" && D.length < 2);
+  const items = j.items || j.libros || [];
+  B = items.map(b => ({ ...b, ahorro: (b.promedio || 0) - (b.precio || 0), url: fixUrl(b) }));
+  maxD = Math.max(...B.map(b => b.descuento || 0), 1);
+  if (j.generated_at) {
+    $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
+  }
+  $("s1").firstChild.textContent = B.length.toLocaleString("es-CL");
+  $("s2").firstChild.textContent = D.length || 1;
+  $("s3").firstChild.textContent = Math.round(B.reduce((a, b) => a + (b.descuento || 0), 0) / Math.max(B.length, 1)) + "%";
+
+  // Chips de tiendas del tab
+  if (D.length > 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = [{ name: "Todas" }, ...D].map((d, i) =>
+      `<button class="chip${i ? "" : " on"}" data-i="${i ? d.id : -1}">${i ? `<i style="--c:${COLORS[(i - 1) % COLORS.length]}"></i>` : ""}${esc(d.name)}</button>`
+    ).join("");
+  } else if (D.length === 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = `<button class="chip on" data-i="${D[0].id}"><i style="--c:${COLORS[0]}"></i>${esc(D[0].name)}</button>`;
+  } else {
+    $("chips").style.display = "none";
+    $("chips").innerHTML = "";
+  }
+
+  page = 1;
+  store = -1;
+  const sv = restoreList(tab.id);
+  render();
+  if (sv) requestAnimationFrame(() => window.scrollTo(0, sv.y || 0));
+}
+
+const col = id => {
+  const idx = D.findIndex(d => d.id === id);
+  return COLORS[Math.max(idx, 0) % COLORS.length];
+};
+
+$("chips").onclick = e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  store = +b.dataset.i;
+  document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  page = 1;
+  render();
+};
+
+["q", "min", "per"].forEach(id => $(id).addEventListener("input", () => { page = 1; render(); }));
+
+document.querySelector("thead").onclick = e => {
+  const h = e.target.closest("th[data-k]");
+  if (!h) return;
+  const k = h.dataset.k;
+  dir = key === k ? -dir : (k === "title" || k === "tienda" || k === "precio" || k === "promedio" ? 1 : -1);
+  key = k;
+  page = 1;
+  render();
+};
+
+// Mini gráfico del historial de precios (solo muestra la tendencia; el número que manda es el descuento).
+function spark(b) {
+  const h = b.hist;
+  if (!h || h.length < 2) return `<span class="o">—</span>`;
+  const min = Math.min(...h), max = Math.max(...h), rng = max - min, W = 130, H = 40, P = 4;
+  const pts = h.map((v, i) => `${(i / (h.length - 1) * W).toFixed(1)},${(rng === 0 ? H / 2 : H - P - (v - min) / rng * (H - 2 * P)).toFixed(1)}`).join(" ");
+  const c = "var(--dn)";
+  const tip = `Normal ${clp(b.promedio)} · mín ${clp(min)} · máx ${clp(max)} · ${h.length} registros`;
+  return `<div class="sp" title="${tip}"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="${pts} ${W},${H} 0,${H}" fill="${c}" opacity=".13"/><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>`;
+}
+
+function render() {
+  const q = $("q").value.toLowerCase().trim(), m = +$("min").value, PER = +$("per").value;
+  const L = B.filter(b => (store < 0 || b.dominio_id === store) && b.descuento >= m && (!q || (b.title || "").toLowerCase().includes(q)));
+  L.sort((a, b) => (typeof a[key] === "string" ? a[key].localeCompare(b[key], "es") : a[key] - b[key]) * dir);
+  document.querySelectorAll("th[data-k]").forEach(h => {
+    h.dataset.l = h.dataset.l || h.textContent;
+    h.classList.toggle("s", h.dataset.k === key);
+    h.textContent = h.dataset.l + (h.dataset.k === key ? (dir > 0 ? " ↑" : " ↓") : "");
+  });
+  const pages = Math.max(1, Math.ceil(L.length / PER));
+  page = Math.min(page, pages);
+  const st = (page - 1) * PER;
+  $("count").innerHTML = `<b>${L.length}</b> ofertas · mostrando ${L.length ? st + 1 : 0}–${Math.min(st + PER, L.length)}`;
+
+  $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
+    <td class="n">${st + i + 1}</td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
+    <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
+    <td class="r p">${clp(b.precio)}</td>
+    <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
+    <td class="r sv">${clp(b.ahorro)}</td>
+    <td class="r">${spark(b)}</td>
+    <td class="r">${b.url ? `<a class="btn" href="${esc(b.url)}" target="_blank" rel="noopener" data-id="${b.id}" data-pos="${st + i + 1}">Ir a la tienda ↗</a>` : ""}</td>
+  </tr>`).join("") : `<tr><td colspan="8"><div class="msg">Nada por aquí… prueba otra búsqueda 🔍</div></td></tr>`;
+
+  const bt = (l, p, x = "") => `<button ${x} data-p="${p}">${l}</button>`, a = [bt("←", page - 1, page === 1 ? "disabled" : "")];
+  const set = [...new Set([1, 2, page - 1, page, page + 1, pages - 1, pages])].filter(x => x >= 1 && x <= pages).sort((x, y) => x - y);
+  set.forEach((x, i) => {
+    if (i && x - set[i - 1] > 1) a.push("<span>…</span>");
+    a.push(bt(x, x, x === page ? 'class="on"' : ""));
+  });
+  a.push(bt("→", page + 1, page === pages ? "disabled" : ""));
+  $("pager").innerHTML = a.join("");
+}
+
+$("pager").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b || b.disabled) return;
+  page = +b.dataset.p;
+  render();
+  $("count").scrollIntoView({ behavior: "smooth" });
+};
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a.btn[data-id]");
+  if (!a || typeof gtag !== "function") return;
+  const b = B.find(x => String(x.id) === a.dataset.id);
+  if (!b) return;
+  gtag("event", "select_item", {
+    item_list_name: currentTab ? currentTab.name : "Ofertas",
+    currency: "CLP",
+    items: [{ item_id: String(b.id), item_name: b.title, item_brand: b.tienda, price: Math.round(b.precio), discount: Math.round(b.ahorro), index: +a.dataset.pos }]
+  });
+});
+</script>
+</body>
+</html>
