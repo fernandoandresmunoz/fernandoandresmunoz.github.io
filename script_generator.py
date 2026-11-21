@@ -65,8 +65,9 @@ DET_REGISTROS = 8      # filas de "Últimos registros" en la página de detalle
 
 # Página /mercados (tarjetas): lista de onesource con los ids de interés
 LISTA_MERCADOS = 18
-MERCADOS_REGISTROS = 5000   # registros que se piden por mercado (igual que el Market Monitor)
+MERCADOS_REGISTROS = 10000  # registros que se piden por mercado (igual que el Market Monitor)
 MERCADOS_PUNTOS = 80        # tramos del gráfico: se guarda el mínimo y el máximo de cada uno
+MERCADOS_VENTANAS = (1000, 2500, 5000, 10000)   # ventanas del selector "Registros" (se calculan con los mismos registros)
 
 TABS_CONFIG = [
     {
@@ -1571,26 +1572,50 @@ def generar_sitemap(active_tabs_data, slugs_productos, fecha):
             f.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n")
 
 
-def _reducir_serie(puntos, cubos):
-    """Reduce [(ts, valor)] conservando el mínimo y el máximo de cada tramo, para no perder picos."""
-    if len(puntos) <= cubos * 2:
-        return puntos
-    tam = -(-len(puntos) // cubos)
-    salida = []
-    for i in range(0, len(puntos), tam):
-        tramo = puntos[i:i + tam]
-        lo = min(tramo, key=lambda p: p[1])
-        hi = max(tramo, key=lambda p: p[1])
-        salida += sorted({lo, hi}, key=lambda p: p[0])
-    if salida[0] != puntos[0]:
-        salida.insert(0, puntos[0])
-    if salida[-1] != puntos[-1]:
-        salida.append(puntos[-1])
-    return salida
+def _reducir_serie(valores, cubos):
+    """Índices a conservar de una serie: el mínimo y el máximo de cada tramo, para no perder picos."""
+    n = len(valores)
+    if n <= cubos * 2:
+        return list(range(n))
+    tam = -(-n // cubos)
+    idx = {0, n - 1}
+    for i in range(0, n, tam):
+        tramo = range(i, min(i + tam, n))
+        idx.add(min(tramo, key=lambda k: valores[k]))
+        idx.add(max(tramo, key=lambda k: valores[k]))
+    return sorted(idx)
+
+
+def _ventana_mercado(pts, precio, promedio):
+    """Una ventana de registros: gráfico reducido, promedio acumulado y estadísticos (como el Market Monitor)."""
+    valores = [v for _, v in pts]
+    n = len(valores)
+    media = sum(valores) / n
+    desv = (sum((v - media) ** 2 for v in valores) / n) ** 0.5
+    acum, suma = [], 0.0
+    for i, v in enumerate(valores, 1):
+        suma += v
+        acum.append(suma / i)  # promedio acumulado desde el inicio de la ventana
+    idx = _reducir_serie(valores, MERCADOS_PUNTOS)
+    maximo, minimo = max(valores), min(valores)
+    return {
+        "n": n,
+        "desv": round(desv, 4), "max": maximo, "min": minimo,
+        "cv": round(desv / promedio * 100, 2) if promedio else 0,
+        "amp": round((maximo - minimo) / promedio * 100, 2) if promedio else 0,
+        "z": round((precio - promedio) / desv, 2) if desv else 0,
+        "s": [[pts[i][0], round(pts[i][1], 4)] for i in idx],
+        "m": [round(acum[i], 4) for i in idx],
+    }
 
 
 def generar_mercados(now_iso):
-    """mercados.json (página /mercados): una tarjeta por item de la lista LISTA_MERCADOS."""
+    """mercados.json (página /mercados): una tarjeta por item de la lista LISTA_MERCADOS.
+
+    Todo sale de los mismos registros que ya se piden (no hay consultas extra): por cada mercado se
+    guardan varias ventanas (últimos 1000, 2500, 5000 registros) para que la página cambie de una a
+    otra sin volver a pedir nada.
+    """
     resp = get(f"/my-lists/{LISTA_MERCADOS}/", page_size=40)
     filas = resp.get("results", [])
     while resp.get("next"):
@@ -1610,23 +1635,28 @@ def generar_mercados(now_iso):
         pts = [(t, v) for t, v in pts if t is not None]
         if len(pts) < 2:
             return None
-        valores = [v for _, v in pts]
-        media = sum(valores) / len(valores)
-        desv = (sum((v - media) ** 2 for v in valores) / len(valores)) ** 0.5
         ap = fila.get("analysis_price") or {}
-        precio = ap.get("precio", valores[-1])
-        z = (precio - media) / desv if desv else 0   # anomalía: |z-score| >= 2
+        precio = ap.get("precio", pts[-1][1])
+        promedio = ap.get("promedio", sum(v for _, v in pts) / len(pts))
+        tams = [w for w in MERCADOS_VENTANAS if w < len(pts)] + [next(w for w in MERCADOS_VENTANAS if w >= len(pts))]
+        vent = {str(w): _ventana_mercado(pts[-w:], precio, promedio) for w in tams}
+        grande = vent[str(tams[-1])]
         return {
-            "id": fila["id"], "name": nombre, "category": categoria, "link": fila.get("product_link"),
-            "precio": precio, "promedio": ap.get("promedio", media), "minimo": ap.get("precio_minimo", min(valores)),
+            "id": fila["id"], "name": nombre, "category": categoria,
+            "precio": precio, "promedio": promedio,
             "variacion": round(ap.get("variacion_promedio") or 0, 2),
-            "z": round(z, 2), "anomalia": abs(z) >= 2, "n": len(pts),
-            "s": [[t, round(v, 4)] for t, v in _reducir_serie(pts, MERCADOS_PUNTOS)],
+            "z": grande["z"], "anomalia": abs(grande["z"]) >= 2,  # anomalía: |z-score| >= 2
+            "n": len(pts),
+            "s": grande["s"],   # compatibilidad: gráfico de la ventana más grande
+            "vent": vent,
         }
 
     with ThreadPoolExecutor(4) as ex:
         items = [i for i in ex.map(uno, filas) if i]
-    guardar_json_atomico(os.path.join(DIR_BASE, "mercados.json"), {"generated_at": now_iso, "lista": LISTA_MERCADOS, "items": items})
+    ventanas = sorted({int(k) for i in items for k in i["vent"]})
+    guardar_json_atomico(os.path.join(DIR_BASE, "mercados.json"), {
+        "generated_at": now_iso, "lista": LISTA_MERCADOS, "ventanas": ventanas, "items": items,
+    })
     print(f"✓ Guardado mercados.json ({len(items)} mercados, {sum(1 for i in items if i['anomalia'])} anomalías).")
 
 

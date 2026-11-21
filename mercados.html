@@ -40,10 +40,13 @@ h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--
 .seg button.on{background:var(--ink);color:var(--bg)}
 .cnt{font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(141,153,174,.25)}
 .opt{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;cursor:pointer}
-.opt input{accent-color:var(--acc);width:16px;height:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:20px;padding:28px 0 56px}
-.mc{position:relative;height:236px;border-radius:20px;border:1px solid var(--line);background:var(--card);overflow:hidden}
+.opt input[type=checkbox]{accent-color:var(--acc);width:16px;height:16px}
+.opt select{background:transparent;border:0;color:var(--ink);font:600 13px Inter,sans-serif;cursor:pointer}
+.opt .k{font:600 10px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:20px;padding:28px 0 56px;align-items:start}
+.mc{border-radius:20px;border:1px solid var(--line);background:var(--card);overflow:hidden}
 .mc.a{border-color:var(--warn);box-shadow:0 0 0 1px color-mix(in srgb,var(--warn) 25%,transparent)}
+.cv{position:relative;height:236px}
 .ch{position:absolute;left:0;right:0;bottom:22px;width:100%;height:130px;display:block;cursor:crosshair}
 .ch.g{color:var(--dn)}.ch.r{color:var(--up)}
 .ar{fill:currentColor;opacity:.14}
@@ -66,8 +69,11 @@ h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--
 .cr{position:absolute;top:84px;bottom:22px;width:1px;background:var(--mute);opacity:.6;display:none;pointer-events:none}
 .dt{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--bg);border:2px solid currentColor;display:none;pointer-events:none}
 .dt.g{color:var(--dn)}.dt.r{color:var(--up)}
-.tp{position:absolute;top:104px;padding:8px 10px;border-radius:10px;background:var(--tip);border:1px solid var(--line);font-size:11px;line-height:1.5;color:var(--mute);display:none;pointer-events:none;white-space:nowrap}
+.tp{position:absolute;top:104px;padding:8px 10px;border-radius:10px;background:var(--tip);border:1px solid var(--line);font-size:11px;line-height:1.5;color:var(--mute);display:none;pointer-events:none;white-space:nowrap;z-index:2}
 .tp b{color:var(--ink);font-size:12px}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 12px;padding:16px 18px;border-top:1px solid var(--line)}
+.st b{display:inline-block;font:600 14px Inter,sans-serif;margin-top:2px}
+.st b.hl{padding:1px 7px;border-radius:6px;background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
 .msg{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}
 footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--mute);font-size:13px;text-align:center}
 </style>
@@ -86,6 +92,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--mute);fo
 </div>
 
 <div class="bar"><div class="wrap"><div class="tools">
+  <label class="opt" id="regw" hidden><span class="k">Registros</span><select id="reg" aria-label="Cantidad de registros"></select></label>
   <div class="seg" role="group" aria-label="Filtro"><button id="f-all" class="on" aria-pressed="true">Todas <span class="cnt" id="c-all">0</span></button><button id="f-an" aria-pressed="false">Anomalías <span class="cnt" id="c-an">0</span></button></div>
   <label class="opt"><input type="checkbox" id="first" checked>Anomalías primero</label>
 </div></div></div>
@@ -96,39 +103,59 @@ footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--mute);fo
 <script>
 const $ = id => document.getElementById(id),
   esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-let ITEMS = [], BY = {}, onlyAn = false;
+let ITEMS = [], BY = {}, onlyAn = false, SEL = 0;
 
-// Decimales según magnitud: 10.636 · 7.529,7 · 997,4 · 88,82 · 3,24
-const fmtN = v => { const d = Math.abs(v) >= 10000 ? 0 : Math.abs(v) >= 100 ? 1 : 2; return v.toLocaleString("es-CL", { minimumFractionDigits: d, maximumFractionDigits: d }); };
+// Decimales según magnitud, sin ceros sobrantes: 10.636 · 7.529,7 · 997,4 · 88,82 · 3,2
+const dec = v => Math.abs(v) >= 10000 ? 0 : Math.abs(v) >= 100 ? 1 : 2;
+const fmt = (v, d) => v.toLocaleString("es-CL", { minimumFractionDigits: 0, maximumFractionDigits: d });
+const fmtN = v => fmt(v, dec(v));
 const fdm = ts => new Date(ts * 1000).toLocaleDateString("es-CL", { day: "2-digit", month: "short" }).replace(".", "").replace(" ", "-");
 const fdt = ts => new Date(ts * 1000).toLocaleString("es-CL", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 const sgn = x => { const r = Math.round(x); return r === 0 ? "0%" : (r > 0 ? "+" : "−") + Math.abs(r) + "%"; };
 const WARN = `<svg width="14" height="14" role="img" aria-label="Anomalía"><use href="#warn" width="14" height="14"/></svg>`;
 
-function geom(it) {
-  const s = it.s, t0 = s[0][0], t1 = Math.max(s[s.length - 1][0], t0 + 1);
-  const vs = s.map(p => p[1]).concat([it.promedio]);
+// Ventana de registros elegida (1000 / 2500 / 5000): el mayor tamaño disponible que no pase de la selección.
+// Todo viene ya cargado en mercados.json; cambiar de ventana no pide nada.
+function win(it) {
+  const ks = Object.keys(it.vent || {}).map(Number).sort((a, b) => a - b);
+  if (!ks.length) return { s: it.s, m: null, desv: null, z: it.z || 0 };
+  let k = ks[0];
+  for (const x of ks) if (x <= SEL) k = x;
+  return it.vent[k];
+}
+const isAn = it => { const w = win(it); return w.desv != null ? Math.abs(w.z) >= 2 : !!it.anomalia; };
+
+function geom(it, w) {
+  const s = w.s, t0 = s[0][0], t1 = Math.max(s[s.length - 1][0], t0 + 1);
+  const vs = s.map(p => p[1]).concat(w.m || [it.promedio]);
   const lo = Math.min(...vs), hi = Math.max(...vs), pad = (hi - lo) * 0.08 || Math.abs(hi) * 0.05 || 1, y0 = lo - pad, y1 = hi + pad;
-  const X = t => (t - t0) / (t1 - t0) * 300, Y = v => 6 + (y1 - v) / (y1 - y0) * 118;
-  return { t0, t1, X, Y };
+  return { t0, t1, X: t => (t - t0) / (t1 - t0) * 300, Y: v => 6 + (y1 - v) / (y1 - y0) * 118 };
 }
 
 function card(it) {
-  const g = it.variacion >= 0, c = g ? "g" : "r", { t0, t1, X, Y } = geom(it);
-  const line = it.s.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
-  return `<article class="mc${it.anomalia ? " a" : ""}" data-id="${it.id}">
-  <svg class="ch ${c}" viewBox="0 0 300 130" preserveAspectRatio="none" role="img" aria-label="Historial de ${esc(it.name)}: actual ${fmtN(it.precio)}, promedio ${fmtN(it.promedio)}"><path class="ar" d="${line}L300 130L0 130Z"/><path class="av" d="M0 ${Y(it.promedio).toFixed(1)}H300"/><path class="ln" d="${line}"/></svg>
-  <div class="hd"><div class="tt">${it.anomalia ? WARN : ""}${esc(it.name)} <i>${esc(it.category)}</i></div><span class="bd ${c}">${g ? "↑" : "↓"} ${Math.round(Math.abs(it.variacion))}%</span></div>
-  <div class="vl"><div><span class="lb">Actual</span><span class="n ${c}">${fmtN(it.precio)}</span></div><div><span class="lb" style="text-align:right">Promedio</span><span class="p"><u></u>${fmtN(it.promedio)}</span></div></div>
-  <span class="xl" style="left:18px">${fdm(t0)}</span><span class="xl" style="right:18px">${fdm(t1)}</span>
-  <div class="cr"></div><span class="dt ${c}"></span><div class="tp"></div>
+  const w = win(it), an = isAn(it), g = it.variacion >= 0, c = g ? "g" : "r", { t0, t1, X, Y } = geom(it, w);
+  const path = pts => pts.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+  const line = path(w.s);
+  // Línea punteada: promedio acumulado (como en el Market Monitor); si no viene, el promedio fijo
+  const avg = w.m ? path(w.s.map((p, i) => [p[0], w.m[i]])) : `M0 ${Y(it.promedio).toFixed(1)}H300`;
+  const cell = (l, v, hl) => `<div><span class="lb">${l}</span><b${hl ? ' class="hl"' : ""}>${v}</b></div>`;
+  const st = w.desv == null ? "" : `<div class="st">${cell("Desv.", fmt(w.desv, dec(w.desv)))}${cell("Máx", fmtN(w.max))}${cell("Mín", fmtN(w.min))}${cell("CV", fmt(w.cv, 2) + "%")}${cell("Z-score", fmt(w.z, 2), Math.abs(w.z) >= 1.5)}${cell("Amplitud", fmt(w.amp, 2) + "%")}</div>`;
+  return `<article class="mc${an ? " a" : ""}" data-id="${it.id}">
+  <div class="cv">
+    <svg class="ch ${c}" viewBox="0 0 300 130" preserveAspectRatio="none" role="img" aria-label="Historial de ${esc(it.name)}: actual ${fmtN(it.precio)}, promedio ${fmtN(it.promedio)}"><path class="ar" d="${line}L300 130L0 130Z"/><path class="av" d="${avg}"/><path class="ln" d="${line}"/></svg>
+    <div class="hd"><div class="tt">${an ? WARN : ""}${esc(it.name)} <i>${esc(it.category)}</i></div><span class="bd ${c}">${g ? "↑" : "↓"} ${Math.round(Math.abs(it.variacion))}%</span></div>
+    <div class="vl"><div><span class="lb">Actual</span><span class="n ${c}">${fmtN(it.precio)}</span></div><div><span class="lb" style="text-align:right">Promedio</span><span class="p"><u></u>${fmtN(it.promedio)}</span></div></div>
+    <span class="xl" style="left:18px">${fdm(t0)}</span><span class="xl" style="right:18px">${fdm(t1)}</span>
+    <div class="cr"></div><span class="dt ${c}"></span><div class="tp"></div>
+  </div>${st}
 </article>`;
 }
 
-// Todas / Anomalías y "Anomalías primero" trabajan sobre los datos ya cargados
+// Registros, Todas / Anomalías y "Anomalías primero" trabajan sobre los datos ya cargados
 function render() {
-  let L = ITEMS.filter(i => !onlyAn || i.anomalia);
-  if ($("first").checked) L = [...L.filter(i => i.anomalia), ...L.filter(i => !i.anomalia)];
+  $("c-an").textContent = ITEMS.filter(isAn).length;
+  let L = ITEMS.filter(i => !onlyAn || isAn(i));
+  if ($("first").checked) L = [...L.filter(isAn), ...L.filter(i => !isAn(i))];
   $("grid").innerHTML = L.length ? L.map(card).join("") : `<div class="msg">No hay anomalías ahora mismo.</div>`;
 }
 
@@ -137,9 +164,14 @@ fetch("mercados.json", { cache: "no-cache" })
   .then(j => {
     ITEMS = (j.items || []).filter(i => i.s && i.s.length > 1);
     ITEMS.forEach(i => BY[i.id] = i);
+    const vs = (j.ventanas || []).map(Number);
+    if (vs.length) {
+      SEL = Math.max(...vs);
+      $("reg").innerHTML = vs.map(v => `<option value="${v}"${v === SEL ? " selected" : ""}>${v.toLocaleString("es-CL")}</option>`).join("");
+      $("regw").hidden = false;
+    }
     $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
     $("c-all").textContent = ITEMS.length;
-    $("c-an").textContent = ITEMS.filter(i => i.anomalia).length;
     render();
   })
   .catch(() => { $("upd").textContent = "sin datos"; $("grid").innerHTML = `<div class="msg">No pude cargar los mercados. Intenta de nuevo en unos minutos.</div>`; });
@@ -153,6 +185,7 @@ function setFilter(an) {
 $("f-all").onclick = () => setFilter(false);
 $("f-an").onclick = () => setFilter(true);
 $("first").onchange = render;
+$("reg").onchange = () => { SEL = +$("reg").value; render(); };
 
 // Hover sobre la curva: fecha, valor y diferencia vs. promedio
 function hide(card) { card.querySelector(".cr").style.display = card.querySelector(".dt").style.display = card.querySelector(".tp").style.display = "none"; }
@@ -162,13 +195,13 @@ $("grid").addEventListener("pointermove", e => {
   if (!card) return;
   const it = BY[card.dataset.id], svg = card.querySelector("svg.ch"), r = svg.getBoundingClientRect();
   if (!it || e.clientY < r.top || e.clientY > r.bottom) return hide(card);
-  const f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), { t0, t1, Y } = geom(it), t = t0 + f * (t1 - t0);
-  let p = it.s[0];
-  for (const q of it.s) if (Math.abs(q[0] - t) < Math.abs(p[0] - t)) p = q;
+  const w = win(it), f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), { t0, t1, Y } = geom(it, w), t = t0 + f * (t1 - t0);
+  let p = w.s[0];
+  for (const q of w.s) if (Math.abs(q[0] - t) < Math.abs(p[0] - t)) p = q;
   const cr = card.querySelector(".cr"), dt = card.querySelector(".dt"), tp = card.querySelector(".tp"), left = f < 0.6;
   cr.style.display = dt.style.display = tp.style.display = "block";
   cr.style.left = dt.style.left = (f * 100) + "%";
-  dt.style.top = (card.clientHeight - 22 - 130 + Y(p[1])) + "px";
+  dt.style.top = (card.querySelector(".cv").clientHeight - 22 - 130 + Y(p[1])) + "px";
   tp.style.left = left ? `calc(${f * 100}% + 12px)` : "auto";
   tp.style.right = left ? "auto" : `calc(${(1 - f) * 100}% + 12px)`;
   tp.innerHTML = `<span>${fdt(p[0])}</span><br><b>Valor ${fmtN(p[1])}</b><br><span>vs. promedio ${sgn((p[1] - it.promedio) / it.promedio * 100)}</span>`;
