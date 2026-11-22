@@ -113,7 +113,7 @@ TABS_CONFIG = [
         "html_file": "cic.html",
     },
     {
-        "id": "falabella",
+        "id": "falabella-tech",
         "name": "Falabella Tecno",
         "icon": "💻",
         "headline": "Los mejores descuentos en Falabella Tecnología, <em>actualizados hoy.</em>",
@@ -346,7 +346,7 @@ TABS_CONFIG = [
         "domains": [59, 53, 56, 51, 57, 54, 55 ],
         "top": 100,
         "por_dominio": 100,
-        "max_descuento": 85.0,
+        "max_descuento": 80.0,
         "json_file": "falabella-all.json",
         "html_file": "falabella-all.html",
     },
