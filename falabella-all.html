@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>falabella | Monitor de Ofertas · Descuentos en Chile</title>
+<meta name="description" content="Ofertas destacadas con mayor variación y descuento en Falabella.">
+<link rel="canonical" href="https://fernandoandresmunoz.github.io/falabella-all">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag.js?id=G-CJRB34M9L8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJRB34M9L8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0f17;--card:#121a28;--card2:#172235;--hov:#1a253a;--ink:#e9eef7;--mute:#8d99ae;--line:#223048;--acc:#ff6b3d;--acc2:#ffc857;--pr:#52e19b;--onacc:#fff;--up:#f87171;--dn:#4ade80;--fl:#94a3b8}
+@media (prefers-color-scheme:light){:root{--bg:#f3f5f9;--card:#fff;--card2:#f8fafc;--hov:#e9edf5;--ink:#0b0f17;--mute:#5a6578;--line:#dbe1ec;--acc:#ec5a2b;--acc2:#b7791f;--pr:#1f9d63;--onacc:#fff;--up:#dc2626;--dn:#16a34a;--fl:#64748b}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(900px 480px at 90% -10%,rgba(255,107,61,.09),transparent),radial-gradient(700px 380px at -5% 5%,rgba(82,225,155,.08),transparent)}
+.wrap{max-width:1260px;margin:auto;padding:0 20px}
+.hero{padding:44px 0 20px}
+.brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:800 20px Fraunces,Georgia,serif}
+.brand b{color:var(--acc)}.brand em{font:500 14px Inter,sans-serif;color:var(--mute);font-style:normal}
+.brand small{font:500 12px Inter;color:var(--mute);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--card)}
+.snav{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.snav a{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:10px;color:var(--mute);font:600 13px Inter,sans-serif;text-decoration:none}
+.snav a.on{background:var(--ink);color:var(--bg)}
+h1{font:800 clamp(32px,5.5vw,64px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:32px 0 14px;max-width:880px}
+h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);font-size:16px;line-height:1.55;max-width:680px}
+.stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stats div{font:800 28px Fraunces,serif}
+.stats span{display:block;font:500 11px Inter;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* Tabs Bar */
+.tabs-wrap{margin:28px auto 16px;display:flex;justify-content:center;width:100%}
+.tabs-scroll{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 10px;margin:0 auto;max-width:100%}
+@media (max-width:768px){.tabs-scroll{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}}
+.tabs-scroll::-webkit-scrollbar{height:5px}
+.tabs-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.tab-btn{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 13px Inter,sans-serif;cursor:pointer;transition:all .2s ease;text-decoration:none;user-select:none}
+.tab-btn:hover{border-color:var(--acc);transform:translateY(-1px);background:var(--hov)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(255,107,61,.18),rgba(255,61,113,.15));border-color:var(--acc);color:var(--ink);box-shadow:0 0 18px -4px rgba(255,107,61,.4)}
+.tab-btn .t-icon{font-size:15px;line-height:1}
+.tab-btn .t-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--mute) 24%,transparent);color:var(--mute);transition:all .2s}
+.tab-btn.active .t-badge{background:var(--acc);color:#fff}
+
+/* Sticky Filter Bar */
+.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-block:1px solid var(--line);padding:12px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:11px 15px;border-radius:12px;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+input{flex:1 1 240px}input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,107,61,.18)}
+.chips{margin-top:10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:99px;font:500 13px Inter;display:flex;gap:7px;align-items:center;transition:all .15s}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}.chip:hover{border-color:var(--acc)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.count{margin:22px 0 12px;color:var(--mute)}.count b{color:var(--ink)}
+
+/* Table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{text-align:left;font:700 11px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:15px 16px;border-bottom:1px solid var(--line);white-space:nowrap;user-select:none}
+th[data-k]{cursor:pointer}th[data-k]:hover,th.s{color:var(--acc)}
+.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{transition:background .15s}tbody tr:hover{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.n{color:var(--mute);width:44px}
+.bk{display:flex;gap:14px;align-items:center}
+a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
+.mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
+.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
+.st{display:inline-flex;gap:7px;align-items:center;padding:5px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,transparent);font:500 12px Inter;white-space:nowrap}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.o{color:var(--mute);text-decoration:line-through;white-space:nowrap;font-size:13px}
+.p{font:800 17px Fraunces,serif;color:var(--pr);white-space:nowrap}
+.d{display:flex;align-items:center;gap:9px;min-width:130px}
+.d b{font:800 14px Fraunces,serif;width:48px;color:var(--acc2)}.d.hot b{color:var(--acc)}
+.d span{flex:1;height:8px;border-radius:9px;background:color-mix(in srgb,var(--mute) 26%,transparent);overflow:hidden}
+.d span i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--acc2),var(--acc),#ff3d71)}
+.sv{color:var(--acc2);font-weight:600;white-space:nowrap}
+.sp{display:flex;align-items:center;justify-content:flex-end;gap:10px}.sp svg{width:120px;height:34px;flex:none}
+table.single .c-store{display:none}
+.btn{display:inline-block;text-decoration:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:10px;font:700 12px Inter;white-space:nowrap;transition:all .15s}
+tr:hover .btn,.btn:hover{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.msg{text-align:center;padding:70px 20px;color:var(--mute);font:500 20px Fraunces,serif}.msg code{font:13px monospace;background:var(--hov);padding:3px 8px;border-radius:6px}
+.pager{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:36px 0 16px}
+.pager button{min-width:40px;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Inter;cursor:pointer;transition:all .15s}
+.pager button:hover:not(:disabled){border-color:var(--acc)}.pager button.on{background:linear-gradient(135deg,var(--acc),#ff3d71);border-color:transparent;color:var(--onacc);font-weight:700}
+.pager button:disabled{opacity:.35;cursor:default}.pager span{align-self:center;color:var(--mute)}
+footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 48px;color:var(--mute);font-size:13px;text-align:center}
+</style>
+<script type="application/ld+json" id="ld-books">{"@context":"https://schema.org","@type":"ItemList","name":"falabella - Ofertas y Descuentos en Chile","numberOfItems":100,"itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Tornillo Roscalata Metal 1 \" 8 mm 10 unidad(es)","offers":{"@type":"Offer","price":"290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110322671/Tornillo-Roscalata-Metal-1-8-mm-10-unidad(es)/110322674"},"image":"https://fernandoandresmunoz.github.io/imagenes/c83fa24ee6fa.webp"}},{"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Enchape 5.5x25 cm 7804656750394 Café 0.5 m2","offers":{"@type":"Offer","price":"4995","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/110313645/Enchape-5.5x25-cm-7804656750394-Cafe-0.5-m2/110313649"}}},{"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Perno Hexagonal G2 5/16X1 1/4PAV 2 unidades","offers":{"@type":"Offer","price":"190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110295548/Perno-Hexagonal-G2-5-16X1-1-4PAV-2-unidades/110295554"}}},{"@type":"ListItem","position":4,"item":{"@type":"Product","name":"Tuerca hexagonal MET M8 PAV 2 unidades","offers":{"@type":"Offer","price":"190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110302430/Tuerca-hexagonal-MET-M8-PAV-2-unidades/110302470"},"image":"https://fernandoandresmunoz.github.io/imagenes/671ad4b49328.webp"}},{"@type":"ListItem","position":5,"item":{"@type":"Product","name":"Parche Reparación Drywall 20x20 cm 2 Unidades","offers":{"@type":"Offer","price":"490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/140778972/Parche-Reparacion-Drywall-20x20-cm-2-Unidades/140778973"},"image":"https://fernandoandresmunoz.github.io/imagenes/06127e8a779b.webp"}},{"@type":"ListItem","position":6,"item":{"@type":"Product","name":"Zapatilla Niño Bubblegummers Bio Fit Blanco-Green","offers":{"@type":"Offer","price":"7000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/133113308/zapatilla-nino-bubblegummers-bio-fit-blanco-green/133113312"}}},{"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Perno Hexagonal 5,8 M8 x 25 2 unidades","offers":{"@type":"Offer","price":"390","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110289162/perno-hexagonal-5-8-m8-x-25-2-unidades/110289189"}}},{"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Clavo para concreto 2x15 mm 10 unidades","offers":{"@type":"Offer","price":"290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110300006/Clavo-para-concreto-2x15-mm-10-unidades/110300026"}}},{"@type":"ListItem","position":9,"item":{"@type":"Product","name":"Guillermina Niña Sami Azul","offers":{"@type":"Offer","price":"6290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/146359097/Guillermina-Nina-Sami-Azul-HUSH-PUPPIES/146359098"}}},{"@type":"ListItem","position":10,"item":{"@type":"Product","name":"Burlete espuma goma negro 19,05 x 11,1 mm","offers":{"@type":"Offer","price":"1000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110278317/burlete-espuma-goma-negro-19-05-x-11-1-mm/110278321"},"image":"https://fernandoandresmunoz.github.io/imagenes/c3012f1aa620.webp"}},{"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Set Bisagras L84 4\"x4\" Zincado 2 un","offers":{"@type":"Offer","price":"2990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110285102/Set-Bisagras-L84-4-x4-Zincado-2-un/110285107"}}},{"@type":"ListItem","position":12,"item":{"@type":"Product","name":"Tuerca cocina cuadrada 3/16\" 5 unidades","offers":{"@type":"Offer","price":"290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110326837/Tuerca-cocina-cuadrada-3-16-5-unidades/110326843"}}},{"@type":"ListItem","position":13,"item":{"@type":"Product","name":"Tornillo Roscalata Metal 5/8 \" 6 mm 100 unidad(es)","offers":{"@type":"Offer","price":"890","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110303388/Tornillo-Roscalata-Metal-5-8-6-mm-100-unidad(es)/110303413"}}},{"@type":"ListItem","position":14,"item":{"@type":"Product","name":"Tuerca cocina hexagonal MET M4 ZBR 4 unidades","offers":{"@type":"Offer","price":"490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110275830/Tuerca-cocina-hexagonal-MET-M4-ZBR-4-unidades/110275834"}}},{"@type":"ListItem","position":15,"item":{"@type":"Product","name":"Sandalia Cuero Niño Coconut Marrón","offers":{"@type":"Offer","price":"9690","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/120828624/Sandalia-Cuero-Nino-Coconut-Marron-HUSH-PUPPIES/120828631"}}},{"@type":"ListItem","position":16,"item":{"@type":"Product","name":"Polera con Cuello Manga Corta Solid Performance Mujer","offers":{"@type":"Offer","price":"16990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/128670420/Polera-con-Cuello-Manga-Corta-Solid-Performance-Mujer/128670422"}}},{"@type":"ListItem","position":17,"item":{"@type":"Product","name":"Perno coche 1/4\" x 4 1/2\" 2 unidades","offers":{"@type":"Offer","price":"790","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110317416/Perno-coche-1-4-x-4-1-2-2-unidades/110317418"}}},{"@type":"ListItem","position":18,"item":{"@type":"Product","name":"Bóxer Sutién Microfibra 5417","offers":{"@type":"Offer","price":"1990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/130343746/boxer-sutien-microfibra-5417/130343757"}}},{"@type":"ListItem","position":19,"item":{"@type":"Product","name":"Cortavientos Entrenamiento Mujer R-Night Blanco","offers":{"@type":"Offer","price":"20990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/152638951/cortavientos-entrenamiento-mujer-joma-r-night-blanco/152638953"}}},{"@type":"ListItem","position":20,"item":{"@type":"Product","name":"Lienza carpintera polipropileno 100 m","offers":{"@type":"Offer","price":"1890","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110315127/Lienza-carpintera-polipropileno-100-m/110315129"}}},{"@type":"ListItem","position":21,"item":{"@type":"Product","name":"Cubrecama Amelia 1.5 Plazas 100% Algodón + Fundas De Almohada","offers":{"@type":"Offer","price":"15990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hogar-y-decoracion.com"},"url":"https://www.falabella.com/falabella-cl/product/prod87919298/Cubrecama%20Infantil%20Reversible%20Con%20Fundas%20Mica%20Kids/882522483"},"image":"https://fernandoandresmunoz.github.io/imagenes/d94942be332c.webp"}},{"@type":"ListItem","position":22,"item":{"@type":"Product","name":"Calzas Mujer","offers":{"@type":"Offer","price":"12990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/149416074/calza-larga-entrenamiento-mujer-joma-r-night-antracita-gris/149416077"}}},{"@type":"ListItem","position":23,"item":{"@type":"Product","name":"Tuerca mariposa 5/32\" 2 unidades","offers":{"@type":"Offer","price":"290","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110301537/Tuerca-mariposa-5-32-2-unidades/110301554"}}},{"@type":"ListItem","position":24,"item":{"@type":"Product","name":"Calza Deportiva Corta Mujer Entrenamiento","offers":{"@type":"Offer","price":"5990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/151696621/calza-corta-entrenamiento-mujer-joma-stella-ii-azul/151696624"}}},{"@type":"ListItem","position":25,"item":{"@type":"Product","name":"Zapatilla Badminton Shadow Team 2 Hombre - Talla US","offers":{"@type":"Offer","price":"85990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/157964404/zapatilla-badminton-shadow-team-2-hombre-babolat-talla-us/157964408"}}},{"@type":"ListItem","position":26,"item":{"@type":"Product","name":"Pitilla 50 metros Blanco","offers":{"@type":"Offer","price":"1390","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110307980/Pitilla-50-metros-Blanco/110307986"}}},{"@type":"ListItem","position":27,"item":{"@type":"Product","name":"Zapatos de fútbol Predator Club para terreno firme/multiterreno para niños","offers":{"@type":"Offer","price":"21990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/147306996/Zapatos-de-futbol-Predator-Club-para-terreno-firme-multiterreno-para-ninos/147307018"}}},{"@type":"ListItem","position":28,"item":{"@type":"Product","name":"Alisador De Pavimento Helicóptero - 5hp Motor Robin Ey20","offers":{"@type":"Offer","price":"649990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/150121164/Alisador-De-Pavimento-Helicoptero-5hp-Motor-Robin-Ey20/150121165"}}},{"@type":"ListItem","position":29,"item":{"@type":"Product","name":"Set de escuadras dobles 4 unidades","offers":{"@type":"Offer","price":"490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110278157/Set-de-escuadras-dobles-4-unidades/110278159"}}},{"@type":"ListItem","position":30,"item":{"@type":"Product","name":"Foco Recargable 336 Led 5 Modos De Luz Usb Solar Portátil","offers":{"@type":"Offer","price":"18990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/148619138/Foco-Recargable-336-Led-5-Modos-De-Luz-Usb-Solar-Portatil/148619139"},"image":"https://fernandoandresmunoz.github.io/imagenes/e0311b7e3d46.webp"}},{"@type":"ListItem","position":31,"item":{"@type":"Product","name":"Bisagra L88 3,5x3,5 Bronceado Espejo 1 un","offers":{"@type":"Offer","price":"1090","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110291641/bisagra-l88-3-5x3-5-bronceado-espejo-1-un/110291645"}}},{"@type":"ListItem","position":32,"item":{"@type":"Product","name":"Alisador De Pavimento Helicóptero - Motor 6.5 Hp Profesional Japon","offers":{"@type":"Offer","price":"549990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/150243100/alisador-de-pavimento-helicoptero-motor-6-5-hp-profesional-japon/150243101"}}},{"@type":"ListItem","position":33,"item":{"@type":"Product","name":"Golilla Plana Acero 5/8 \" 2 unidades","offers":{"@type":"Offer","price":"590","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110317367/Golilla-Plana-Calibrada-5-8-NR-2-unidades/110317375"},"image":"https://fernandoandresmunoz.github.io/imagenes/6cfcd729f9c4.webp"}},{"@type":"ListItem","position":34,"item":{"@type":"Product","name":"Tuerca Cocina hexagonal 5/32\" Zincada brillante 5 unidades","offers":{"@type":"Offer","price":"390","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110302830/Tuerca-Cocina-hexagonal-5-32-Zincada-brillante-5-unidades/110302860"}}},{"@type":"ListItem","position":35,"item":{"@type":"Product","name":"Tuerca Cocina hexagonal 1/8\" Zincada brillante 5 unidades","offers":{"@type":"Offer","price":"390","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110313431/Tuerca-Cocina-hexagonal-1-8-Zincada-brillante-5-unidades/110313433"}}},{"@type":"ListItem","position":36,"item":{"@type":"Product","name":"Camiseta de Fútbol Selección Peru Local 2026 Hombre","offers":{"@type":"Offer","price":"35990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/80643094/Camiseta-de-F%C3%BAtbol-Selecci%C3%B3n-Peru-Local-2026-Hombre-Adidas/80643229"}}},{"@type":"ListItem","position":37,"item":{"@type":"Product","name":"Tornillo Roscalata Metal 3/4 \" 4 mm 100 unidad(es)","offers":{"@type":"Offer","price":"690","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110305249/tornillo-roscalata-metal-3-4-4-mm-100-unidades/110305252"}}},{"@type":"ListItem","position":38,"item":{"@type":"Product","name":"Poleron Deportivo Basic Unisex Adulto","offers":{"@type":"Offer","price":"18990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/116268150/Poleron-Aress-Naranja/116268153"},"image":"https://fernandoandresmunoz.github.io/imagenes/f9adaed77eb5.webp"}},{"@type":"ListItem","position":39,"item":{"@type":"Product","name":"Toallero Eléctrico Baño Secador De Toallas 55w Acero","offers":{"@type":"Offer","price":"45000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hogar-y-decoracion.com"},"url":"https://www.falabella.com/falabella-cl/product/152229093/toallero-electrico-bano-secador-de-toallas-55w-acero/152229094"}}},{"@type":"ListItem","position":40,"item":{"@type":"Product","name":"Primera Capa Térmica Mujer","offers":{"@type":"Offer","price":"8990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/152689207/primera-capa-termica-tortel-mujer-kano/152689210"},"image":"https://fernandoandresmunoz.github.io/imagenes/9071da18f31c.webp"}},{"@type":"ListItem","position":41,"item":{"@type":"Product","name":"Alisador De Pavimento Helicóptero - 5hp Motor Robin Ey20","offers":{"@type":"Offer","price":"599990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/150121127/Alisador-De-Pavimento-Helicoptero-5hp-Motor-Robin-Ey20/150121128"}}},{"@type":"ListItem","position":42,"item":{"@type":"Product","name":"Bisagra 3,5x3,5\" gris","offers":{"@type":"Offer","price":"1190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/142873932/bisagra-3-5x3-5-gris/142873933"}}},{"@type":"ListItem","position":43,"item":{"@type":"Product","name":"Cortavientos Entrenamiento Mujer R-Night Negro","offers":{"@type":"Offer","price":"20990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/152638956/cortavientos-entrenamiento-mujer-joma-r-night-negro/152638959"}}},{"@type":"ListItem","position":44,"item":{"@type":"Product","name":"Malla Raschel Rollo 5mt Verde-blanco 80% 2.10mt","offers":{"@type":"Offer","price":"6990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/151909020/malla-raschel-rollo-5mt-verde-blanco-80-2-10mt/151909021"}}},{"@type":"ListItem","position":45,"item":{"@type":"Product","name":"Bóxer Largo Holgado Algodón Hombre 5326","offers":{"@type":"Offer","price":"1990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/130706369/Boxer-Trevira-Hombre-5326/130706381"}}},{"@type":"ListItem","position":46,"item":{"@type":"Product","name":"Camiseta Manga Larga Bambú Mujer Primera Capa","offers":{"@type":"Offer","price":"5490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/130748967/Pack-1-Camiseta-Manga-Larga-Bambu-Mujer-Primera-Capa/130748968"}}},{"@type":"ListItem","position":47,"item":{"@type":"Product","name":"Set x2 Bisagras Rectas Cierre Suave 35 Mm","offers":{"@type":"Offer","price":"11990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/122346653/Set-10-Bisagras-Rectas-Cierre-Suave-35-Mm/122346654"},"image":"https://fernandoandresmunoz.github.io/imagenes/5ded8ae46efa.webp"}},{"@type":"ListItem","position":48,"item":{"@type":"Product","name":"Porta Jabón Verona Metal Cromado","offers":{"@type":"Offer","price":"5000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hogar-y-decoracion.com"},"url":"https://www.falabella.com/falabella-cl/product/110154097/portajabon-acabado-cromado/110154104"}}},{"@type":"ListItem","position":49,"item":{"@type":"Product","name":"Malla Cerco Raschel 90% Sombra 5mx2.10 Metros Mocha","offers":{"@type":"Offer","price":"6790","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/151909002/malla-cerco-raschel-90-sombra-5mx2-10-metros-mochabroches/151909003"}}},{"@type":"ListItem","position":50,"item":{"@type":"Product","name":"Polerón Polo French Terry Vulpes Blanco Unisex","offers":{"@type":"Offer","price":"8990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/122838482/Poleron-Polo-French-Terry-Vulpes-Blanco-Unisex/122838484"}}},{"@type":"ListItem","position":51,"item":{"@type":"Product","name":"Calcetin medio algodon pack 2","offers":{"@type":"Offer","price":"3590","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/110646634/Calcetin-medio-algodon-mota-pack-2/110646642"}}},{"@type":"ListItem","position":52,"item":{"@type":"Product","name":"Pantalón Traje Mezcla de Lana Mujer","offers":{"@type":"Offer","price":"44990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/17664786/pantalon-traje-mezcla-de-lana-mujer-mango/17664787"}}},{"@type":"ListItem","position":53,"item":{"@type":"Product","name":"Pack 3 Unidades Bisagra 3,5''x3,5'' Bronce","offers":{"@type":"Offer","price":"2990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/142873913/Pack-3-Unidades-Bisagra-3,5''x3,5''-Bronce/142873915"}}},{"@type":"ListItem","position":54,"item":{"@type":"Product","name":"Freidora 5.5 Litros WFR-EASYCH55","offers":{"@type":"Offer","price":"49990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-electrohogar-y-climatizacion.com"},"url":"https://www.falabella.com/falabella-cl/product/142005184/Freidora-Litros-/142005185"},"image":"https://fernandoandresmunoz.github.io/imagenes/7f8810e67419.webp"}},{"@type":"ListItem","position":55,"item":{"@type":"Product","name":"Faja Maternal 1 Unidad","offers":{"@type":"Offer","price":"23576","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/115826468/faja-maternal-elasticada-talla-m-super-ortho/115826470"}}},{"@type":"ListItem","position":56,"item":{"@type":"Product","name":"Zapato Niño Teo Taupe","offers":{"@type":"Offer","price":"17090","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/146359041/Zapato-Nino-Teo-Taupe-HUSH-PUPPIES/146359042"}}},{"@type":"ListItem","position":57,"item":{"@type":"Product","name":"Zapatilla Urbana Unisex Sailor Mid Negro","offers":{"@type":"Offer","price":"22990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/145408415/zapatilla-urbana-unisex-gangsta-sailor-mid-negro/145408419"}}},{"@type":"ListItem","position":58,"item":{"@type":"Product","name":"Polerón Polo French Terry Vulpes Grafito Unisex","offers":{"@type":"Offer","price":"8990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/122838495/Poleron-Polo-French-Terry-Vulpes-Grafito-Unisex.-/122838500"}}},{"@type":"ListItem","position":59,"item":{"@type":"Product","name":"Pantalones de Buzos Urbano Firebird Mujer","offers":{"@type":"Offer","price":"53990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/154490798/pantalones-de-buzos-urbano-firebird-mujer/154903245"}}},{"@type":"ListItem","position":60,"item":{"@type":"Product","name":"Perno cocina combinado 5/16\" x 3/8\" 5 unidades","offers":{"@type":"Offer","price":"190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110301999/Perno-cocina-combinado-5-16-x-3-8-5-unidades/110302007"}}},{"@type":"ListItem","position":61,"item":{"@type":"Product","name":"Faja Elasticada 1 Unidad Talla XL","offers":{"@type":"Offer","price":"23576","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/115826473/faja-maternal-elasticada-talla-xl-super-ortho/115826474"},"image":"https://fernandoandresmunoz.github.io/imagenes/f79cf0a6f40d.webp"}},{"@type":"ListItem","position":62,"item":{"@type":"Product","name":"Cubrecama Max 1.5 Plazas 100% Algodón Reversible + Fundas De Almohada","offers":{"@type":"Offer","price":"15990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hogar-y-decoracion.com"},"url":"https://www.falabella.com/falabella-cl/product/882522673/CUB-MAX-15P/882522673"}}},{"@type":"ListItem","position":63,"item":{"@type":"Product","name":"Zapatillas VL Court 3.0 Niños","offers":{"@type":"Offer","price":"21990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/130702244/Zapatillas-VL-adidas-Court-3.0-Ninos/130715976"}}},{"@type":"ListItem","position":64,"item":{"@type":"Product","name":"Pack De 3 Boxers Algodón Hombre","offers":{"@type":"Offer","price":"4990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/883009683/Pack-De-3-Boxers-Algodon-Hombre-Benetton/883009696"},"image":"https://fernandoandresmunoz.github.io/imagenes/3fd371319bba.webp"}},{"@type":"ListItem","position":65,"item":{"@type":"Product","name":"Cocina Inducción 4 Platos IBC-64010 MSS","offers":{"@type":"Offer","price":"289990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-electrohogar-y-climatizacion.com"},"url":"https://www.falabella.com/falabella-cl/product/110356910/cocina-induccion-4-platos-negro-ibc-64010-mss/110356911"}}},{"@type":"ListItem","position":66,"item":{"@type":"Product","name":"Perno coche 5/16\" x 1 2 unidades","offers":{"@type":"Offer","price":"490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110278219/Perno-coche-5-16-x-1-2-unidades/110278222"}}},{"@type":"ListItem","position":67,"item":{"@type":"Product","name":"Sweater Hombre","offers":{"@type":"Offer","price":"17450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/143818914/Sweater-Smart-Casual-Sleeve-Business-Azul-Ferouch/143818918"}}},{"@type":"ListItem","position":68,"item":{"@type":"Product","name":"Zapatillas Padel Speed Hombre","offers":{"@type":"Offer","price":"53990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/153961155/zapatillas-padel-speed-hombre/153961156"}}},{"@type":"ListItem","position":69,"item":{"@type":"Product","name":"Perno Hexagonal G2 5/16X4 1/2 ZBR 2 unidades","offers":{"@type":"Offer","price":"1190","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110325448/perno-hexagonal-g2-5-16x4-1-2-zbr-2-unidades/110325450"}}},{"@type":"ListItem","position":70,"item":{"@type":"Product","name":"Nylon Para Orilladoras Y Desmalezadora De 3mmx15m Acerado","offers":{"@type":"Offer","price":"5990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/135941811/Nylon-Para-Orilladoras-Y-Desmalezadora-De-3mmx15m-Acerado/135941812"}}},{"@type":"ListItem","position":71,"item":{"@type":"Product","name":"Corrector Postural 1 Unidad","offers":{"@type":"Offer","price":"21104","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/114093651/corrector-postural-pro-talla-m-super-ortho/114093652"}}},{"@type":"ListItem","position":72,"item":{"@type":"Product","name":"Cubrecama Cotton Blend + Fundas de Almohadas","offers":{"@type":"Offer","price":"2199025990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hogar-y-decoracion.com"},"url":"https://www.falabella.com/falabella-cl/product/prod116407903/Cubrecama-Benjamin-Benetton/883154854"}}},{"@type":"ListItem","position":73,"item":{"@type":"Product","name":"Corrector Postural Pro Talla L 1 Unidad","offers":{"@type":"Offer","price":"21104","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/114093647/corrector-postural-pro-talla-l-super-ortho/114093648"}}},{"@type":"ListItem","position":74,"item":{"@type":"Product","name":"Guardapolvo cepillo autoadhesivo marrón","offers":{"@type":"Offer","price":"2000","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/110284389/guardapolvo-cepillo-autoadhesivo-marron/110284391"}}},{"@type":"ListItem","position":75,"item":{"@type":"Product","name":"Malla Ventana Mosquitos Moscas Ajustable Blanca.","offers":{"@type":"Offer","price":"7990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/139083050/Malla-Ventana-Mosquitos-Moscas-Ajustable-Blanca./139083051"}}},{"@type":"ListItem","position":76,"item":{"@type":"Product","name":"Malla Cerco Raschel 80% Sombra 5mx4.20 Metros Largo Negro","offers":{"@type":"Offer","price":"9490","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-construccion.com"},"url":"https://www.falabella.com/falabella-cl/product/151909014/malla-cerco-raschel-80-sombra-5mx4-20-metros-negro-broches/151909015"}}},{"@type":"ListItem","position":77,"item":{"@type":"Product","name":"Zueco Niños Pequeños Classic Fleece Lined Rosado","offers":{"@type":"Offer","price":"24990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/152883525/zueco-ninos-pequenos-classic-fleece-lined-rosado-crocs/152883532"}}},{"@type":"ListItem","position":78,"item":{"@type":"Product","name":"Blazer Stanford F Smart Casual Negro","offers":{"@type":"Offer","price":"59950","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140874281/Blazer-Stanford-F-Smart-Casual-Negro-Ferouch/140874283"},"image":"https://fernandoandresmunoz.github.io/imagenes/062f7e7d3b58.webp"}},{"@type":"ListItem","position":79,"item":{"@type":"Product","name":"Pantalón Hombre Regular","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140964641/Pantalon-Twill-Without-Pleats-L-33-Business-Cafe-Ferouch/140964648"},"image":"https://fernandoandresmunoz.github.io/imagenes/f3d2e42cc650.webp"}},{"@type":"ListItem","position":80,"item":{"@type":"Product","name":"Faja Para Hombre Reductor Alta Compresion Colombiana","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/144376744/Faja-Para-Hombre-Reductor-Alta-Compresion/144376745"},"image":"https://fernandoandresmunoz.github.io/imagenes/fa3cc5c9b356.webp"}},{"@type":"ListItem","position":81,"item":{"@type":"Product","name":"Pantalón Hombre Slim","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/143823483/Pantalon-Twill-Slim-31-Business-Gris-Ferouch/143823488"}}},{"@type":"ListItem","position":82,"item":{"@type":"Product","name":"Camiseta Hombre Colo-Colo 100 Años","offers":{"@type":"Offer","price":"27990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/143268012/Camiseta-Colo-Colo-100-anos/143268013"},"image":"https://fernandoandresmunoz.github.io/imagenes/12b3b917b827.webp"}},{"@type":"ListItem","position":83,"item":{"@type":"Product","name":"Zapatillas Padel Speed Hombre","offers":{"@type":"Offer","price":"53990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/152596437/zapatillas-padel-speed-hombre/154537938"}}},{"@type":"ListItem","position":84,"item":{"@type":"Product","name":"Filtro De Bencina Boca Grande Motosierras Husqvarna Pack 10","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-ferreteria.com"},"url":"https://www.falabella.com/falabella-cl/product/138573416/Filtro-De-Bencina-Boca-Grande-Motosierras-Husqvarna-Pack-10/138573417"}}},{"@type":"ListItem","position":85,"item":{"@type":"Product","name":"Pantalón Hombre Twill Regular","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/142074629/Pantalon-Twill-Without-Pleats-L-31-Business-Negro-Ferouch/142074632"}}},{"@type":"ListItem","position":86,"item":{"@type":"Product","name":"Camisa Smart Casual Oxford Sc Blanco","offers":{"@type":"Offer","price":"22450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140964419/Camisa-Smart-Casual-Oxford-Sc-Blanco-Ferouch/140964423"}}},{"@type":"ListItem","position":87,"item":{"@type":"Product","name":"Camisa Dublin Smart Casual Blanco","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/142488995/Camisa-Dublin-Smart-Casual-Blanco-Ferouch/142488996"}}},{"@type":"ListItem","position":88,"item":{"@type":"Product","name":"Pantalón Hombre Regular","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140964519/pantalon-twill-without-pleats-l-33-business-azul-ferouch/140964520"}}},{"@type":"ListItem","position":89,"item":{"@type":"Product","name":"Pantalón Hombre Regular","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140964549/pantalon-twill-without-pleats-l-33-business-gris-ferouch/140964552"}}},{"@type":"ListItem","position":90,"item":{"@type":"Product","name":"Jeans Básico Bristol Fj Fjs Negro","offers":{"@type":"Offer","price":"24950","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140964565/jeans-basico-bristol-fj-fjs-negro-ferouch/140964569"}}},{"@type":"ListItem","position":91,"item":{"@type":"Product","name":"Chaqueta Pilot Fj Fjs Verde","offers":{"@type":"Offer","price":"49950","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140354089/Chaqueta-Pilot-Fj-Fjs-Verde-Ferouch/140354090"}}},{"@type":"ListItem","position":92,"item":{"@type":"Product","name":"Rebound V6 Mid Zapatilla Urbana Niño Multicolor (28 a 35)","offers":{"@type":"Offer","price":"19990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella_zapatos_y_zapatillas"},"url":"https://www.falabella.com/falabella-cl/product/50280259/rebound-v6-mid-zapatilla-urbana-nino-multicolor-28-a-35-puma/50280264"}}},{"@type":"ListItem","position":93,"item":{"@type":"Product","name":"Pantalón Twill Slim /33 Business Café","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140352397/Pantalon-Twill-Slim-33-Business-Cafe-Ferouch/140352402"}}},{"@type":"ListItem","position":94,"item":{"@type":"Product","name":"Polar Hombre Wanderer High Pile Negro","offers":{"@type":"Offer","price":"51990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/151921665/polar-hombre-wanderer-high-pile-negro-marmot/151921669"}}},{"@type":"ListItem","position":95,"item":{"@type":"Product","name":"Pack X2 Slip de Secado Rápido 33278N2","offers":{"@type":"Offer","price":"11200","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/132258615/Pack-X2-Boxer-de-secado-rapido-33278N2-Blanco-Negro/132258619"}}},{"@type":"ListItem","position":96,"item":{"@type":"Product","name":"Primera Capa Superior Mujer Heatgear Print Crop Mock Ss Blanco","offers":{"@type":"Offer","price":"15990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/152383675/primera-capa-superior-mujer-heatgear-print-crop-mock-ss-blanco-under-armour/152383678"}}},{"@type":"ListItem","position":97,"item":{"@type":"Product","name":"Pantalón Twill Slim /33 Business Café","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/140964621/pantalon-twill-slim-33-business-cafe-ferouch/140964628"}}},{"@type":"ListItem","position":98,"item":{"@type":"Product","name":"Blazer Sastrero Mujer","offers":{"@type":"Offer","price":"67990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/8532149/Blazer-Sastrero-Con-Botones-Mujer-123/8532152"},"image":"https://fernandoandresmunoz.github.io/imagenes/509fdad7d803.webp"}},{"@type":"ListItem","position":99,"item":{"@type":"Product","name":"Parka Mujer Long Café","offers":{"@type":"Offer","price":"74990","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-mujer.com"},"url":"https://www.falabella.com/falabella-cl/product/151842202/parka-mujer-long-cafe-merrell/151842206"}}},{"@type":"ListItem","position":100,"item":{"@type":"Product","name":"Pantalón Twill Slim /31 Business Negro","offers":{"@type":"Offer","price":"24450","priceCurrency":"CLP","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"falabella-hombre.com"},"url":"https://www.falabella.com/falabella-cl/product/142075107/Pantalon-Twill-Slim-31-Business-Negro-Ferouch/142075113"}}}]}</script>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="brand"><span>Páginas <b>&amp;</b> Precios <em>| Monitor de Ofertas</em></span><nav class="snav" aria-label="Secciones"><a href="/" class="on" aria-current="page">Ofertas</a><a href="/mercados">Mercados</a></nav><small id="upd">cargando…</small></div>
+  <h1 id="hero-title">Los mejores descuentos en Falabella, <em>actualizados hoy.</em></h1>
+  <p class="lead" id="hero-desc">Ofertas destacadas con mayor variación y descuento en Falabella.</p>
+  <div class="stats">
+    <div id="s1">–<span>Ofertas</span></div>
+    <div id="s2">–<span>Tiendas</span></div>
+    <div id="s3">–<span>Descuento promedio</span></div>
+  </div>
+</header>
+</div>
+
+<nav class="tabs-wrap wrap" aria-label="Categorías y Tiendas">
+  <div class="tabs-scroll" id="tabs-nav"></div>
+</nav>
+
+<div class="bar"><div class="wrap">
+  <div class="row">
+    <input id="q" type="search" placeholder="Buscar..." aria-label="Buscar">
+    <select id="min" aria-label="Descuento mínimo"><option value="0">Cualquier descuento</option><option value="20">+20%</option><option value="40">+40%</option><option value="50">+50%</option><option value="70">+70%</option></select>
+    <select id="per" aria-label="Filas por página"><option selected>10</option><option>25</option><option>50</option><option value="1000">Todos</option></select>
+  </div>
+  <div class="chips" id="chips"></div>
+</div></div>
+
+<main class="wrap">
+  <p class="count" id="count"></p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th data-k="title" id="col-item">Producto</th><th data-k="tienda" class="c-store">Tienda</th><th class="r" data-k="precio">Precio</th><th data-k="descuento">Descuento</th><th class="r" data-k="ahorro">Ahorras</th><th class="r">Historial</th><th></th></tr></thead>
+    <tbody id="body"></tbody>
+  </table></div>
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="wrap">© Páginas &amp; Precios · Monitoreo automático de ofertas en Chile. Los precios y disponibilidad son responsabilidad de cada tienda.</footer>
+
+<script>
+window.PAGE_DEFAULT_TAB = "falabella";
+const $ = id => document.getElementById(id),
+  clp = n => "$" + Math.round(n).toLocaleString("es-CL"),
+  esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const COLORS = ["#ff8a3d", "#4da3ff", "#6fe3a5", "#ff5d8f", "#b78cff", "#ffc857", "#20c997", "#fd7e14", "#e879f9", "#38bdf8", "#a3e635", "#f43f5e", "#fbbf24", "#34d399", "#818cf8"];
+let TABS = [], currentTab = null, B = [], D = [], page = 1, store = -1, key = "descuento", dir = -1, maxD = 1;
+const tabCache = {};
+const tabPath = t => t.path || (t.html_file && t.html_file !== "index.html" ? "/" + t.html_file.replace(".html", "") : "/");
+const tabFromLocation = () => {
+  let p = location.pathname.replace("/index.html", "/").replace(".html", "");
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+  return TABS.find(t => tabPath(t) === p);
+};
+
+fetch("tabs.json", { cache: "no-cache" })
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(data => {
+    TABS = data.tabs || [];
+    if (!TABS.some(t => t.id === "global")) {
+      const tot = TABS.reduce((acc, t) => acc + (t.total || 0), 0);
+      const avg = Math.round(TABS.reduce((acc, t) => acc + (t.avg_discount || 0) * (t.total || 0), 0) / (tot || 1));
+      TABS.unshift({
+        id: "global",
+        name: "Ranking Global",
+        icon: "🌐",
+        headline: "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+        subtitle: "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+        item_label: "Producto",
+        file: "global.json",
+        html_file: "global.html",
+        path: "/global",
+        total: tot,
+        avg_discount: avg,
+        dominios: []
+      });
+    }
+    renderTabsBar();
+    // Links viejos tipo /#abc: se llevan a la URL limpia /abc
+    const legacy = TABS.find(t => t.id === (location.hash || "").replace("#", "").trim());
+    const found = legacy || tabFromLocation();
+    const initialId = found ? found.id : (TABS.find(t => t.id === window.PAGE_DEFAULT_TAB) || TABS[0])?.id;
+    if (initialId) switchTab(initialId, false);
+    if (legacy) history.replaceState(null, "", tabPath(legacy));
+  })
+  .catch(() => {
+    // Fallback: intentar cargar libros.json directamente
+    fetch("libros.json", { cache: "no-cache" }).then(r => r.json()).then(j => {
+      initTabData({ id: "libros", name: "Libros", item_label: "Libro", headline: "Los mejores descuentos de libros en Chile", subtitle: "Librerías principales de Chile" }, j);
+    }).catch(() => {
+      $("upd").textContent = "sin datos";
+      $("body").innerHTML = `<tr><td colspan="8"><div class="msg">No pude leer los datos.<br><br>Genera las ofertas con <code>python3 script_generator.py</code>.</div></td></tr>`;
+    });
+  });
+
+function renderTabsBar() {
+  const nav = $("tabs-nav");
+  nav.innerHTML = TABS.map(t => `
+    <a class="tab-btn${currentTab && currentTab.id === t.id ? " active" : ""}" href="${tabPath(t)}" data-tab="${t.id}" id="tab-btn-${t.id}">
+      <span class="t-icon">${t.icon || "🏷️"}</span>
+      <span>${esc(t.name)}</span>
+      <span class="t-badge">${t.total || 0}</span>
+    </a>
+  `).join("");
+}
+
+$("tabs-nav").onclick = e => {
+  const btn = e.target.closest(".tab-btn");
+  if (!btn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+  e.preventDefault();
+  const tid = btn.dataset.tab;
+  if (tid && !(currentTab && currentTab.id === tid)) switchTab(tid, true);
+};
+
+window.addEventListener("popstate", () => {
+  const t = tabFromLocation();
+  if (t && (!currentTab || currentTab.id !== t.id)) switchTab(t.id, false);
+});
+
+function switchTab(tabId, updateHash) {
+  const tab = TABS.find(t => t.id === tabId);
+  if (!tab) return;
+  currentTab = tab;
+  if (updateHash) {
+    history.pushState(null, "", tabPath(tab));
+  }
+  document.title = `${tab.name} | Monitor de Ofertas · Descuentos en Chile`;
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const isAct = b.dataset.tab === tabId;
+    b.classList.toggle("active", isAct);
+    if (isAct) b.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+  });
+
+  // Actualizar hero y textos
+  $("hero-title").innerHTML = tab.headline || `Los mejores descuentos en ${esc(tab.name)}, <em>actualizados hoy.</em>`;
+  $("hero-desc").textContent = tab.subtitle || `Monitoreo de precios y descuentos en ${tab.name}.`;
+  $("col-item").dataset.l = tab.item_label || "Producto";
+  $("col-item").textContent = $("col-item").dataset.l;
+  $("q").placeholder = tab.id === "global" ? "Buscar en todas las tiendas..." : `Buscar en ${tab.name}...`;
+
+  if (tabCache[tabId]) {
+    initTabData(tab, tabCache[tabId]);
+  } else if (tabId === "global") {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ranking global de todas las tiendas…</div></td></tr>`;
+    fetch(tab.file || "global.json", { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(() => {
+        consolidateGlobalFromTabs(tab);
+      });
+  } else {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Cargando ofertas de ${esc(tab.name)}…</div></td></tr>`;
+    fetch(tab.file || `${tabId}.json`, { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw 0; return r.json(); })
+      .then(j => {
+        tabCache[tabId] = j;
+        initTabData(tab, j);
+      })
+      .catch(err => {
+        $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al cargar datos de ${esc(tab.name)}.</div></td></tr>`;
+      });
+  }
+}
+
+function consolidateGlobalFromTabs(tab) {
+  const tabsToFetch = TABS.filter(t => t.id !== "global" && t.file);
+  Promise.all(tabsToFetch.map(t => {
+    if (tabCache[t.id]) return Promise.resolve(tabCache[t.id]);
+    return fetch(t.file, { cache: "no-cache" })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => { if (j) tabCache[t.id] = j; return j; })
+      .catch(() => null);
+  })).then(results => {
+    const allItems = [];
+    const domMap = new Map();
+    const seen = new Set();
+    let genAt = null;
+    results.forEach(res => {
+      if (!res) return;
+      if (res.generated_at && !genAt) genAt = res.generated_at;
+      (res.dominios || []).forEach(d => {
+        if (!domMap.has(d.id)) domMap.set(d.id, d);
+      });
+      const list = res.items || res.libros || [];
+      list.forEach(item => {
+        const key = (item.dominio_id || 0) + ":" + (item.id || item.slug || item.title);
+        if (!seen.has(key)) {
+          seen.add(key);
+          allItems.push(item);
+        }
+      });
+    });
+    allItems.sort((a, b) => (b.descuento || 0) - (a.descuento || 0));
+    const domArray = Array.from(domMap.values());
+    const avgDisc = allItems.length ? Math.round(allItems.reduce((a, b) => a + (b.descuento || 0), 0) / allItems.length) : 0;
+    const globalData = {
+      id: "global",
+      name: "Ranking Global",
+      item_label: "Producto",
+      headline: "Ranking Global de las mejores ofertas, <em>todos los dominios.</em>",
+      subtitle: "Consolidado de los mayores descuentos encontrados en todas las tiendas y categorías.",
+      generated_at: genAt || new Date().toISOString(),
+      total: allItems.length,
+      avg_discount: avgDisc,
+      dominios: domArray,
+      items: allItems
+    };
+    tabCache["global"] = globalData;
+    tab.total = allItems.length;
+    tab.avg_discount = avgDisc;
+    renderTabsBar();
+    initTabData(tab, globalData);
+  }).catch(() => {
+    $("body").innerHTML = `<tr><td colspan="8"><div class="msg">Error al consolidar ofertas globales.</div></td></tr>`;
+  });
+}
+
+const fixUrl = b => {
+  if (!b.url) return "";
+  if (/buscalibre/i.test(b.tienda) && !/^https?:/i.test(b.url)) {
+    return new URL(b.url, "https://www.buscalibre.cl/").href;
+  }
+  return b.url;
+};
+
+// Al ir al detalle se guarda cómo estaba el listado (búsqueda, filtros, página, orden, scroll)
+// para dejarlo igual cuando la persona vuelve.
+function saveList() {
+  if (!currentTab) return;
+  try {
+    sessionStorage.setItem("lista:" + currentTab.id, JSON.stringify({ q: $("q").value, min: $("min").value, per: $("per").value, page, store, key, dir, y: window.scrollY }));
+  } catch (e) {}
+}
+function restoreList(tabId) {
+  let s = null;
+  try {
+    s = JSON.parse(sessionStorage.getItem("lista:" + tabId) || "null");
+    sessionStorage.removeItem("lista:" + tabId);
+  } catch (e) {}
+  if (!s) return null;
+  $("q").value = s.q || "";
+  $("min").value = s.min || "0";
+  $("per").value = s.per || "10";
+  page = s.page || 1;
+  store = s.store ?? -1;
+  key = s.key || key;
+  dir = s.dir || dir;
+  if (D.length > 1) document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", +c.dataset.i === store));
+  return s;
+}
+document.addEventListener("click", e => { if (e.target.closest("a.dl")) saveList(); });
+
+function initTabData(tab, j) {
+  D = j.dominios || [];
+  document.querySelector("table").classList.toggle("single", tab.id !== "global" && D.length < 2);
+  const items = j.items || j.libros || [];
+  B = items.map(b => ({ ...b, ahorro: (b.promedio || 0) - (b.precio || 0), url: fixUrl(b) }));
+  maxD = Math.max(...B.map(b => b.descuento || 0), 1);
+  if (j.generated_at) {
+    $("upd").textContent = "Actualizado " + new Date(j.generated_at).toLocaleString("es-CL", { dateStyle: "medium", timeStyle: "short" });
+  }
+  $("s1").firstChild.textContent = B.length.toLocaleString("es-CL");
+  $("s2").firstChild.textContent = D.length || 1;
+  $("s3").firstChild.textContent = Math.round(B.reduce((a, b) => a + (b.descuento || 0), 0) / Math.max(B.length, 1)) + "%";
+
+  // Chips de tiendas del tab
+  if (D.length > 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = [{ name: "Todas" }, ...D].map((d, i) =>
+      `<button class="chip${i ? "" : " on"}" data-i="${i ? d.id : -1}">${i ? `<i style="--c:${COLORS[(i - 1) % COLORS.length]}"></i>` : ""}${esc(d.name)}</button>`
+    ).join("");
+  } else if (D.length === 1) {
+    $("chips").style.display = "flex";
+    $("chips").innerHTML = `<button class="chip on" data-i="${D[0].id}"><i style="--c:${COLORS[0]}"></i>${esc(D[0].name)}</button>`;
+  } else {
+    $("chips").style.display = "none";
+    $("chips").innerHTML = "";
+  }
+
+  page = 1;
+  store = -1;
+  const sv = restoreList(tab.id);
+  render();
+  if (sv) requestAnimationFrame(() => window.scrollTo(0, sv.y || 0));
+}
+
+const col = id => {
+  const idx = D.findIndex(d => d.id === id);
+  return COLORS[Math.max(idx, 0) % COLORS.length];
+};
+
+$("chips").onclick = e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  store = +b.dataset.i;
+  document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  page = 1;
+  render();
+};
+
+["q", "min", "per"].forEach(id => $(id).addEventListener("input", () => { page = 1; render(); }));
+
+document.querySelector("thead").onclick = e => {
+  const h = e.target.closest("th[data-k]");
+  if (!h) return;
+  const k = h.dataset.k;
+  dir = key === k ? -dir : (k === "title" || k === "tienda" || k === "precio" || k === "promedio" ? 1 : -1);
+  key = k;
+  page = 1;
+  render();
+};
+
+// Mini gráfico del historial de precios (solo muestra la tendencia; el número que manda es el descuento).
+function spark(b) {
+  const h = b.hist;
+  if (!h || h.length < 2) return `<span class="o">—</span>`;
+  const min = Math.min(...h), max = Math.max(...h), rng = max - min, W = 130, H = 40, P = 4;
+  const pts = h.map((v, i) => `${(i / (h.length - 1) * W).toFixed(1)},${(rng === 0 ? H / 2 : H - P - (v - min) / rng * (H - 2 * P)).toFixed(1)}`).join(" ");
+  const c = "var(--dn)";
+  const tip = `Normal ${clp(b.promedio)} · mín ${clp(min)} · máx ${clp(max)} · ${h.length} registros`;
+  return `<div class="sp" title="${tip}"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="${pts} ${W},${H} 0,${H}" fill="${c}" opacity=".13"/><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>`;
+}
+
+function render() {
+  const q = $("q").value.toLowerCase().trim(), m = +$("min").value, PER = +$("per").value;
+  const L = B.filter(b => (store < 0 || b.dominio_id === store) && b.descuento >= m && (!q || (b.title || "").toLowerCase().includes(q)));
+  L.sort((a, b) => (typeof a[key] === "string" ? a[key].localeCompare(b[key], "es") : a[key] - b[key]) * dir);
+  document.querySelectorAll("th[data-k]").forEach(h => {
+    h.dataset.l = h.dataset.l || h.textContent;
+    h.classList.toggle("s", h.dataset.k === key);
+    h.textContent = h.dataset.l + (h.dataset.k === key ? (dir > 0 ? " ↑" : " ↓") : "");
+  });
+  const pages = Math.max(1, Math.ceil(L.length / PER));
+  page = Math.min(page, pages);
+  const st = (page - 1) * PER;
+  $("count").innerHTML = `<b>${L.length}</b> ofertas · mostrando ${L.length ? st + 1 : 0}–${Math.min(st + PER, L.length)}`;
+
+  $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
+    <td class="n">${st + i + 1}</td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
+    <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
+    <td class="r p">${clp(b.precio)}</td>
+    <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
+    <td class="r sv">${clp(b.ahorro)}</td>
+    <td class="r">${spark(b)}</td>
+    <td class="r">${b.url ? `<a class="btn" href="${esc(b.url)}" target="_blank" rel="noopener" data-id="${b.id}" data-pos="${st + i + 1}">Ir a la tienda ↗</a>` : ""}</td>
+  </tr>`).join("") : `<tr><td colspan="8"><div class="msg">Nada por aquí… prueba otra búsqueda 🔍</div></td></tr>`;
+
+  const bt = (l, p, x = "") => `<button ${x} data-p="${p}">${l}</button>`, a = [bt("←", page - 1, page === 1 ? "disabled" : "")];
+  const set = [...new Set([1, 2, page - 1, page, page + 1, pages - 1, pages])].filter(x => x >= 1 && x <= pages).sort((x, y) => x - y);
+  set.forEach((x, i) => {
+    if (i && x - set[i - 1] > 1) a.push("<span>…</span>");
+    a.push(bt(x, x, x === page ? 'class="on"' : ""));
+  });
+  a.push(bt("→", page + 1, page === pages ? "disabled" : ""));
+  $("pager").innerHTML = a.join("");
+}
+
+$("pager").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b || b.disabled) return;
+  page = +b.dataset.p;
+  render();
+  $("count").scrollIntoView({ behavior: "smooth" });
+};
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a.btn[data-id]");
+  if (!a || typeof gtag !== "function") return;
+  const b = B.find(x => String(x.id) === a.dataset.id);
+  if (!b) return;
+  gtag("event", "select_item", {
+    item_list_name: currentTab ? currentTab.name : "Ofertas",
+    currency: "CLP",
+    items: [{ item_id: String(b.id), item_name: b.title, item_brand: b.tienda, price: Math.round(b.precio), discount: Math.round(b.ahorro), index: +a.dataset.pos }]
+  });
+});
+</script>
+</body>
+</html>
