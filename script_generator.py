@@ -773,6 +773,8 @@ a.bk{color:inherit;text-decoration:none}a.bk:hover .t{color:var(--acc)}
 .mc{flex:none;width:44px;height:56px;border-radius:6px;overflow:hidden;background:var(--line);box-shadow:2px 4px 10px -2px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:18px}
 .mc img{width:100%;height:100%;object-fit:cover;display:block}
 .t{font:500 15px/1.25 Fraunces,serif;max-width:440px}
+.chip-rec{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--acc) 16%,transparent);color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 38%,transparent);font:700 10px/1.3 Inter,sans-serif;vertical-align:middle;margin-left:6px;white-space:nowrap;letter-spacing:.02em}
+.chip-rec i{width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block}
 .st{display:inline-flex;gap:7px;align-items:center;padding:5px 11px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,transparent);font:500 12px Inter;white-space:nowrap}
 .st i{width:7px;height:7px;border-radius:50%;background:var(--c)}
 .o{color:var(--mute);text-decoration:line-through;white-space:nowrap;font-size:13px}
@@ -1136,7 +1138,7 @@ function render() {
 
   $("body").innerHTML = L.length ? L.slice(st, st + PER).map((b, i) => `<tr>
     <td class="n">${st + i + 1}</td>
-    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}</div>${b.slug ? "</a>" : "</div>"}</td>
+    <td>${b.slug ? `<a class="bk dl" href="/producto/${esc(b.slug)}/">` : `<div class="bk">`}<div class="mc">${b.thumbnail ? `<img src="${esc(b.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : "📦"}</div><div class="t">${esc(b.title)}${b.variacion_ultimo_precio && b.variacion_ultimo_precio !== 0 ? ` <span class="chip-rec" title="Descuento reciente"><i></i>reciente</span>` : ""}</div>${b.slug ? "</a>" : "</div>"}</td>
     <td class="c-store"><span class="st" style="--c:${col(b.dominio_id)}"><i></i>${esc(b.tienda)}</span></td>
     <td class="r p">${clp(b.precio)}</td>
     <td><div class="d${b.descuento >= 45 ? " hot" : ""}"><b>−${Math.round(b.descuento)}%</b><span><i style="width:${b.descuento / maxD * 100}%"></i></span></div></td>
