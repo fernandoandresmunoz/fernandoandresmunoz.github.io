@@ -49,12 +49,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fernandoandresmunoz.github.io/unimarc</loc>
-    <lastmod>2026-11-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://fernandoandresmunoz.github.io/abc</loc>
     <lastmod>2026-11-25</lastmod>
     <changefreq>daily</changefreq>
@@ -31016,6 +31010,12 @@
   </url>
   <url>
     <loc>https://fernandoandresmunoz.github.io/producto/900836-box-spring-king-ortopedic-5-zonas/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fernandoandresmunoz.github.io/producto/901886-respaldo-2-plazas-dublin-gris/</loc>
     <lastmod>2026-11-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
